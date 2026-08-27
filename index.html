@@ -6,7 +6,7 @@
 
   <title>morhirc | Free Software Developer</title>
 
-  <meta name="description" content="morhircが制作・公開しているフリーソフトの公式ページです。Windows向けツールやChatGPT会話保存ツール、Googleタイムライン可視化ツールなどを公開しています。">
+  <meta name="description" content="morhircが制作・公開しているフリーソフトの公式ページです。Windows向けツール、ChatGPT会話保存ツール、Googleタイムライン可視化ツールなどを公開しています。">
 
   <style>
     * {
@@ -73,15 +73,26 @@
 
     .software-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      grid-template-columns: repeat(2, 1fr);
       gap: 20px;
     }
 
     .software {
+      display: block;
       background: white;
       padding: 25px;
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+      text-decoration: none;
+      color: #222;
+      transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease;
+    }
+
+    .software:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.12);
     }
 
     .software h3 {
@@ -91,7 +102,12 @@
     }
 
     .software p {
-      margin-bottom: 0;
+      margin-bottom: 15px;
+    }
+
+    .software .more {
+      font-weight: 600;
+      color: #2563eb;
     }
 
     .links a {
@@ -114,6 +130,24 @@
       padding: 30px 20px;
       color: #666;
       font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 50px 20px;
+      }
+
+      header h1 {
+        font-size: 34px;
+      }
+
+      main {
+        padding-top: 35px;
+      }
+
+      .software-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -142,7 +176,8 @@
       </p>
 
       <p>
-        公開ソフトはGitHub等で確認できます。
+        公開ソフトの詳細、ソースコード、更新履歴などは
+        GitHub上の各公式リポジトリから確認できます。
       </p>
     </div>
   </section>
@@ -153,31 +188,55 @@
 
     <div class="software-grid">
 
-      <div class="software">
+      <a class="software"
+         href="https://github.com/morhirc/ChatAttic"
+         target="_blank"
+         rel="noopener">
         <h3>ChatAttic</h3>
         <p>
           ChatGPTの会話データを保存・検索・閲覧するためのツールです。
           JSONやHTML、エクスポートZIPから会話を読み込み、
           ChatGPT風の画面で確認できます。
         </p>
-      </div>
+        <span class="more">GitHubで詳しく見る →</span>
+      </a>
 
-      <div class="software">
+      <a class="software"
+         href="https://github.com/morhirc/Maplimo"
+         target="_blank"
+         rel="noopener">
         <h3>Maplimo</h3>
         <p>
           Googleタイムラインの履歴をPC上の地図で振り返るためのツールです。
           Google Takeoutのデータを利用し、
           日付や訪問地域を地図上で確認できます。
         </p>
-      </div>
+        <span class="more">GitHubで詳しく見る →</span>
+      </a>
 
-      <div class="software">
+      <a class="software"
+         href="https://github.com/morhirc/WinSukkiri"
+         target="_blank"
+         rel="noopener">
         <h3>Winすっきり</h3>
         <p>
-          Windows 11の初期設定や不要機能の調整を
+          Windows 11の初期設定や不要機能の調整を、
           分かりやすくまとめて行うための設定支援ツールです。
         </p>
-      </div>
+        <span class="more">GitHubで詳しく見る →</span>
+      </a>
+
+      <a class="software"
+         href="https://github.com/morhirc/WinNoHara"
+         target="_blank"
+         rel="noopener">
+        <h3>Winの腹の中</h3>
+        <p>
+          Windows PCの状態確認やトラブル切り分けに使う情報を
+          収集・確認するための診断・解析ツールです。
+        </p>
+        <span class="more">GitHubで詳しく見る →</span>
+      </a>
 
     </div>
   </section>
@@ -187,7 +246,9 @@
     <h2>Official Links</h2>
 
     <div class="links">
-      <a href="https://github.com/morhirc" target="_blank" rel="noopener">
+      <a href="https://github.com/morhirc"
+         target="_blank"
+         rel="noopener">
         GitHub
       </a>
     </div>
@@ -200,7 +261,7 @@
     <div class="intro">
       <p>
         ソフトウェアの配布元、更新情報、公開内容については、
-        本ページおよびGitHub上の各公開ページをご確認ください。
+        本ページおよびGitHub上の各公式リポジトリをご確認ください。
       </p>
     </div>
   </section>

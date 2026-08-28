@@ -306,9 +306,15 @@
       GitHub
     </a>
 
-    <a href="mailto:morhirc@gmail.com">
+    <button type="button" class="contact-button" onclick="toggleContact()">
       Contact
-    </a>
+    </button>
+  </div>
+
+  <div id="contact-info" class="contact-info" hidden>
+    <span id="contact-email">morhirc@gmail.com</span>
+    <button type="button" onclick="copyEmail()">コピー</button>
+    <span id="copy-result"></span>
   </div>
 </section>
 
@@ -329,5 +335,23 @@
   © 2026 morhirc
 </footer>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b8af35d7e6e7422a9b5bc77c2c36d2ff"}'></script><!-- End Cloudflare Web Analytics -->
+<script>
+function toggleContact() {
+  const info = document.getElementById("contact-info");
+  info.hidden = !info.hidden;
+}
+
+async function copyEmail() {
+  const email = document.getElementById("contact-email").textContent;
+  await navigator.clipboard.writeText(email);
+
+  const result = document.getElementById("copy-result");
+  result.textContent = "コピーしました";
+
+  setTimeout(() => {
+    result.textContent = "";
+  }, 2000);
+}
+</script>
 </body>
 </html>

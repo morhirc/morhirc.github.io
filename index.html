@@ -334,8 +334,34 @@
 <footer>
   © 2026 morhirc
 </footer>
-<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "b8af35d7e6e7422a9b5bc77c2c36d2ff"}'></script><!-- End Cloudflare Web Analytics -->
 <script>
+(() => {
+  const params = new URLSearchParams(location.search);
+
+  // この端末をアクセス解析から除外
+  if (params.get("analytics") === "off") {
+    localStorage.setItem("morhirc_no_analytics", "1");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  // 除外を解除
+  if (params.get("analytics") === "on") {
+    localStorage.removeItem("morhirc_no_analytics");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  // 除外端末でなければCloudflare Analyticsを読み込む
+  if (localStorage.getItem("morhirc_no_analytics") !== "1") {
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src = "https://static.cloudflareinsights.com/beacon.min.js";
+    script.dataset.cfBeacon =
+      '{"token":"b8af35d7e6e7422a9b5bc77c2c36d2ff"}';
+
+    document.head.appendChild(script);
+  }
+})();
+</script>
 function toggleContact() {
   const info = document.getElementById("contact-info");
   info.hidden = !info.hidden;

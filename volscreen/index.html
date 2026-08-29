@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>VolScreen | Windows 音量OSD・デュアルディスプレイ対応ツール | morhirc</title>
+
+  <meta name="description" content="VolScreenは、Windowsの音量変更を画面上にシンプルなOSDで表示する無料ツールです。デュアルディスプレイに対応し、ディスプレイごとに文字サイズ、バーサイズ、表示位置などを個別設定できます。インストール不要です。">
+
+  <meta name="robots" content="index,follow">
+
+  <link rel="canonical" href="https://morhirc.github.io/volscreen/">
+
+  <meta property="og:title" content="VolScreen | Windows 音量OSD・デュアルディスプレイ対応ツール">
+  <meta property="og:description" content="Windowsの音量変更を、画面上にシンプルに表示。デュアルディスプレイにも対応した軽量OSDツールです。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://morhirc.github.io/volscreen/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "VolScreen",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Windows 11",
+    "softwareVersion": "1.0",
+    "description": "Windowsの音量変更を画面上にシンプルなOSDで表示する軽量ツールです。",
+    "author": {
+      "@type": "Person",
+      "name": "morhirc",
+      "url": "https://morhirc.github.io/"
+    },
+    "url": "https://morhirc.github.io/volscreen/",
+    "downloadUrl": "https://github.com/morhirc/VolScreen/releases/latest"
+  }
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        Meiryo,
+        sans-serif;
+      background: #f5f7fa;
+      color: #222;
+      line-height: 1.7;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 45px 20px;
+      text-align: center;
+    }
+
+    .brand {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .brand:hover {
+      color: white;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 42px;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin: 12px 0 0;
+      color: #cbd5e1;
+      font-size: 18px;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 50px 20px 80px;
+    }
+
+    section {
+      margin-bottom: 55px;
+    }
+
+    h2 {
+      font-size: 25px;
+      border-bottom: 2px solid #d1d5db;
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+
+    .card {
+      background: white;
+      padding: 28px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .lead {
+      font-size: 18px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 11px 20px;
+      background: #111827;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .button:hover {
+      background: #374151;
+    }
+
+    .button.secondary {
+      background: #2563eb;
+    }
+
+    .button.secondary:hover {
+      background: #1d4ed8;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      background: white;
+      padding: 22px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .feature h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .feature p {
+      margin: 0;
+    }
+
+    .screenshot {
+      background: white;
+      padding: 18px;
+      margin-bottom: 24px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .screenshot img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 6px;
+    }
+
+    .screenshot p {
+      margin: 14px 5px 0;
+      color: #555;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    ul,
+    ol {
+      padding-left: 24px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    code {
+      background: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .spec {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 10px 20px;
+    }
+
+    .spec strong {
+      color: #374151;
+    }
+
+    .back {
+      margin-bottom: 30px;
+    }
+
+    .back a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 40px 20px;
+      }
+
+      header h1 {
+        font-size: 34px;
+      }
+
+      main {
+        padding-top: 35px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .spec {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a class="brand" href="/">morhirc | Free Software Developer</a>
+  <h1>VolScreen</h1>
+  <p>音量を、見える場所に。</p>
+</header>
+
+<main>
+
+  <div class="back">
+    <a href="/">← morhirc ホームへ戻る</a>
+  </div>
+
+  <section>
+    <h2>VolScreenとは</h2>
+
+    <div class="card">
+      <p class="lead">
+        VolScreenは、Windowsの音量変更を
+        画面上にシンプルなOSDで表示する軽量ツールです。
+      </p>
+
+      <p>
+        インストール不要で、
+        <code>VolScreen.exe</code> を起動するだけで使用できます。
+      </p>
+
+      <p>
+        デュアルディスプレイにも対応し、
+        ディスプレイごとに表示サイズや位置を個別設定できます。
+      </p>
+
+      <div class="buttons">
+        <a class="button secondary"
+           href="https://github.com/morhirc/VolScreen/releases/latest"
+           target="_blank"
+           rel="noopener">
+          最新版をダウンロード
+        </a>
+
+        <a class="button"
+           href="https://github.com/morhirc/VolScreen"
+           target="_blank"
+           rel="noopener">
+          GitHubで詳しく見る
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>主な機能</h2>
+
+    <div class="feature-grid">
+
+      <div class="feature">
+        <h3>音量をOSD表示</h3>
+        <p>
+          Windowsの音量を変更すると、
+          現在の音量を画面上に表示します。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>デュアルディスプレイ対応</h3>
+        <p>
+          複数ディスプレイ環境でも使用でき、
+          ディスプレイごとに設定を分けられます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>表示サイズを調整</h3>
+        <p>
+          文字サイズ、バーの幅・高さ・間隔を
+          好みに合わせて調整できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>表示位置を調整</h3>
+        <p>
+          OSDの表示位置や、
+          画面下端からの距離を調整できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>2種類の表示スタイル</h3>
+        <p>
+          ダーク表示とクラシック表示から選択できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>ライブプレビュー</h3>
+        <p>
+          設定変更中に実際の表示を確認しながら調整できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>タスクトレイ常駐</h3>
+        <p>
+          起動後はタスクトレイに常駐し、
+          設定画面や終了操作を行えます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>インストール不要</h3>
+        <p>
+          セットアップ不要で、
+          EXEファイルを任意の場所から直接起動できます。
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+<section>
+  <h2>画面</h2>
+
+  <div class="screenshot">
+    <img src="./images/VolScreen_dual-display.png"
+         alt="VolScreen 音量OSD表示"
+         loading="lazy">
+    <p>音量変更時のOSD表示</p>
+  </div>
+
+  <div class="screenshot">
+    <img src="./images/VolScreen_settings.png"
+         alt="VolScreen 設定画面とライブプレビュー"
+         loading="lazy">
+    <p>ディスプレイごとの設定とライブプレビュー</p>
+  </div>
+</section>
+  <section>
+    <h2>使い方</h2>
+
+    <div class="card">
+      <ol>
+        <li><code>VolScreen.exe</code> を起動します。</li>
+        <li>Windowsの音量を変更します。</li>
+        <li>画面上に現在の音量がOSD表示されます。</li>
+        <li>タスクトレイのVolScreenアイコンから設定画面を開きます。</li>
+        <li>各ディスプレイの表示方法を好みに合わせて調整します。</li>
+      </ol>
+
+      <p>
+        終了する場合は、
+        タスクトレイのVolScreenアイコンから終了してください。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>対応環境</h2>
+
+    <div class="card">
+      <div class="spec">
+        <strong>対応OS</strong>
+        <span>Windows 11</span>
+
+        <strong>ディスプレイ</strong>
+        <span>デュアルディスプレイ対応</span>
+
+        <strong>形式</strong>
+        <span>EXE / インストール不要</span>
+
+        <strong>バージョン</strong>
+        <span>VolScreen 1.0</span>
+
+        <strong>取り扱い</strong>
+        <span>フリーソフト</span>
+
+        <strong>作者</strong>
+        <span>morhirc</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>アンインストール</h2>
+
+    <div class="card">
+      <p>
+        VolScreenを終了したあと、
+        <code>VolScreen.exe</code> を削除してください。
+      </p>
+
+      <p>
+        インストール処理は行っていないため、
+        アンインストーラーはありません。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>ビルド</h2>
+
+    <div class="card">
+      <p>
+        GitHubリポジトリには、
+        EXE生成用のソースとスクリプトも含まれています。
+      </p>
+
+      <p>
+        <code>EXEを作る.cmd</code> を実行すると、
+        同じフォルダに <code>VolScreen.exe</code> を生成できます。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Download / Source</h2>
+
+    <div class="card">
+      <p>
+        最新版、更新履歴、ソースコードは
+        GitHub上の公式リポジトリから確認できます。
+      </p>
+
+      <div class="buttons">
+        <a class="button secondary"
+           href="https://github.com/morhirc/VolScreen/releases/latest"
+           target="_blank"
+           rel="noopener">
+          最新版をダウンロード
+        </a>
+
+        <a class="button"
+           href="https://github.com/morhirc/VolScreen"
+           target="_blank"
+           rel="noopener">
+          GitHub Repository
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 morhirc
+</footer>
+
+<script>
+(() => {
+  const params = new URLSearchParams(location.search);
+
+  if (params.get("analytics") === "off") {
+    localStorage.setItem("morhirc_no_analytics", "1");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (params.get("analytics") === "on") {
+    localStorage.removeItem("morhirc_no_analytics");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (localStorage.getItem("morhirc_no_analytics") !== "1") {
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src = "https://static.cloudflareinsights.com/beacon.min.js";
+    script.dataset.cfBeacon =
+      '{"token":"b8af35d7e6e7422a9b5bc77c2c36d2ff"}';
+
+    document.head.appendChild(script);
+  }
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Winすっきり | Windows 11 初期設定・カスタマイズ支援ツール | morhirc</title>
+
+  <meta name="description" content="Winすっきりは、Windows 11の初期設定や日常的な設定変更を、ひとつの画面から分かりやすく行うための無料Windowsユーティリティです。OneDrive・Teams・スタートアップ・ユーザーフォルダーなどの設定を確認しながら変更できます。">
+
+  <meta name="robots" content="index,follow">
+
+  <link rel="canonical" href="https://morhirc.github.io/winsukkiri/">
+
+  <meta property="og:title" content="Winすっきり | Windows 11 初期設定・カスタマイズ支援ツール">
+  <meta property="og:description" content="Windows 11を、もっとシンプルに。Windowsの各種設定を確認しながら整理・変更できる無料ユーティリティです。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://morhirc.github.io/winsukkiri/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Winすっきり",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Windows 11 64-bit",
+    "softwareVersion": "1.0",
+    "description": "Windows 11の初期設定や日常的な設定変更を、ひとつの画面から分かりやすく行うためのWindows用ユーティリティです。",
+    "author": {
+      "@type": "Person",
+      "name": "morhirc",
+      "url": "https://morhirc.github.io/"
+    },
+    "url": "https://morhirc.github.io/winsukkiri/",
+    "downloadUrl": "https://github.com/morhirc/WinSukkiri/releases/latest"
+  }
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        Meiryo,
+        sans-serif;
+      background: #f5f7fa;
+      color: #222;
+      line-height: 1.7;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 45px 20px;
+      text-align: center;
+    }
+
+    .brand {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .brand:hover {
+      color: white;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 42px;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin: 12px 0 0;
+      color: #cbd5e1;
+      font-size: 18px;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 50px 20px 80px;
+    }
+
+    section {
+      margin-bottom: 55px;
+    }
+
+    h2 {
+      font-size: 25px;
+      border-bottom: 2px solid #d1d5db;
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+
+    .card {
+      background: white;
+      padding: 28px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .lead {
+      font-size: 18px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 11px 20px;
+      background: #111827;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .button:hover {
+      background: #374151;
+    }
+
+    .button.secondary {
+      background: #2563eb;
+    }
+
+    .button.secondary:hover {
+      background: #1d4ed8;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      background: white;
+      padding: 22px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .feature h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .feature p {
+      margin: 0;
+    }
+
+    .screenshot {
+      background: white;
+      padding: 18px;
+      margin-bottom: 24px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .screenshot img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 6px;
+    }
+
+    .screenshot p {
+      margin: 14px 5px 0;
+      color: #555;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    ul,
+    ol {
+      padding-left: 24px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .spec {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 10px 20px;
+    }
+
+    .spec strong {
+      color: #374151;
+    }
+
+    .back {
+      margin-bottom: 30px;
+    }
+
+    .back a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 40px 20px;
+      }
+
+      header h1 {
+        font-size: 34px;
+      }
+
+      main {
+        padding-top: 35px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .spec {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a class="brand" href="/">morhirc | Free Software Developer</a>
+  <h1>Winすっきり</h1>
+  <p>Windows 11を、もっとシンプルに。</p>
+</header>
+
+<main>
+
+  <div class="back">
+    <a href="/">← morhirc ホームへ戻る</a>
+  </div>
+
+  <section>
+    <h2>Winすっきりとは</h2>
+
+    <div class="card">
+      <p class="lead">
+        Winすっきりは、Windows 11の初期設定や日常的な設定変更を、
+        ひとつの画面から分かりやすく行うためのWindows用ユーティリティです。
+      </p>
+
+      <p>
+        不要ファイルを自動削除するクリーナーや、
+        無理な「高速化」を行うソフトではありません。
+      </p>
+
+      <p>
+        Windowsで普段手作業している設定を、
+        現在の状態を確認しながら整理・変更することを目的にしています。
+      </p>
+
+      <div class="buttons">
+        <a class="button secondary"
+           href="https://github.com/morhirc/WinSukkiri/releases/latest"
+           target="_blank"
+           rel="noopener">
+          最新版をダウンロード
+        </a>
+
+        <a class="button"
+           href="https://github.com/morhirc/WinSukkiri"
+           target="_blank"
+           rel="noopener">
+          GitHubで詳しく見る
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>主な機能</h2>
+
+    <div class="feature-grid">
+
+      <div class="feature">
+        <h3>Windowsのシンプル化</h3>
+        <p>
+          Windowsのヒント・おすすめなど、
+          日常利用で気になる表示設定をまとめて確認できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>自動起動の管理</h3>
+        <p>
+          OneDrive、Microsoft Teamsなどの自動起動設定や、
+          Windowsのスタートアップ項目を確認・切り替えできます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>エクスプローラー関連</h3>
+        <p>
+          デスクトップやエクスプローラーに関する設定を、
+          現在の状態を確認しながら変更できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>ユーザーフォルダー</h3>
+        <p>
+          デスクトップ、ダウンロード、ドキュメント、ピクチャ、
+          ミュージック、ビデオの保存場所を確認・変更できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>PCチェック・詳細設定</h3>
+        <p>
+          PCの状態確認や、プライバシー・パフォーマンス関連などの
+          各種設定をまとめて確認できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>設定の保存・復元</h3>
+        <p>
+          マイ設定の保存・読み込みや、
+          直前に行った変更を元に戻す機能を備えています。
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>画面</h2>
+
+    <div class="screenshot">
+      <img src="./images/home.png"
+           alt="Winすっきり ホーム画面"
+           loading="lazy">
+      <p>Winすっきり ホーム画面</p>
+    </div>
+
+    <div class="screenshot">
+      <img src="./images/simple.png"
+           alt="Winすっきり シンプル化画面"
+           loading="lazy">
+      <p>Windowsのシンプル化設定</p>
+    </div>
+
+    <div class="screenshot">
+      <img src="./images/user-folders.png"
+           alt="Winすっきり ユーザーフォルダー保存場所画面"
+           loading="lazy">
+      <p>ユーザーフォルダーの保存場所確認・変更</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>対応環境</h2>
+
+    <div class="card">
+      <div class="spec">
+        <strong>対応OS</strong>
+        <span>Windows 11</span>
+
+        <strong>アーキテクチャ</strong>
+        <span>64bit</span>
+
+        <strong>バージョン</strong>
+        <span>Winすっきり v1.0</span>
+
+        <strong>作者</strong>
+        <span>morhirc</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>使い方</h2>
+
+    <div class="card">
+      <ol>
+        <li>GitHub Releasesから最新版のZIPファイルをダウンロードします。</li>
+        <li>ZIPファイルを任意の場所へ展開します。</li>
+        <li><strong>WinSukkiri.exe</strong> をダブルクリックして起動します。</li>
+        <li>変更したい項目を選び、内容を確認して適用します。</li>
+      </ol>
+
+      <p>
+        設定によっては、サインアウトや再起動後に完全に反映される場合があります。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>注意事項</h2>
+
+    <div class="card">
+      <ul>
+        <li>
+          WinすっきりはWindowsの各種設定やレジストリ等を変更します。
+          重要なデータは事前にバックアップすることをおすすめします。
+        </li>
+
+        <li>
+          会社や学校など管理されたPCでは、
+          管理者の設定やポリシーにより変更できない項目があります。
+        </li>
+
+        <li>
+          Windows Update等により、
+          将来一部の機能が利用できなくなる場合があります。
+        </li>
+
+        <li>
+          ユーザーフォルダーの保存場所を変更する場合は、
+          対象フォルダー内のファイルを使用しているアプリを終了してください。
+        </li>
+
+        <li>
+          OneDrive配下から移動する場合は、
+          同期状態を確認してから実行してください。
+        </li>
+
+        <li>
+          自動ログインは利便性が上がる一方、
+          PCを操作できる人がそのままアカウントへアクセスできる状態になります。
+          共有PCや持ち運ぶPCでは注意してください。
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Download / Source</h2>
+
+    <div class="card">
+      <p>
+        最新版、更新履歴、ソースコードは
+        GitHub上の公式リポジトリから確認できます。
+      </p>
+
+      <div class="buttons">
+        <a class="button secondary"
+           href="https://github.com/morhirc/WinSukkiri/releases/latest"
+           target="_blank"
+           rel="noopener">
+          最新版をダウンロード
+        </a>
+
+        <a class="button"
+           href="https://github.com/morhirc/WinSukkiri"
+           target="_blank"
+           rel="noopener">
+          GitHub Repository
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 morhirc
+</footer>
+
+<script>
+(() => {
+  const params = new URLSearchParams(location.search);
+
+  if (params.get("analytics") === "off") {
+    localStorage.setItem("morhirc_no_analytics", "1");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (params.get("analytics") === "on") {
+    localStorage.removeItem("morhirc_no_analytics");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (localStorage.getItem("morhirc_no_analytics") !== "1") {
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src = "https://static.cloudflareinsights.com/beacon.min.js";
+    script.dataset.cfBeacon =
+      '{"token":"b8af35d7e6e7422a9b5bc77c2c36d2ff"}';
+
+    document.head.appendChild(script);
+  }
+})();
+</script>
+
+</body>
+</html>

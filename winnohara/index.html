@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Winの腹の中 | Windows 11 状態確認・トラブル切り分けツール | morhirc</title>
+
+  <meta name="description" content="Winの腹の中は、Windows 11のPC状態確認、ネットワーク、SMB、サービス、タスク、重大エラー、デバイス、ストレージなど、トラブル切り分けに必要な情報や標準コマンドをまとめた無料診断・参照ツールです。">
+
+  <meta name="robots" content="index,follow">
+
+  <link rel="canonical" href="https://morhirc.github.io/winnohara/">
+
+  <meta property="og:title" content="Winの腹の中 | Windows 11 状態確認・トラブル切り分けツール">
+  <meta property="og:description" content="見る。見つける。必要な場所を開く。Windowsの状態確認とトラブル切り分けを支援する無料ツールです。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://morhirc.github.io/winnohara/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Winの腹の中",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Windows 11",
+    "softwareVersion": "1.0",
+    "description": "Windows PCの状態確認やトラブル切り分けに使う情報、設定画面、標準コマンドをひとつにまとめた参照・診断ツールです。",
+    "author": {
+      "@type": "Person",
+      "name": "morhirc",
+      "url": "https://morhirc.github.io/"
+    },
+    "url": "https://morhirc.github.io/winnohara/",
+    "downloadUrl": "https://github.com/morhirc/WinNoHara/releases/latest"
+  }
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        Meiryo,
+        sans-serif;
+      background: #f5f7fa;
+      color: #222;
+      line-height: 1.7;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 45px 20px;
+      text-align: center;
+    }
+
+    .brand {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .brand:hover {
+      color: white;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 42px;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin: 12px 0 0;
+      color: #cbd5e1;
+      font-size: 18px;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 50px 20px 80px;
+    }
+
+    section {
+      margin-bottom: 55px;
+    }
+
+    h2 {
+      font-size: 25px;
+      border-bottom: 2px solid #d1d5db;
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+
+    .card {
+      background: white;
+      padding: 28px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .lead {
+      font-size: 18px;
+    }
+
+    .quote {
+      margin: 22px 0;
+      padding: 18px 20px;
+      background: #f9fafb;
+      border-left: 4px solid #111827;
+      font-weight: 600;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 11px 20px;
+      background: #111827;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .button:hover {
+      background: #374151;
+    }
+
+    .button.secondary {
+      background: #2563eb;
+    }
+
+    .button.secondary:hover {
+      background: #1d4ed8;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      background: white;
+      padding: 22px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .feature h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .feature p {
+      margin: 0;
+    }
+
+    .screenshot {
+      background: white;
+      padding: 18px;
+      margin-bottom: 24px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .screenshot img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 6px;
+    }
+
+    .screenshot p {
+      margin: 14px 5px 0;
+      color: #555;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    code {
+      background: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    ul,
+    ol {
+      padding-left: 24px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .spec {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 10px 20px;
+    }
+
+    .spec strong {
+      color: #374151;
+    }
+
+    .back {
+      margin-bottom: 30px;
+    }
+
+    .back a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 40px 20px;
+      }
+
+      header h1 {
+        font-size: 34px;
+      }
+
+      main {
+        padding-top: 35px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .spec {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a class="brand" href="/">morhirc | Free Software Developer</a>
+  <h1>Winの腹の中</h1>
+  <p>見る。見つける。必要な場所を開く。</p>
+</header>
+
+<main>
+
+  <div class="back">
+    <a href="/">← morhirc ホームへ戻る</a>
+  </div>
+
+  <section>
+    <h2>Winの腹の中とは</h2>
+
+    <div class="card">
+      <p class="lead">
+        Winの腹の中は、Windows PCの状態確認やトラブル切り分けに使う情報、
+        設定画面、標準コマンドをひとつにまとめた参照・診断ツールです。
+      </p>
+
+      <p>
+        「Windowsのどこを見ればいいんだっけ？」を少し減らすことを目的に作りました。
+      </p>
+
+      <div class="quote">
+        掃除しません。高速化を煽りません。<br>
+        ただし、Windowsの腹の中はかなり見えます。
+      </div>
+
+      <div class="buttons">
+        <a class="button secondary"
+           href="https://github.com/morhirc/WinNoHara/releases/latest"
+           target="_blank"
+           rel="noopener">
+          最新版をダウンロード
+        </a>
+
+        <a class="button"
+           href="https://github.com/morhirc/WinNoHara"
+           target="_blank"
+           rel="noopener">
+          GitHubで詳しく見る
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>主な機能</h2>
+
+    <div class="feature-grid">
+
+      <div class="feature">
+        <h3>PC・Windows基本情報</h3>
+        <p>
+          PCやWindowsの基本情報を一覧で確認できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>ネットワーク・SMB</h3>
+        <p>
+          ネットワーク構成、共有、SMB関連情報など、
+          通信トラブルの切り分けに使う情報を確認できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>セキュリティ・ストレージ</h3>
+        <p>
+          セキュリティ状態、ストレージ、デバイス状態などを確認できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>Windows管理ツール</h3>
+        <p>
+          コントロールパネルやWindows管理ツールへ、
+          必要な場所からすぐアクセスできます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>便利コマンド</h3>
+        <p>
+          Windows標準の参照系コマンドをボタンから実行し、
+          結果を画面で確認できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>深掘り診断</h3>
+        <p>
+          スタートアップ、サービス、タスク、重大エラー、
+          ドライバー、環境変数などを詳しく確認できます。
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>便利コマンド</h2>
+
+    <div class="card">
+      <p>
+        Windows標準の参照系コマンドを、ボタンから実行して結果を確認できます。
+      </p>
+
+      <ul>
+        <li><code>ipconfig /all</code></li>
+        <li><code>netstat -ano</code></li>
+        <li><code>arp -a</code></li>
+        <li><code>route print</code></li>
+        <li><code>systeminfo</code></li>
+        <li><code>driverquery</code></li>
+        <li><code>net share</code></li>
+        <li><code>net use</code></li>
+        <li><code>whoami /all</code></li>
+        <li>IPv6 優先順位</li>
+      </ul>
+
+      <p>
+        修復系コマンドについては、安全のためWinの腹の中から自動実行しません。
+        必要な場合のみコマンドをコピーし、
+        管理者権限のターミナル等から実行する方式です。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>画面</h2>
+
+    <div class="screenshot">
+      <img src="./images/screenshot-control-panel.png"
+           alt="Winの腹の中 コントロールパネル画面"
+           loading="lazy">
+      <p>コントロールパネル</p>
+    </div>
+
+    <div class="screenshot">
+      <img src="./images/screenshot-commands.png"
+           alt="Winの腹の中 便利コマンド画面"
+           loading="lazy">
+      <p>便利コマンド</p>
+    </div>
+
+    <div class="screenshot">
+      <img src="./images/screenshot-deep-dive.png"
+           alt="Winの腹の中 深掘り画面"
+           loading="lazy">
+      <p>深掘り</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>対応環境</h2>
+
+    <div class="card">
+      <div class="spec">
+        <strong>対応OS</strong>
+        <span>Windows 11</span>
+
+        <strong>PowerShell</strong>
+        <span>5.1 以降</span>
+
+        <strong>バージョン</strong>
+        <span>Winの腹の中 v1.0</span>
+
+        <strong>作者</strong>
+        <span>morhirc</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>使い方</h2>
+
+    <div class="card">
+      <ol>
+        <li>GitHub Releasesから配布ZIPをダウンロードします。</li>
+        <li>ZIPファイルを任意の場所へ展開します。</li>
+        <li><strong>WinNoHara.exe</strong> を実行します。</li>
+        <li>確認したい項目やコマンドを選び、結果を確認します。</li>
+      </ol>
+
+      <p>
+        インストール作業は不要です。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>注意事項</h2>
+
+    <div class="card">
+      <ul>
+        <li>
+          本ソフトはWindowsの状態確認とトラブル切り分けを補助するためのツールです。
+        </li>
+
+        <li>
+          Windowsの環境・権限・構成によって、
+          一部の情報を取得できない場合があります。
+        </li>
+
+        <li>
+          表示内容や診断結果には、
+          ユーザー名、PC名、IPアドレス、SID、
+          プロダクトキー関連情報などが含まれる場合があります。
+        </li>
+
+        <li>
+          診断結果や「深掘り」の表示内容を第三者へ共有する場合は、
+          個人情報やPC固有情報が含まれていないか確認してください。
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Download / Source</h2>
+
+    <div class="card">
+      <p>
+        最新版、更新履歴、ソースコードは
+        GitHub上の公式リポジトリから確認できます。
+      </p>
+
+      <div class="buttons">
+        <a class="button secondary"
+           href="https://github.com/morhirc/WinNoHara/releases/latest"
+           target="_blank"
+           rel="noopener">
+          最新版をダウンロード
+        </a>
+
+        <a class="button"
+           href="https://github.com/morhirc/WinNoHara"
+           target="_blank"
+           rel="noopener">
+          GitHub Repository
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 morhirc
+</footer>
+
+<script>
+(() => {
+  const params = new URLSearchParams(location.search);
+
+  if (params.get("analytics") === "off") {
+    localStorage.setItem("morhirc_no_analytics", "1");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (params.get("analytics") === "on") {
+    localStorage.removeItem("morhirc_no_analytics");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (localStorage.getItem("morhirc_no_analytics") !== "1") {
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src = "https://static.cloudflareinsights.com/beacon.min.js";
+    script.dataset.cfBeacon =
+      '{"token":"b8af35d7e6e7422a9b5bc77c2c36d2ff"}';
+
+    document.head.appendChild(script);
+  }
+})();
+</script>
+
+</body>
+</html>

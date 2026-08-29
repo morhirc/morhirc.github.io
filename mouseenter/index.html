@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>MouseEnter | morhirc</title>
+
+  <meta name="description"
+        content="MouseEnterは、マウスの右ボタン長押しでEnterキーを入力できるWindows向けの軽量マウス操作補助ツールです。">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        Meiryo,
+        sans-serif;
+      background: #f5f7fa;
+      color: #222;
+      line-height: 1.8;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 35px 20px;
+      text-align: center;
+    }
+
+    header .brand {
+      font-size: 13px;
+      color: #cbd5e1;
+      margin-bottom: 12px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 42px;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin: 12px 0 0;
+      color: #cbd5e1;
+      font-size: 17px;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 45px 20px 80px;
+    }
+
+    section {
+      margin-bottom: 45px;
+    }
+
+    h2 {
+      font-size: 25px;
+      border-bottom: 2px solid #d1d5db;
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+    }
+
+    h3 {
+      margin-top: 0;
+      font-size: 18px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back:hover {
+      text-decoration: underline;
+    }
+
+    .card {
+      background: white;
+      padding: 28px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .feature {
+      background: white;
+      padding: 22px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .feature p {
+      margin-bottom: 0;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 10px 18px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      color: white;
+      background: #111827;
+    }
+
+    .button.primary {
+      background: #2563eb;
+    }
+
+    .button:hover {
+      opacity: 0.9;
+    }
+
+    .steps {
+      background: white;
+      padding: 28px 28px 28px 48px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .steps li {
+      margin-bottom: 12px;
+    }
+
+    .spec {
+      background: white;
+      padding: 28px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .spec dl {
+      margin: 0;
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 10px 20px;
+    }
+
+    .spec dt {
+      font-weight: 600;
+    }
+
+    .spec dd {
+      margin: 0;
+    }
+
+    code {
+      background: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      header h1 {
+        font-size: 34px;
+      }
+
+      main {
+        padding-top: 35px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .spec dl {
+        grid-template-columns: 1fr;
+        gap: 3px;
+      }
+
+      .spec dd {
+        margin-bottom: 12px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="brand">morhirc | Free Software Developer</div>
+  <h1>MouseEnter</h1>
+  <p>右クリック長押しを、Enterキーに。</p>
+</header>
+
+<main>
+
+  <a class="back" href="/">← morhirc ホームへ戻る</a>
+
+  <section>
+    <h2>MouseEnterとは</h2>
+
+    <div class="card">
+      <p>
+        MouseEnterは、マウスの右ボタン長押しで
+        Enterキーを入力できるWindows向けの軽量マウス操作補助ツールです。
+      </p>
+
+      <p>
+        通常の右クリック操作はそのまま使用でき、
+        右ボタンを約0.7秒長押ししたときだけEnterとして動作します。
+        インストールは不要で、EXEを起動するだけで使用できます。
+      </p>
+
+      <div class="buttons">
+        <a class="button primary"
+           href="https://github.com/morhirc/MouseEnter/releases/latest"
+           target="_blank"
+           rel="noopener">
+          最新版をダウンロード
+        </a>
+
+        <a class="button"
+           href="https://github.com/morhirc/MouseEnter"
+           target="_blank"
+           rel="noopener">
+          GitHubで詳しく見る
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>主な機能</h2>
+
+    <div class="feature-grid">
+
+      <div class="feature">
+        <h3>右ボタン長押しでEnter</h3>
+        <p>
+          マウスの右ボタンを約0.7秒長押しすると、
+          Enterキーを入力します。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>通常の右クリックも使用可能</h3>
+        <p>
+          短くクリックした場合は、
+          通常の右クリックとして動作します。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>タスクトレイ常駐</h3>
+        <p>
+          起動後はタスクトレイに常駐し、
+          必要なときだけ動作します。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>一時停止に対応</h3>
+        <p>
+          タスクトレイからホットキーの一時停止や
+          終了ができます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>二重起動防止</h3>
+        <p>
+          MouseEnterを誤って複数起動することを
+          防止します。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>インストール不要</h3>
+        <p>
+          セットアップは不要です。
+          EXEファイルをそのまま起動できます。
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>使い方</h2>
+
+    <ol class="steps">
+      <li>
+        ダウンロードしたZIPファイルを展開します。
+      </li>
+      <li>
+        <code>MouseEnter.exe</code> を起動します。
+      </li>
+      <li>
+        マウスの右ボタンを短く押すと通常の右クリックとして動作します。
+      </li>
+      <li>
+        右ボタンを約0.7秒長押しするとEnterキーが入力されます。
+      </li>
+      <li>
+        一時停止や終了はタスクトレイから操作できます。
+      </li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>動作環境</h2>
+
+    <div class="spec">
+      <dl>
+        <dt>対応OS</dt>
+        <dd>Windows 11</dd>
+
+        <dt>インストール</dt>
+        <dd>不要</dd>
+
+        <dt>バージョン</dt>
+        <dd>v1.0</dd>
+
+        <dt>開発</dt>
+        <dd>AutoHotkey v2</dd>
+
+        <dt>配布形式</dt>
+        <dd>ZIP / EXE</dd>
+      </dl>
+    </div>
+  </section>
+
+  <section>
+    <h2>ダウンロード</h2>
+
+    <div class="card">
+      <p>
+        最新版はGitHub Releasesからダウンロードできます。
+        ZIPファイルを展開して、そのまま使用できます。
+      </p>
+
+      <div class="buttons">
+        <a class="button primary"
+           href="https://github.com/morhirc/MouseEnter/releases/latest"
+           target="_blank"
+           rel="noopener">
+          最新版をダウンロード
+        </a>
+
+        <a class="button"
+           href="https://github.com/morhirc/MouseEnter"
+           target="_blank"
+           rel="noopener">
+          GitHub Repository
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 morhirc
+</footer>
+
+<script>
+(() => {
+  const params = new URLSearchParams(location.search);
+
+  if (params.get("analytics") === "off") {
+    localStorage.setItem("morhirc_no_analytics", "1");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (params.get("analytics") === "on") {
+    localStorage.removeItem("morhirc_no_analytics");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (localStorage.getItem("morhirc_no_analytics") !== "1") {
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src =
+      "https://static.cloudflareinsights.com/beacon.min.js";
+    script.dataset.cfBeacon =
+      '{"token":"b8af35d7e6e7422a9b5bc77c2c36d2ff"}';
+
+    document.head.appendChild(script);
+  }
+})();
+</script>
+
+</body>
+</html>

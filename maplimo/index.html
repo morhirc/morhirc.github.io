@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Maplimo | Google Maps Timeline 可視化・振り返りツール | morhirc</title>
+
+  <meta name="description" content="Maplimoは、Androidなどから書き出したGoogle Maps Timelineのタイムライン.jsonをPCブラウザで読み込み、過去の訪問場所や移動記録を地図で振り返るための非公式ビューアです。地域検索、旅行一覧、ランキング、行った都市、お気に入り、思い出メモなどに対応します。">
+
+  <meta name="robots" content="index,follow">
+
+  <link rel="canonical" href="https://morhirc.github.io/maplimo/">
+
+  <meta property="og:title" content="Maplimo | Google Maps Timeline 可視化・振り返りツール">
+  <meta property="og:description" content="地図から、あの日をたどる。Google Maps Timelineの履歴をPCで振り返る非公式ビューアです。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://morhirc.github.io/maplimo/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "Maplimo",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Windows, macOS, Linux",
+    "softwareVersion": "1.0",
+    "description": "Google Maps TimelineのタイムラインJSONをPCブラウザで読み込み、訪問場所や移動記録を地図で振り返るための非公式ビューアです。",
+    "author": {
+      "@type": "Person",
+      "name": "morhirc",
+      "url": "https://morhirc.github.io/"
+    },
+    "url": "https://morhirc.github.io/maplimo/",
+    "downloadUrl": "https://github.com/morhirc/Maplimo/releases/latest"
+  }
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        Meiryo,
+        sans-serif;
+      background: #f5f7fa;
+      color: #222;
+      line-height: 1.7;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 45px 20px;
+      text-align: center;
+    }
+
+    .brand {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .brand:hover {
+      color: white;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 42px;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin: 12px 0 0;
+      color: #cbd5e1;
+      font-size: 18px;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 50px 20px 80px;
+    }
+
+    section {
+      margin-bottom: 55px;
+    }
+
+    h2 {
+      font-size: 25px;
+      border-bottom: 2px solid #d1d5db;
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+
+    .card {
+      background: white;
+      padding: 28px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .lead {
+      font-size: 18px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 11px 20px;
+      background: #111827;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .button:hover {
+      background: #374151;
+    }
+
+    .button.secondary {
+      background: #2563eb;
+    }
+
+    .button.secondary:hover {
+      background: #1d4ed8;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      background: white;
+      padding: 22px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .feature h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .feature p {
+      margin: 0;
+    }
+
+    .screenshot {
+      background: white;
+      padding: 18px;
+      margin-bottom: 24px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .screenshot img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 6px;
+    }
+
+    .screenshot p {
+      margin: 14px 5px 0;
+      color: #555;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .notice {
+      margin-top: 20px;
+      padding: 18px 20px;
+      background: #f9fafb;
+      border-left: 4px solid #111827;
+    }
+
+    ul,
+    ol {
+      padding-left: 24px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    code {
+      background: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .spec {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 10px 20px;
+    }
+
+    .spec strong {
+      color: #374151;
+    }
+
+    .back {
+      margin-bottom: 30px;
+    }
+
+    .back a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 40px 20px;
+      }
+
+      header h1 {
+        font-size: 34px;
+      }
+
+      main {
+        padding-top: 35px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .spec {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a class="brand" href="/">morhirc | Free Software Developer</a>
+  <h1>Maplimo</h1>
+  <p>地図から、あの日をたどる。</p>
+</header>
+
+<main>
+
+  <div class="back">
+    <a href="/">← morhirc ホームへ戻る</a>
+  </div>
+
+  <section>
+    <h2>Maplimoとは</h2>
+
+    <div class="card">
+      <p class="lead">
+        Maplimo（マプリモ）は、Androidなどから書き出した
+        Google Maps Timelineの <code>タイムライン.json</code> を
+        PCのブラウザで読み込み、過去の訪問場所や移動記録を
+        地図上で振り返るための非公式ビューアです。
+      </p>
+
+      <p>
+        「いつ、どこへ行ったか」を日付から見るだけでなく、
+        地域名や旅行、都市、思い出などから過去の行動記録をたどれます。
+      </p>
+
+      <div class="buttons">
+        <a class="button secondary"
+           href="https://github.com/morhirc/Maplimo/releases/latest"
+           target="_blank"
+           rel="noopener">
+          最新版をダウンロード
+        </a>
+
+        <a class="button"
+           href="https://github.com/morhirc/Maplimo"
+           target="_blank"
+           rel="noopener">
+          GitHubで詳しく見る
+        </a>
+      </div>
+
+      <div class="notice">
+        MaplimoはGoogle LLCとは関係のない、個人制作の非公式ツールです。
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>主な機能</h2>
+
+    <div class="feature-grid">
+
+      <div class="feature">
+        <h3>タイムラインJSONを読み込み</h3>
+        <p>
+          <code>タイムライン.json</code> を選択、またはドラッグ＆ドロップで読み込めます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>日付ごとの地図表示</h3>
+        <p>
+          訪問場所、移動、経路を日付ごとに地図上で確認できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>地域名から訪問日検索</h3>
+        <p>
+          「北海道」「札幌」などの地域名から、
+          その地域へ行った日を探せます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>あの日へワープ</h3>
+        <p>
+          ランダムな過去の日や「○年前の今日」へ移動して、
+          思い出を振り返れます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>旅行一覧・ランキング</h3>
+        <p>
+          旅行一覧、最長移動、よく訪れた場所などを確認できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>行った都市</h3>
+        <p>
+          訪問した都市を一覧・地図で確認し、
+          都市マーカーから訪問日へ移動できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>お気に入り・思い出メモ</h3>
+        <p>
+          気に入った日をお気に入り登録し、
+          日ごとの思い出メモを残せます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>Google Maps連携</h3>
+        <p>
+          表示中の地点をGoogle Mapsで開いて確認できます。
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>地域名から探す</h2>
+
+    <div class="card">
+      <p>
+        Maplimoでは、細かい場所名を覚えていなくても、
+        地域名から過去の訪問日を探せます。
+      </p>
+
+      <p>例えば検索欄に、</p>
+
+      <ul>
+        <li>北海道</li>
+        <li>札幌</li>
+        <li>長野</li>
+        <li>大阪</li>
+      </ul>
+
+      <p>
+        などと入力してEnterを押すと、
+        その地域に含まれる訪問記録の日付が一覧表示されます。
+      </p>
+
+      <p>
+        「北海道へ行ったのはいつだったか」程度しか覚えていない場合でも、
+        候補日から記録をたどれます。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>画面</h2>
+
+    <div class="screenshot">
+      <img src="./images/maplimo-main.png"
+           alt="Maplimo メイン画面"
+           loading="lazy">
+      <p>タイムラインを地図で振り返るメイン画面</p>
+    </div>
+
+    <div class="screenshot">
+      <img src="./images/maplimo-search.png"
+           alt="Maplimo 地域検索画面"
+           loading="lazy">
+      <p>地域名から訪問日を探す検索機能</p>
+    </div>
+
+    <div class="screenshot">
+      <img src="./images/maplimo-cities.png"
+           alt="Maplimo 行った都市画面"
+           loading="lazy">
+      <p>訪問した都市の一覧・都市マップ</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>使い方</h2>
+
+    <div class="card">
+      <ol>
+        <li><code>Maplimo_v1.0.html</code> をChrome / Braveなどのブラウザで開きます。</li>
+        <li>「タイムライン.json を選ぶ」を押します。</li>
+        <li>端末から書き出した <code>タイムライン.json</code> を選択します。</li>
+        <li>読み込み後、地図上で過去の記録を振り返ります。</li>
+      </ol>
+
+      <p>
+        JSONファイルはドラッグ＆ドロップでも読み込めます。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>タイムラインJSONを用意する</h2>
+
+    <div class="card">
+      <h3>Android</h3>
+
+      <ol>
+        <li>Androidの「設定」アプリを開きます。</li>
+        <li>「位置情報」→「位置情報サービス」→「タイムライン」を開きます。</li>
+        <li>「タイムライン データをエクスポート」を選びます。</li>
+        <li>保存場所を選び、JSONファイルを書き出します。</li>
+      </ol>
+
+      <h3>iPhone / iPad</h3>
+
+      <p>
+        Google マップのタイムライン画面から
+        「位置情報とプライバシーの設定」を開き、
+        「タイムライン データをエクスポート」を選びます。
+      </p>
+
+      <p>
+        端末・OS・アプリのバージョンによって、
+        表示名や手順が変わる場合があります。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>プライバシー</h2>
+
+    <div class="card">
+      <p>
+        読み込んだ <code>タイムライン.json</code> 本体は、
+        ブラウザ内で処理されます。
+      </p>
+
+      <p>
+        MaplimoがタイムラインJSON全体を
+        サーバーへアップロードすることはありません。
+      </p>
+
+      <p>ただし、以下の機能では外部サービスへ通信します。</p>
+
+      <ul>
+        <li>地図表示：OpenStreetMap</li>
+        <li>場所名・住所の取得：OpenStreetMap Nominatim</li>
+        <li>地域検索：OpenStreetMap Nominatim</li>
+        <li>Google Mapsで場所を見る：Google Maps</li>
+      </ul>
+
+      <p>
+        Nominatim利用時は検索語や緯度経度が送信されます。
+        取得した場所名・住所はブラウザの <code>localStorage</code> にキャッシュされます。
+      </p>
+
+      <p>
+        お気に入り・思い出メモも
+        ブラウザの <code>localStorage</code> に保存されます。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>サンプルデータ</h2>
+
+    <div class="card">
+      <p>
+        配布ZIPには <code>sample_timeline.json</code> が含まれています。
+      </p>
+
+      <p>
+        公開場所を使った架空のサンプルで、
+        実際の個人行動履歴は含まれていません。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>対応環境</h2>
+
+    <div class="card">
+      <div class="spec">
+        <strong>形式</strong>
+        <span>単一HTMLファイル</span>
+
+        <strong>ブラウザ</strong>
+        <span>Chrome / Brave / Edge などのChromium系ブラウザ</span>
+
+        <strong>対応データ</strong>
+        <span>semanticSegments を含む Timeline JSON</span>
+
+        <strong>バージョン</strong>
+        <span>Maplimo v1.0</span>
+
+        <strong>ライセンス</strong>
+        <span>MIT License</span>
+
+        <strong>作者</strong>
+        <span>morhirc</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>使用ライブラリ・外部サービス</h2>
+
+    <div class="card">
+      <ul>
+        <li>Leaflet 1.9.4</li>
+        <li>OpenStreetMap</li>
+        <li>Nominatim</li>
+      </ul>
+
+      <p>
+        地図データ © OpenStreetMap contributors
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>注意事項</h2>
+
+    <div class="card">
+      <ul>
+        <li>
+          MaplimoはGoogle、Google Maps、OpenStreetMap Foundationなどから
+          承認・提供されている公式製品ではありません。
+        </li>
+
+        <li>
+          Google側のタイムラインエクスポート形式が将来変更された場合、
+          読み込めなくなる可能性があります。
+        </li>
+
+        <li>
+          Maplimo本体は単一HTMLですが、
+          地図表示や場所名検索にはインターネット接続が必要です。
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Download / Source</h2>
+
+    <div class="card">
+      <p>
+        最新版、更新履歴、ソースコードは
+        GitHub上の公式リポジトリから確認できます。
+      </p>
+
+      <div class="buttons">
+        <a class="button secondary"
+           href="https://github.com/morhirc/Maplimo/releases/latest"
+           target="_blank"
+           rel="noopener">
+          最新版をダウンロード
+        </a>
+
+        <a class="button"
+           href="https://github.com/morhirc/Maplimo"
+           target="_blank"
+           rel="noopener">
+          GitHub Repository
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 morhirc
+</footer>
+
+<script>
+(() => {
+  const params = new URLSearchParams(location.search);
+
+  if (params.get("analytics") === "off") {
+    localStorage.setItem("morhirc_no_analytics", "1");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (params.get("analytics") === "on") {
+    localStorage.removeItem("morhirc_no_analytics");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (localStorage.getItem("morhirc_no_analytics") !== "1") {
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src = "https://static.cloudflareinsights.com/beacon.min.js";
+    script.dataset.cfBeacon =
+      '{"token":"b8af35d7e6e7422a9b5bc77c2c36d2ff"}';
+
+    document.head.appendChild(script);
+  }
+})();
+</script>
+
+</body>
+</html>

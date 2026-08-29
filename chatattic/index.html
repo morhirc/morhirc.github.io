@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>ChatAttic | ChatGPT会話保存・検索・閲覧ツール | morhirc</title>
+
+  <meta name="description" content="ChatAtticは、ChatGPTの会話を保存・検索・閲覧するためのChrome向け非公式ツールです。OpenAIエクスポートZIPを解凍せず読み込み、JSON・HTMLの閲覧、本文検索、日付範囲・発言者による絞り込みに対応します。">
+
+  <meta name="robots" content="index,follow">
+
+  <link rel="canonical" href="https://morhirc.github.io/chatattic/">
+
+  <meta property="og:title" content="ChatAttic | ChatGPT会話保存・検索・閲覧ツール">
+  <meta property="og:description" content="ChatGPTの会話を、保存して、探して、あとから読む。ZIP・JSON・HTML対応のChrome向け非公式ツールです。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://morhirc.github.io/chatattic/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "ChatAttic",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Chrome",
+    "softwareVersion": "1.0",
+    "description": "ChatGPTの会話を保存・検索・閲覧するためのChrome向け非公式ツールです。",
+    "author": {
+      "@type": "Person",
+      "name": "morhirc",
+      "url": "https://morhirc.github.io/"
+    },
+    "url": "https://morhirc.github.io/chatattic/",
+    "downloadUrl": "https://github.com/morhirc/ChatAttic/releases/latest"
+  }
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        Meiryo,
+        sans-serif;
+      background: #f5f7fa;
+      color: #222;
+      line-height: 1.7;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 45px 20px;
+      text-align: center;
+    }
+
+    .brand {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .brand:hover {
+      color: white;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 42px;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin: 12px 0 0;
+      color: #cbd5e1;
+      font-size: 18px;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 50px 20px 80px;
+    }
+
+    section {
+      margin-bottom: 55px;
+    }
+
+    h2 {
+      font-size: 25px;
+      border-bottom: 2px solid #d1d5db;
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+
+    .card {
+      background: white;
+      padding: 28px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .lead {
+      font-size: 18px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 11px 20px;
+      background: #111827;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .button:hover {
+      background: #374151;
+    }
+
+    .button.secondary {
+      background: #2563eb;
+    }
+
+    .button.secondary:hover {
+      background: #1d4ed8;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      background: white;
+      padding: 22px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .feature h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .feature p {
+      margin: 0;
+    }
+
+    .screenshot {
+      background: white;
+      padding: 18px;
+      margin-bottom: 24px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .screenshot img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 6px;
+    }
+
+    .screenshot p {
+      margin: 14px 5px 0;
+      color: #555;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    .notice {
+      margin-top: 20px;
+      padding: 18px 20px;
+      background: #f9fafb;
+      border-left: 4px solid #111827;
+    }
+
+    ul,
+    ol {
+      padding-left: 24px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    code {
+      background: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .spec {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 10px 20px;
+    }
+
+    .spec strong {
+      color: #374151;
+    }
+
+    .back {
+      margin-bottom: 30px;
+    }
+
+    .back a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 40px 20px;
+      }
+
+      header h1 {
+        font-size: 34px;
+      }
+
+      main {
+        padding-top: 35px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .spec {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <a class="brand" href="/">morhirc | Free Software Developer</a>
+  <h1>ChatAttic</h1>
+  <p>ChatGPTの会話を、保存して、探して、あとから読む。</p>
+</header>
+
+<main>
+
+  <div class="back">
+    <a href="/">← morhirc ホームへ戻る</a>
+  </div>
+
+  <section>
+    <h2>ChatAtticとは</h2>
+
+    <div class="card">
+      <p class="lead">
+        ChatAtticは、ChatGPTの会話を保存・検索・閲覧するために作った、
+        Chrome向けの非公式ツールです。
+      </p>
+
+      <p>
+        表示中のChatGPT会話を保存できるほか、
+        OpenAIからエクスポートした <strong>ZIP / JSON / HTML</strong> を
+        PC上で読み込んで閲覧できます。
+      </p>
+
+      <p>
+        OpenAIエクスポートZIPは解凍不要です。
+        複数の会話が含まれている場合は、
+        検索して読みたい会話を選択できます。
+      </p>
+
+      <div class="buttons">
+        <a class="button secondary"
+           href="https://github.com/morhirc/ChatAttic/releases/latest"
+           target="_blank"
+           rel="noopener">
+          最新版をダウンロード
+        </a>
+
+        <a class="button"
+           href="https://github.com/morhirc/ChatAttic"
+           target="_blank"
+           rel="noopener">
+          GitHubで詳しく見る
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>なぜ作ったか</h2>
+
+    <div class="card">
+      <p>
+        短い会話なら、ブラウザのPDF保存やHTML保存でも十分です。
+      </p>
+
+      <p>
+        ただ、長い会話では途中が空白になるなど、
+        うまく保存できないことがありました。
+      </p>
+
+      <p>
+        そこで、ChatGPTの会話を保存して、
+        あとから検索しながら読み返せるように
+        ChatAtticを作りました。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>主な機能</h2>
+
+    <div class="feature-grid">
+
+      <div class="feature">
+        <h3>表示中の会話を保存</h3>
+        <p>
+          ChatGPTで現在表示している会話を、
+          Chrome拡張から保存できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>OpenAI ZIPをそのまま閲覧</h3>
+        <p>
+          OpenAIエクスポートZIPを解凍せず、
+          そのまま読み込んで会話を閲覧できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>JSON / HTML対応</h3>
+        <p>
+          JSONやHTML形式の会話データも
+          ChatAtticで読み込んで閲覧できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>会話内検索</h3>
+        <p>
+          会話本文を文字検索し、
+          検索結果の前後へ移動できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>日付・発言者フィルター</h3>
+        <p>
+          開始日～終了日の範囲や、
+          「あなた」「ChatGPT」で表示を絞り込めます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>画像を含むデータの閲覧</h3>
+        <p>
+          画像を含む保存データも
+          ビューア上で確認できます。
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>画面</h2>
+
+    <div class="screenshot">
+      <img src="./images/01_home.png"
+           alt="ChatAttic ホーム画面"
+           loading="lazy">
+      <p>ファイルをドラッグ＆ドロップして読み込めるChatAtticホーム画面</p>
+    </div>
+
+    <div class="screenshot">
+      <img src="./images/02_import.png"
+           alt="ChatAttic OpenAIエクスポートZIP読み込み画面"
+           loading="lazy">
+      <p>OpenAIエクスポートZIPから会話を選択</p>
+    </div>
+
+    <div class="screenshot">
+      <img src="./images/03_viewer.png"
+           alt="ChatAttic ChatGPTビューア画面"
+           loading="lazy">
+      <p>本文検索・日付範囲・発言者フィルターに対応したChatGPTビューア</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>使い方</h2>
+
+    <div class="card">
+      <h3>インストール</h3>
+
+      <ol>
+        <li><code>ChatAttic_v1.0.zip</code> を任意の場所へ解凍します。</li>
+        <li>Chromeで「拡張機能を管理」を開きます。</li>
+        <li>右上の「デベロッパー モード」をオンにします。</li>
+        <li>「パッケージ化されていない拡張機能を読み込む」を押します。</li>
+        <li>解凍した <code>ChatAttic_v1.0</code> フォルダを選択します。</li>
+        <li>必要に応じてChatAtticをツールバーへピン留めします。</li>
+      </ol>
+
+      <p>
+        v1.0はChromeでの利用を基本としています。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>表示中の会話を保存</h2>
+
+    <div class="card">
+      <ol>
+        <li>ChatGPTで保存したい会話を開きます。</li>
+        <li>ChatAtticの拡張機能アイコンを押します。</li>
+        <li>「会話を保存」を実行します。</li>
+        <li>保存したデータをChatAtticで読み返します。</li>
+      </ol>
+    </div>
+  </section>
+
+  <section>
+    <h2>ZIP / JSON / HTMLを見る</h2>
+
+    <div class="card">
+      <p>
+        ChatAtticの入口画面を開き、
+        中央の読み込みエリアへファイルをドラッグ＆ドロップします。
+      </p>
+
+      <p>
+        OpenAIエクスポートZIPは解凍不要です。
+      </p>
+
+      <p>
+        ZIP内に複数の会話がある場合は、
+        読みたい会話を選んで「選択した会話を開く」を押します。
+        別タブの「ChatGPTビューア」で閲覧できます。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>ビューア</h2>
+
+    <div class="card">
+      <ul>
+        <li><strong>会話を検索：</strong>会話本文を検索します。</li>
+        <li><strong>‹ 1 / 4 ›：</strong>検索結果の前後へ移動します。</li>
+        <li><strong>日付：</strong>開始日～終了日で発言を絞り込みます。</li>
+        <li><strong>あなた / ChatGPT：</strong>発言者で表示を絞り込みます。</li>
+        <li><strong>解除：</strong>絞り込み条件を解除します。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>データと安全性</h2>
+
+    <div class="card">
+      <p>
+        OpenAIエクスポートZIP / JSON / HTMLの閲覧処理は
+        PC内で行います。
+      </p>
+
+      <p>
+        読み込んだHTMLについては、
+        <code>script</code> / <code>iframe</code> などの実行要素や、
+        外部HTTP/HTTPSリソースを遮断する対策を入れています。
+      </p>
+
+      <p>
+        巨大なZIPについても、
+        安全のため読み込みサイズに上限を設けています。
+      </p>
+
+      <div class="notice">
+        <strong>使用する権限</strong><br><br>
+        <code>scripting</code>：
+        ChatGPT画面で会話保存処理を実行するために使用します。<br><br>
+
+        <code>https://chatgpt.com/*</code>：
+        ChatGPT上で会話保存処理を動かすために使用します。
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>対応環境</h2>
+
+    <div class="card">
+      <div class="spec">
+        <strong>ブラウザ</strong>
+        <span>Google Chrome</span>
+
+        <strong>形式</strong>
+        <span>Chrome拡張</span>
+
+        <strong>バージョン</strong>
+        <span>ChatAttic v1.0</span>
+
+        <strong>作者</strong>
+        <span>morhirc</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>非公式ツールについて</h2>
+
+    <div class="card">
+      <p>
+        ChatAtticは個人制作の非公式ツールです。
+      </p>
+
+      <p>
+        OpenAIによる公式・公認・提携製品ではありません。
+        ChatGPTおよびOpenAIの名称は、
+        それぞれの権利者に帰属します。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Download / Source</h2>
+
+    <div class="card">
+      <p>
+        最新版、更新履歴、ソースコードは
+        GitHub上の公式リポジトリから確認できます。
+      </p>
+
+      <div class="buttons">
+        <a class="button secondary"
+           href="https://github.com/morhirc/ChatAttic/releases/latest"
+           target="_blank"
+           rel="noopener">
+          最新版をダウンロード
+        </a>
+
+        <a class="button"
+           href="https://github.com/morhirc/ChatAttic"
+           target="_blank"
+           rel="noopener">
+          GitHub Repository
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  © 2026 morhirc
+</footer>
+
+<script>
+(() => {
+  const params = new URLSearchParams(location.search);
+
+  if (params.get("analytics") === "off") {
+    localStorage.setItem("morhirc_no_analytics", "1");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (params.get("analytics") === "on") {
+    localStorage.removeItem("morhirc_no_analytics");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (localStorage.getItem("morhirc_no_analytics") !== "1") {
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src = "https://static.cloudflareinsights.com/beacon.min.js";
+    script.dataset.cfBeacon =
+      '{"token":"b8af35d7e6e7422a9b5bc77c2c36d2ff"}';
+
+    document.head.appendChild(script);
+  }
+})();
+</script>
+
+</body>
+</html>

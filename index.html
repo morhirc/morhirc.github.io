@@ -323,6 +323,25 @@
   © 2026 morhirc
 </footer>
 <script>
+  function toggleContact() {
+  const info = document.getElementById("contact-info");
+  info.hidden = !info.hidden;
+
+  if (info.hidden) {
+    document.getElementById("copy-result").textContent = "";
+  }
+}
+
+function copyEmail() {
+  const email = document.getElementById("contact-email").textContent;
+
+  navigator.clipboard.writeText(email).then(() => {
+    document.getElementById("copy-result").textContent = "コピーしました";
+  }).catch(() => {
+    document.getElementById("copy-result").textContent =
+      "コピーできませんでした";
+  });
+}
 (() => {
   const params = new URLSearchParams(location.search);
 

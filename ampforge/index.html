@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>AmpForge | オープンソース ギターアンプ・エフェクトプラグイン | morhirc</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+
+  <meta name="description"
+        content="AmpForgeは、Windows・Linux・macOSに対応した無料・オープンソースのギターアンプシミュレータです。VST3、LV2、CLAPに対応し、NAM、アンプ、キャビネット、ディレイ、リバーブ、Autotuneなど多数のモジュールを搭載しています。">
+
+  <meta name="robots" content="index,follow">
+
+  <link rel="canonical"
+        href="https://morhirc.github.io/ampforge/">
+
+  <meta property="og:title"
+        content="AmpForge | オープンソース ギターアンプ・エフェクトプラグイン">
+
+  <meta property="og:description"
+        content="19種類のモジュール、NAM、アンプ、キャビネット、エフェクト、ボーカル処理まで搭載した無料のオープンソースプラグインです。">
+
+  <meta property="og:type" content="website">
+
+  <meta property="og:url"
+        content="https://morhirc.github.io/ampforge/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "AmpForge",
+    "applicationCategory": "MultimediaApplication",
+    "operatingSystem": "Windows, Linux, macOS",
+    "description": "無料・オープンソースのギターアンプシミュレータ・エフェクトプラグインです。",
+    "url": "https://morhirc.github.io/ampforge/",
+    "license": "https://www.gnu.org/licenses/gpl-3.0.html"
+  }
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        Meiryo,
+        sans-serif;
+      background: #f5f7fa;
+      color: #222;
+      line-height: 1.7;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 27px 20px;
+      text-align: center;
+    }
+
+    .brand {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .brand:hover {
+      color: white;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 42px;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin: 12px 0 0;
+      color: #cbd5e1;
+      font-size: 18px;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 50px 20px 80px;
+    }
+
+    section {
+      margin-bottom: 55px;
+    }
+
+    h2 {
+      font-size: 25px;
+      border-bottom: 2px solid #d1d5db;
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+
+    .card {
+      background: white;
+      padding: 28px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .lead {
+      font-size: 18px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 11px 20px;
+      background: #111827;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .button:hover {
+      background: #374151;
+    }
+
+    .button.secondary {
+      background: #2563eb;
+    }
+
+    .button.secondary:hover {
+      background: #1d4ed8;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      background: white;
+      padding: 22px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .feature h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .feature p {
+      margin: 0;
+    }
+
+    .spec {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 10px 20px;
+    }
+
+    .spec strong {
+      color: #374151;
+    }
+
+    .back {
+      margin-bottom: 30px;
+    }
+
+    .back a,
+    .text-link {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back a:hover,
+    .text-link:hover {
+      text-decoration: underline;
+    }
+
+    ul {
+      padding-left: 24px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .notice {
+      border-left: 4px solid #d1d5db;
+      padding-left: 18px;
+      color: #4b5563;
+    }
+
+    .back-top {
+      text-align: right;
+      margin-top: 50px;
+    }
+
+    .back-top a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 40px 20px;
+      }
+
+      header h1 {
+        font-size: 34px;
+      }
+
+      main {
+        padding-top: 35px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .spec {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+    }
+  </style>
+</head>
+
+<body id="top">
+
+<header>
+  <a class="brand" href="/">
+    morhirc | Free Software Developer
+  </a>
+
+  <h1>AmpForge</h1>
+
+  <p>アンプも、ペダルも、ひとつのプラグインに。</p>
+</header>
+
+<main>
+
+  <div class="back">
+    <a href="/">← morhirc ホームへ戻る</a>
+  </div>
+
+
+  <section>
+    <h2>AmpForgeとは</h2>
+
+    <div class="card">
+
+      <p class="lead">
+        AmpForgeは、
+        Windows・Linux・macOSに対応した
+        無料・オープンソースの
+        ギターアンプシミュレータ・エフェクトプラグインです。
+      </p>
+
+      <p>
+        複数のプラグインを別々に組み合わせるのではなく、
+        ひとつのプラグイン内部に
+        ペダルボード、アンプ、キャビネット、各種エフェクトをまとめています。
+      </p>
+
+      <p>
+        VST3、LV2、CLAPに対応し、
+        環境によってはStandaloneアプリとしても利用できます。
+      </p>
+
+      <div class="buttons">
+
+        <a class="button secondary"
+           href="https://github.com/Loursy/AmpForge/releases/latest"
+           target="_blank"
+           rel="noopener">
+          最新版をダウンロード
+        </a>
+
+        <a class="button"
+           href="https://github.com/Loursy/AmpForge"
+           target="_blank"
+           rel="noopener">
+          GitHub Repository
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <section>
+    <h2>主な特徴</h2>
+
+    <div class="feature-grid">
+
+      <div class="feature">
+        <h3>19種類の内部モジュール</h3>
+        <p>
+          Noise Gate、Compressor、Wah、Amp、
+          Cabinet、Delay、Reverbなどを自由に並べ替えられます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>NAM対応</h3>
+        <p>
+          Neural Amp Modelerの
+          .namキャプチャファイルを読み込んで利用できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>4種類のAmp Type</h3>
+        <p>
+          Modern、Vintage、Crunch、Hi-Gainの
+          4種類のアンプ特性を選択できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>ドラッグ＆ドロップ</h3>
+        <p>
+          ペダルを追加し、
+          ドラッグ操作で自由に並べ替えられる
+          ペダルボードUIを備えています。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>ボーカルエフェクト</h3>
+        <p>
+          AutotuneやDe-esserを搭載し、
+          ギター以外のボーカル処理にも利用できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>プリセット</h3>
+        <p>
+          Factory Presetに加え、
+          カスタムプリセットの保存・更新・
+          Import / Exportにも対応しています。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>A/B比較</h3>
+        <p>
+          現在の設定をA/Bスロットへ保存し、
+          音作りを比較できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>チューナー内蔵</h3>
+        <p>
+          入力信号を直接解析する
+          内蔵チューナーを利用できます。
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section>
+    <h2>主なエフェクト</h2>
+
+    <div class="card">
+
+      <ul>
+        <li>Noise Gate</li>
+        <li>Compressor</li>
+        <li>Wah</li>
+        <li>Screamer</li>
+        <li>Distortion</li>
+        <li>Amp</li>
+        <li>Cabinet</li>
+        <li>NAM</li>
+        <li>Chorus</li>
+        <li>Phaser</li>
+        <li>Tremolo</li>
+        <li>Delay</li>
+        <li>Reverb</li>
+        <li>EQ</li>
+        <li>Autotune</li>
+        <li>De-esser</li>
+        <li>Doubler</li>
+        <li>Harmonizer</li>
+        <li>Exciter</li>
+      </ul>
+
+    </div>
+  </section>
+
+
+  <section>
+    <h2>対応形式</h2>
+
+    <div class="card">
+
+      <div class="spec">
+
+        <strong>Windows</strong>
+        <span>VST3 / CLAP / LV2</span>
+
+        <strong>Linux</strong>
+        <span>VST3 / CLAP / LV2 / Standalone</span>
+
+        <strong>macOS</strong>
+        <span>VST3 / CLAP / LV2 / Standalone</span>
+
+        <strong>用途</strong>
+        <span>ギターアンプ / エフェクト / ボーカル処理</span>
+
+        <strong>NAM</strong>
+        <span>対応</span>
+
+        <strong>ライセンス</strong>
+        <span>GPL-3.0-or-later</span>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <section>
+    <h2>Windows版</h2>
+
+    <div class="card">
+
+      <p>
+        Windows向けには、
+        GitHub Releasesから
+        <strong>AmpForge-Setup.exe</strong>
+        が配布されています。
+      </p>
+
+      <p>
+        Windows版インストーラーでは、
+        VST3、CLAP、LV2形式をインストールできます。
+      </p>
+
+      <p class="notice">
+        現時点ではWindows向けStandalone版は提供されていません。
+        WindowsではDAW内部のVST3 / CLAP / LV2として利用します。
+      </p>
+
+    </div>
+  </section>
+
+
+  <section>
+    <h2>NAM / Cabinet IR</h2>
+
+    <div class="card">
+
+      <p>
+        AmpForgeでは、
+        Neural Amp Modelerの
+        <strong>.nam</strong> ファイルを読み込めます。
+      </p>
+
+      <p>
+        また、Cabinetモジュールでは
+        スピーカーキャビネットのImpulse Responseを
+        WAVファイルとして読み込めます。
+      </p>
+
+      <p>
+        NAMモデルやCabinet IRはAmpForge本体には含まれていないため、
+        利用者自身で用意します。
+      </p>
+
+    </div>
+  </section>
+
+
+  <section>
+    <h2>ライセンス・クレジット</h2>
+
+    <div class="card">
+
+      <p>
+        AmpForgeは
+        <strong>GPL-3.0-or-later</strong>
+        ライセンスで公開されています。
+      </p>
+
+      <p>
+        Original project:
+        <a class="text-link"
+           href="https://github.com/Loursy/AmpForge"
+           target="_blank"
+           rel="noopener">
+          AmpForge
+        </a>
+      </p>
+
+      <p>
+        License:
+        <a class="text-link"
+           href="https://www.gnu.org/licenses/gpl-3.0.html"
+           target="_blank"
+           rel="noopener">
+          GNU General Public License v3
+        </a>
+      </p>
+
+    </div>
+  </section>
+
+
+  <section>
+    <h2>Download / Source</h2>
+
+    <div class="card">
+
+      <p>
+        最新版、Windowsインストーラー、
+        ソースコード、更新履歴は
+        GitHub上の公式リポジトリから確認できます。
+      </p>
+
+      <div class="buttons">
+
+        <a class="button secondary"
+           href="https://github.com/Loursy/AmpForge/releases/latest"
+           target="_blank"
+           rel="noopener">
+          最新版をダウンロード
+        </a>
+
+        <a class="button"
+           href="https://github.com/Loursy/AmpForge"
+           target="_blank"
+           rel="noopener">
+          GitHub Repository
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <p class="back-top">
+    <a href="#top">Topへ戻る↑</a>
+  </p>
+
+</main>
+
+
+<footer>
+  © 2026 morhirc
+</footer>
+
+
+<script>
+(() => {
+  const params = new URLSearchParams(location.search);
+
+  if (params.get("analytics") === "off") {
+    localStorage.setItem("morhirc_no_analytics", "1");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (params.get("analytics") === "on") {
+    localStorage.removeItem("morhirc_no_analytics");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (localStorage.getItem("morhirc_no_analytics") !== "1") {
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src =
+      "https://static.cloudflareinsights.com/beacon.min.js";
+
+    script.dataset.cfBeacon =
+      '{"token":"b8af35d7e6e7422a9b5bc77c2c36d2ff"}';
+
+    document.head.appendChild(script);
+  }
+})();
+</script>
+
+</body>
+</html>

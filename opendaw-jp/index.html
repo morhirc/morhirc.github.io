@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>OpenDaw-JP | openDAW 日本語対応版 | morhirc</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+
+  <meta name="description"
+        content="OpenDaw-JPは、WebベースのDAW openDAWを日本語で利用しやすくするための日本語対応版です。音楽制作環境をより分かりやすく利用できるよう日本語化しています。">
+
+  <meta name="robots" content="index,follow">
+
+  <link rel="canonical"
+        href="https://morhirc.github.io/opendaw-jp/">
+
+  <meta property="og:title"
+        content="OpenDaw-JP | openDAW 日本語対応版">
+
+  <meta property="og:description"
+        content="WebベースDAW openDAWを、日本語で利用しやすくするための日本語対応版です。">
+
+  <meta property="og:type" content="website">
+
+  <meta property="og:url"
+        content="https://morhirc.github.io/opendaw-jp/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "OpenDaw-JP",
+    "applicationCategory": "MultimediaApplication",
+    "softwareVersion": "0.1.25",
+    "description": "WebベースDAW openDAWを日本語で利用しやすくするための日本語対応版です。",
+    "author": {
+      "@type": "Person",
+      "name": "morhirc",
+      "url": "https://morhirc.github.io/"
+    },
+    "url": "https://morhirc.github.io/opendaw-jp/",
+    "license": "https://www.gnu.org/licenses/agpl-3.0.html"
+  }
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        Meiryo,
+        sans-serif;
+      background: #f5f7fa;
+      color: #222;
+      line-height: 1.7;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 27px 20px;
+      text-align: center;
+    }
+
+    .brand {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .brand:hover {
+      color: white;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 42px;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin: 12px 0 0;
+      color: #cbd5e1;
+      font-size: 18px;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 50px 20px 80px;
+    }
+
+    section {
+      margin-bottom: 55px;
+    }
+
+    h2 {
+      font-size: 25px;
+      border-bottom: 2px solid #d1d5db;
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+
+    .card {
+      background: white;
+      padding: 28px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .lead {
+      font-size: 18px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 11px 20px;
+      background: #111827;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .button:hover {
+      background: #374151;
+    }
+
+    .button.secondary {
+      background: #2563eb;
+    }
+
+    .button.secondary:hover {
+      background: #1d4ed8;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      background: white;
+      padding: 22px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .feature h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .feature p {
+      margin: 0;
+    }
+
+    .spec {
+      display: grid;
+      grid-template-columns: 170px 1fr;
+      gap: 10px 20px;
+    }
+
+    .spec strong {
+      color: #374151;
+    }
+
+    .back {
+      margin-bottom: 30px;
+    }
+
+    .back a,
+    .text-link {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back a:hover,
+    .text-link:hover {
+      text-decoration: underline;
+    }
+
+    code {
+      background: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    ul,
+    ol {
+      padding-left: 24px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .notice {
+      border-left: 4px solid #d1d5db;
+      padding-left: 18px;
+      color: #4b5563;
+    }
+
+    .back-top {
+      text-align: right;
+      margin-top: 50px;
+    }
+
+    .back-top a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 40px 20px;
+      }
+
+      header h1 {
+        font-size: 34px;
+      }
+
+      main {
+        padding-top: 35px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .spec {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+    }
+  </style>
+</head>
+
+<body id="top">
+
+<header>
+  <a class="brand" href="/">
+    morhirc | Free Software Developer
+  </a>
+
+  <h1>OpenDaw-JP</h1>
+
+  <p>openDAWを、日本語でもっと身近に。</p>
+</header>
+
+
+<main>
+
+  <div class="back">
+    <a href="/">← morhirc ホームへ戻る</a>
+  </div>
+
+
+  <section>
+    <h2>OpenDaw-JPとは</h2>
+
+    <div class="card">
+
+      <p class="lead">
+        OpenDaw-JPは、
+        WebベースのDigital Audio Workstation
+        <strong>openDAW</strong> を、
+        日本語で利用しやすくするための日本語対応版です。
+      </p>
+
+      <p>
+        openDAWの操作画面や表示内容を日本語化し、
+        英語環境に慣れていないユーザーでも
+        音楽制作を始めやすい環境を目指しています。
+      </p>
+
+      <p>
+        ベースとなるopenDAWは、
+        ブラウザ上で動作するオープンソースのDAWです。
+      </p>
+
+      <div class="buttons">
+
+        <!-- 実際のダウンロードURLに変更 -->
+        <a class="button secondary"
+           href="#"
+           target="_blank"
+           rel="noopener">
+          OpenDaw-JPをダウンロード
+        </a>
+
+        <!-- 実際のOpenDaw-JPリポジトリURLに変更 -->
+        <a class="button"
+           href="#"
+           target="_blank"
+           rel="noopener">
+          GitHub Repository
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <section>
+    <h2>主な特徴</h2>
+
+    <div class="feature-grid">
+
+      <div class="feature">
+        <h3>日本語対応</h3>
+        <p>
+          openDAWの画面や各種表示を
+          日本語で利用しやすいよう調整しています。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>WebベースDAW</h3>
+        <p>
+          openDAWはWeb技術を利用して構築された
+          Digital Audio Workstationです。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>音楽制作機能</h3>
+        <p>
+          オーディオやMIDIを扱い、
+          楽曲制作を行うための環境を提供します。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>豊富なデバイス</h3>
+        <p>
+          シンセサイザー、サンプラー、
+          リバーブ、ディレイなど
+          多数のデバイスを利用できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>オープンソース</h3>
+        <p>
+          openDAWはAGPL v3以降の
+          ライセンスでソースコードが公開されています。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>プライバシー重視</h3>
+        <p>
+          openDAWはサインアップや広告、
+          ユーザープロファイリングなどを行わない方針を掲げています。
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+
+  <section>
+    <h2>openDAWについて</h2>
+
+    <div class="card">
+
+      <p>
+        openDAWは、
+        André Michelle氏を中心に開発されている
+        オープンソースのDigital Audio Workstationです。
+      </p>
+
+      <p>
+        高品質な音楽制作ツールを
+        より多くの人が利用できるようにすることを目標とし、
+        教育やデータプライバシーにも重点を置いています。
+      </p>
+
+      <p>
+        本家openDAWの詳細については、
+        公式サイトおよび公式GitHubリポジトリをご確認ください。
+      </p>
+
+      <div class="buttons">
+
+        <a class="button"
+           href="https://opendaw.org/"
+           target="_blank"
+           rel="noopener">
+          openDAW Official
+        </a>
+
+        <a class="button"
+           href="https://github.com/andremichelle/opendaw"
+           target="_blank"
+           rel="noopener">
+          Original GitHub
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <section>
+    <h2>主な内蔵デバイス</h2>
+
+    <div class="card">
+
+      <p>
+        openDAWには、多数の音楽制作デバイスが用意されています。
+      </p>
+
+      <ul>
+        <li>Autotune</li>
+        <li>Arpeggio</li>
+        <li>Convolver</li>
+        <li>Delay</li>
+        <li>Dattorro Reverb</li>
+        <li>Maximizer</li>
+        <li>Nano Sampler</li>
+        <li>Neon Synthesizer</li>
+        <li>Playfield</li>
+        <li>Revamp Equalizer</li>
+        <li>Soundfont Player</li>
+        <li>Tone3000</li>
+        <li>Vocoder</li>
+        <li>Waveshaper</li>
+      </ul>
+
+      <p>
+        上記は本家openDAWに含まれるデバイスの一部です。
+      </p>
+
+    </div>
+  </section>
+
+
+  <section>
+    <h2>バージョン情報</h2>
+
+    <div class="card">
+
+      <div class="spec">
+
+        <strong>名称</strong>
+        <span>OpenDaw-JP</span>
+
+        <strong>バージョン</strong>
+        <span>0.1.25</span>
+
+        <strong>ベース</strong>
+        <span>openDAW</span>
+
+        <strong>種類</strong>
+        <span>Digital Audio Workstation / 日本語対応版</span>
+
+        <strong>日本語版制作</strong>
+        <span>morhirc</span>
+
+        <strong>ライセンス</strong>
+        <span>AGPL v3 or later</span>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <section>
+    <h2>ライセンス・クレジット</h2>
+
+    <div class="card">
+
+      <p>
+        OpenDaw-JPは、
+        オープンソースプロジェクト
+        <strong>openDAW</strong> をベースにしています。
+      </p>
+
+      <p>
+        openDAWは
+        <strong>AGPL v3 or later</strong>
+        の条件で公開されています。
+      </p>
+
+      <p>
+        Original project:
+        <a class="text-link"
+           href="https://github.com/andremichelle/opendaw"
+           target="_blank"
+           rel="noopener">
+          openDAW by André Michelle
+        </a>
+      </p>
+
+      <p>
+        License:
+        <a class="text-link"
+           href="https://www.gnu.org/licenses/agpl-3.0.html"
+           target="_blank"
+           rel="noopener">
+          GNU Affero General Public License v3
+        </a>
+      </p>
+
+      <p class="notice">
+        OpenDaw-JPは日本語対応を目的とした派生版です。
+        openDAW本体に関する情報や最新の開発状況については、
+        本家openDAWをご確認ください。
+      </p>
+
+    </div>
+  </section>
+
+
+  <section>
+    <h2>Download / Source</h2>
+
+    <div class="card">
+
+      <p>
+        OpenDaw-JPの配布ファイル、更新履歴、
+        ソースコードについてはGitHubから確認できます。
+      </p>
+
+      <div class="buttons">
+
+        <!-- 実際のダウンロードURLに変更 -->
+        <a class="button secondary"
+           href="#"
+           target="_blank"
+           rel="noopener">
+          OpenDaw-JPをダウンロード
+        </a>
+
+        <!-- 実際のリポジトリURLに変更 -->
+        <a class="button"
+           href="#"
+           target="_blank"
+           rel="noopener">
+          GitHub Repository
+        </a>
+
+      </div>
+
+    </div>
+  </section>
+
+
+  <p class="back-top">
+    <a href="#top">Topへ戻る↑</a>
+  </p>
+
+</main>
+
+
+<footer>
+  © 2026 morhirc
+</footer>
+
+
+<script>
+(() => {
+  const params = new URLSearchParams(location.search);
+
+  if (params.get("analytics") === "off") {
+    localStorage.setItem("morhirc_no_analytics", "1");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (params.get("analytics") === "on") {
+    localStorage.removeItem("morhirc_no_analytics");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (localStorage.getItem("morhirc_no_analytics") !== "1") {
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src =
+      "https://static.cloudflareinsights.com/beacon.min.js";
+
+    script.dataset.cfBeacon =
+      '{"token":"b8af35d7e6e7422a9b5bc77c2c36d2ff"}';
+
+    document.head.appendChild(script);
+  }
+})();
+</script>
+
+</body>
+</html>

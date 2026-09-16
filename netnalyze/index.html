@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>NetNalyze | Windows ネットワーク診断・解析ツール | morhirc</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+
+  <meta name="description" content="NetNalyzeは、Windowsのネットワーク状態を総合的に診断し、NIC・IP・Wi-Fi・LAN・インターネット・DNS・ルーティング・SMB/NASなどの障害切り分けを支援する無料ネットワーク診断・解析ツールです。">
+
+  <meta name="robots" content="index,follow">
+
+  <link rel="canonical" href="https://morhirc.github.io/netnalyze/">
+
+  <meta property="og:title" content="NetNalyze | Windows ネットワーク診断・解析ツール">
+  <meta property="og:description" content="Windowsのネットワーク状態を総合診断。NIC・Wi-Fi・LAN・Internet・DNS・ルーティングなどの障害切り分けを支援します。">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://morhirc.github.io/netnalyze/">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "NetNalyze",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "Windows 11 64-bit",
+    "softwareVersion": "1.0.0",
+    "description": "Windowsのネットワーク状態を総合的に診断し、ネットワーク障害の切り分けを支援するWindows用ネットワーク診断・解析ツールです。",
+    "author": {
+      "@type": "Person",
+      "name": "morhirc",
+      "url": "https://morhirc.github.io/"
+    },
+    "url": "https://morhirc.github.io/netnalyze/",
+    "downloadUrl": "https://github.com/morhirc/NetNalyze/releases/latest"
+  }
+  </script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        Meiryo,
+        sans-serif;
+      background: #f5f7fa;
+      color: #222;
+      line-height: 1.7;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 27px 20px;
+      text-align: center;
+    }
+
+    .brand {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #cbd5e1;
+      text-decoration: none;
+      font-size: 15px;
+    }
+
+    .brand:hover {
+      color: white;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 42px;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin: 12px 0 0;
+      color: #cbd5e1;
+      font-size: 18px;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 50px 20px 80px;
+    }
+
+    section {
+      margin-bottom: 55px;
+    }
+
+    h2 {
+      font-size: 25px;
+      border-bottom: 2px solid #d1d5db;
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+    }
+
+    h3 {
+      margin-top: 0;
+    }
+
+    .card {
+      background: white;
+      padding: 28px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .lead {
+      font-size: 18px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .button {
+      display: inline-block;
+      padding: 11px 20px;
+      background: #111827;
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+
+    .button:hover {
+      background: #374151;
+    }
+
+    .button.secondary {
+      background: #2563eb;
+    }
+
+    .button.secondary:hover {
+      background: #1d4ed8;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 18px;
+    }
+
+    .feature {
+      background: white;
+      padding: 22px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .feature h3 {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    .feature p {
+      margin: 0;
+    }
+
+    .screenshot {
+      background: white;
+      padding: 18px;
+      margin-bottom: 24px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .screenshot img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 6px;
+    }
+
+    .screenshot p {
+      margin: 14px 5px 0;
+      color: #555;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    ul,
+    ol {
+      padding-left: 24px;
+    }
+
+    li {
+      margin-bottom: 8px;
+    }
+
+    .spec {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 10px 20px;
+    }
+
+    .spec strong {
+      color: #374151;
+    }
+
+    .back {
+      margin-bottom: 30px;
+    }
+
+    .back a {
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back a:hover {
+      text-decoration: underline;
+    }
+
+    .back-top {
+      margin: 60px 0 40px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .back-top a {
+      color: #b34fc0;
+      text-decoration: none;
+    }
+
+    .back-top a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      header {
+        padding: 40px 20px;
+      }
+
+      header h1 {
+        font-size: 34px;
+      }
+
+      main {
+        padding-top: 35px;
+      }
+
+      .feature-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .spec {
+        grid-template-columns: 1fr;
+        gap: 2px;
+      }
+    }
+  </style>
+</head>
+
+<body id="top">
+
+<header>
+  <a class="brand" href="/">morhirc | Free Software Developer</a>
+  <h1>NetNalyze</h1>
+  <p>Network Diagnostic Analyzer for Windows</p>
+</header>
+
+<main>
+
+  <div class="back">
+    <a href="/">← morhirc ホームへ戻る</a>
+  </div>
+
+  <section>
+    <h2>NetNalyzeとは</h2>
+
+    <div class="card">
+      <p class="lead">
+        NetNalyzeは、Windowsのネットワーク状態を総合的に診断し、
+        ネットワーク障害の切り分けを支援する診断・解析ツールです。
+      </p>
+
+      <p>
+        NIC、IP、Wi-Fi、LAN、インターネット、DNS、ルーティングなどを順番に確認し、
+        現在の接続状態や診断結果を分かりやすく表示します。
+      </p>
+
+      <p>
+        インストール不要の自己完結型EXEで、
+        .NET Runtimeを事前にインストールする必要はありません。
+      </p>
+
+      <div class="buttons">
+        <a class="button secondary"
+           href="https://github.com/morhirc/NetNalyze/releases/latest"
+           target="_blank"
+           rel="noopener">
+          最新版をダウンロード
+        </a>
+
+        <a class="button"
+           href="https://github.com/morhirc/NetNalyze"
+           target="_blank"
+           rel="noopener">
+          GitHub Repository
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>主な機能</h2>
+
+    <div class="feature-grid">
+
+      <div class="feature">
+        <h3>ネットワーク総合診断</h3>
+        <p>
+          PCからNIC・Gateway・Internet・DNSまで、
+          ネットワーク全体の状態を順番に確認します。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>NIC / IP・Wi-Fi診断</h3>
+        <p>
+          IPアドレス、Gateway、DNS、リンク速度、
+          Wi-FiのSSID・信号強度・チャンネルなどを確認します。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>LAN（ローカル）診断</h3>
+        <p>
+          Gatewayへの到達状態やARPキャッシュ、
+          LAN内機器・SMB応答などを確認します。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>Internet / DNS診断</h3>
+        <p>
+          IPv4・IPv6の外部疎通、HTTPS通信、
+          DNS名前解決やDNSキャッシュを確認します。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>経路・ポート・SMB診断</h3>
+        <p>
+          ルーティング情報、指定TCPポートの通信、
+          SMB/NASへの接続状態を確認できます。
+        </p>
+      </div>
+
+      <div class="feature">
+        <h3>詳細解析・コマンド集</h3>
+        <p>
+          NIC統計やログ・生データに加え、
+          障害調査で使用するWindowsコマンドを確認・コピーできます。
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2>画面</h2>
+
+    <div class="screenshot">
+      <img src="./images/main.png"
+           alt="NetNalyze 総合診断画面"
+           loading="lazy">
+      <p>ネットワーク全体を総合診断</p>
+    </div>
+
+    <div class="screenshot">
+      <img src="./images/lan.png"
+           alt="NetNalyze LANローカル診断画面"
+           loading="lazy">
+      <p>LAN内の機器・通信状態を確認</p>
+    </div>
+
+    <div class="screenshot">
+      <img src="./images/commands.png"
+           alt="NetNalyze コマンド集画面"
+           loading="lazy">
+      <p>ネットワーク診断コマンドを一覧表示</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>対応環境</h2>
+
+    <div class="card">
+      <div class="spec">
+        <strong>対応OS</strong>
+        <span>Windows 11</span>
+
+        <strong>アーキテクチャ</strong>
+        <span>64bit（x64）</span>
+
+        <strong>バージョン</strong>
+        <span>NetNalyze v1.0.0</span>
+
+        <strong>インストール</strong>
+        <span>不要</span>
+
+        <strong>.NET Runtime</strong>
+        <span>事前インストール不要</span>
+
+        <strong>作者</strong>
+        <span>morhirc</span>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>使い方</h2>
+
+    <div class="card">
+      <ol>
+        <li>GitHub Releasesから最新版のZIPファイルをダウンロードします。</li>
+        <li>ZIPファイルを任意の場所へ展開します。</li>
+        <li><strong>NetNalyze.exe</strong> をダブルクリックして起動します。</li>
+        <li><strong>「総合診断を開始」</strong>をクリックします。</li>
+        <li>左側の診断メニューから各項目の詳細を確認します。</li>
+      </ol>
+
+      <p>
+        起動直後は現在のローカルネットワーク構成のみを取得し、
+        総合診断開始後に各種通信診断を実行します。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Wi-Fi情報について</h2>
+
+    <div class="card">
+      <p>
+        Windowsのプライバシー設定（位置情報）が無効の場合、
+        SSID、BSSID、信号強度、チャンネルなどの
+        Wi-Fi詳細情報を取得できない場合があります。
+      </p>
+
+      <p>
+        その場合は、
+        <strong>「設定」→「プライバシーとセキュリティ」→「位置情報」</strong>
+        を確認してください。
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>注意事項</h2>
+
+    <div class="card">
+      <ul>
+        <li>
+          NetNalyzeはネットワーク状態の診断・確認を目的としたツールです。
+          ネットワーク設定を自動的に変更するツールではありません。
+        </li>
+
+        <li>
+          コマンド集には状態を変更するコマンドも掲載されていますが、
+          NetNalyze自身がそれらを自動実行することはありません。
+        </li>
+
+        <li>
+          診断結果はネットワーク障害の原因を完全に保証・特定するものではありません。
+        </li>
+
+        <li>
+          Windowsの設定、ネットワーク機器、セキュリティ製品などにより、
+          取得できる情報や診断結果が異なる場合があります。
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Download / Source</h2>
+
+    <div class="card">
+      <p>
+        最新版、更新履歴、ソースコードは
+        GitHub上の公式リポジトリから確認できます。
+      </p>
+
+      <div class="buttons">
+        <a class="button secondary"
+           href="https://github.com/morhirc/NetNalyze/releases/latest"
+           target="_blank"
+           rel="noopener">
+          最新版をダウンロード
+        </a>
+
+        <a class="button"
+           href="https://github.com/morhirc/NetNalyze"
+           target="_blank"
+           rel="noopener">
+          GitHub Repository
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <p class="back-top">
+    <a href="#top">Topへ戻る↑</a>
+  </p>
+
+</main>
+
+<footer>
+  © 2026 morhirc
+</footer>
+
+<script>
+(() => {
+  const params = new URLSearchParams(location.search);
+
+  if (params.get("analytics") === "off") {
+    localStorage.setItem("morhirc_no_analytics", "1");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (params.get("analytics") === "on") {
+    localStorage.removeItem("morhirc_no_analytics");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (localStorage.getItem("morhirc_no_analytics") !== "1") {
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src = "https://static.cloudflareinsights.com/beacon.min.js";
+    script.dataset.cfBeacon =
+      '{"token":"b8af35d7e6e7422a9b5bc77c2c36d2ff"}';
+
+    document.head.appendChild(script);
+  }
+})();
+</script>
+
+</body>
+</html>

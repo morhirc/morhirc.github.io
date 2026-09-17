@@ -139,16 +139,17 @@
 
     .command-grid {
       display: grid;
-      grid-template-columns: 1fr;
+      grid-template-columns: minmax(0, 1fr);
       gap: 16px;
     }
 
     .command {
-      background: white;
-      padding: 22px;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-    }
+  min-width: 0;
+  background: white;
+  padding: 22px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
 
     .command p {
       margin: 10px 0;
@@ -324,9 +325,9 @@
       }
 
       .toc,
-      .command-grid {
-        grid-template-columns: 1fr;
-      }
+.command-grid {
+  grid-template-columns: minmax(0, 1fr);
+}
 
       pre {
         padding-right: 15px;

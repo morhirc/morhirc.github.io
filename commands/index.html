@@ -1,1 +1,1260 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Windows コマンド集 | ネットワーク・診断・トラブルシューティング | morhirc</title>
+  <link rel="icon" type="image/png" href="/favicon.png">
+
+  <meta name="description"
+        content="Windowsのネットワーク診断、DNS、ルーティング、ポート、Wi-Fi、SMB、システム確認、修復などで使えるコマンドを、基本からDeepなものまで目的別に紹介します。">
+
+  <meta name="robots" content="index,follow">
+  <link rel="canonical" href="https://morhirc.github.io/commands/">
+
+  <meta property="og:title"
+        content="Windows コマンド集 | morhirc">
+
+  <meta property="og:description"
+        content="Windowsの診断・トラブルシューティングで使えるコマンドを、用途・見方・注意点とともに紹介します。">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url"
+        content="https://morhirc.github.io/commands/">
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        "Hiragino Kaku Gothic ProN",
+        "Yu Gothic",
+        Meiryo,
+        sans-serif;
+      background: #f5f7fa;
+      color: #222;
+      line-height: 1.8;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 23px 20px;
+      text-align: center;
+    }
+
+    header .brand {
+      font-size: 15px;
+      color: #cbd5e1;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 42px;
+      letter-spacing: 1px;
+    }
+
+    header p {
+      margin: 12px 0 0;
+      color: #cbd5e1;
+      font-size: 18px;
+    }
+
+    main {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 50px 20px 80px;
+    }
+
+    section {
+      margin-bottom: 50px;
+      scroll-margin-top: 20px;
+    }
+
+    h2 {
+      font-size: 25px;
+      border-bottom: 2px solid #d1d5db;
+      padding-bottom: 8px;
+      margin-bottom: 25px;
+    }
+
+    h3 {
+      margin-top: 0;
+      margin-bottom: 8px;
+      font-size: 21px;
+    }
+
+    .back {
+      display: inline-block;
+      margin-bottom: 20px;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back:hover,
+    .section-top:hover {
+      text-decoration: underline;
+    }
+
+    .card {
+      background: white;
+      padding: 28px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .toc {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .toc a {
+      display: block;
+      background: white;
+      padding: 14px 16px;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      text-decoration: none;
+      color: #2563eb;
+      font-weight: 600;
+    }
+
+    .toc a:hover {
+      background: #f8fafc;
+    }
+
+    .command-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .command {
+      background: white;
+      padding: 22px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .command p {
+      margin: 10px 0;
+    }
+
+    .tags {
+      margin: 0 0 12px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 3px 8px;
+      margin: 0 5px 5px 0;
+      font-size: 12px;
+      border-radius: 999px;
+      background: #f3f4f6;
+      border: 1px solid #d1d5db;
+      color: #374151;
+    }
+
+    .tag.basic {
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+      color: #065f46;
+    }
+
+    .tag.middle {
+      background: #eff6ff;
+      border-color: #bfdbfe;
+      color: #1e40af;
+    }
+
+    .tag.deep {
+      background: #f5f3ff;
+      border-color: #ddd6fe;
+      color: #5b21b6;
+    }
+
+    .tag.admin {
+      background: #fff7ed;
+      border-color: #fed7aa;
+      color: #9a3412;
+    }
+
+    .tag.warning {
+      background: #fef2f2;
+      border-color: #fecaca;
+      color: #991b1b;
+    }
+
+    pre {
+      margin: 12px 0;
+      padding: 13px 15px;
+      overflow-x: auto;
+      background: #111827;
+      color: #f9fafb;
+      border-radius: 7px;
+      line-height: 1.5;
+    }
+
+    code {
+      font-family:
+        Consolas,
+        "Courier New",
+        monospace;
+    }
+
+    p code,
+    li code {
+      background: #f3f4f6;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+
+    .label {
+      font-weight: 700;
+    }
+
+    .warning-box {
+      margin-top: 12px;
+      padding: 12px 14px;
+      background: #fff7ed;
+      border-left: 4px solid #f97316;
+      border-radius: 4px;
+    }
+
+    .danger-box {
+      margin-top: 12px;
+      padding: 12px 14px;
+      background: #fef2f2;
+      border-left: 4px solid #dc2626;
+      border-radius: 4px;
+    }
+
+    .section-top {
+      display: inline-block;
+      margin-top: 18px;
+      color: #2563eb;
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back-top {
+      margin: 60px 0 40px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+
+    .back-top a {
+      color: #b34fc0;
+      text-decoration: none;
+    }
+
+    .back-top a:hover {
+      text-decoration: underline;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    @media (max-width: 700px) {
+      header h1 {
+        font-size: 34px;
+      }
+
+      main {
+        padding-top: 35px;
+      }
+
+      .toc,
+      .command-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body id="top">
+
+<header>
+  <div class="brand">morhirc | Free Software Developer</div>
+  <h1>Windows コマンド集</h1>
+  <p>基本からDeepな診断まで。用途・見方・注意点とともに。</p>
+</header>
+
+<main>
+
+  <a class="back" href="/">← morhirc ホームへ戻る</a>
+
+  <section>
+    <h2>このページについて</h2>
+
+    <div class="card">
+      <p>
+        Windowsの状態確認やネットワーク障害の切り分け、
+        トラブルシューティングで使用するコマンドをまとめています。
+      </p>
+
+      <p>
+        単なるコマンド一覧ではなく、
+        <strong>「何を調べるコマンドなのか」「結果のどこを見るのか」</strong>
+        を中心に、基本的なものから少しDeepなものまで紹介します。
+      </p>
+
+      <p>
+        表示・確認だけを行うコマンドと、
+        システムやネットワークの状態を変更するコマンドは区別しています。
+      </p>
+
+      <div class="warning-box">
+        <strong>注意：</strong>
+        ［管理者権限］［設定変更］［要注意！］の表示があるものは、
+        内容を確認してから実行してください。
+        業務PCや管理下のPCでは、組織の運用ルールを優先してください。
+      </div>
+    </div>
+  </section>
+
+
+  <section id="menu">
+    <h2>カテゴリ</h2>
+
+    <div class="toc">
+      <a href="#network">ネットワーク基本</a>
+      <a href="#dns">DNS・名前解決</a>
+      <a href="#route">経路・ルーティング</a>
+      <a href="#port">ポート・接続</a>
+      <a href="#wifi">NIC・Wi-Fi</a>
+      <a href="#smb">SMB・共有</a>
+      <a href="#system">Windowsシステム</a>
+      <a href="#repair">修復・診断</a>
+      <a href="#powershell">PowerShell</a>
+    </div>
+  </section>
+
+
+  <!-- ネットワーク基本 -->
+
+  <section id="network">
+    <h2>ネットワーク基本</h2>
+
+    <div class="command-grid">
+
+      <div class="command">
+        <h3>ipconfig</h3>
+        <div class="tags">
+          <span class="tag basic">基本</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>PCに設定されているIPアドレスなどを確認します。</p>
+
+        <pre><code>ipconfig</code></pre>
+
+        <p><span class="label">何が分かる？</span><br>
+          IPv4アドレス、サブネットマスク、デフォルトゲートウェイなど。
+        </p>
+
+        <p><span class="label">見るところ</span><br>
+          使用中のNICに正しいIPv4アドレスとゲートウェイが設定されているか。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>ipconfig /all</h3>
+        <div class="tags">
+          <span class="tag basic">基本</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>ネットワーク設定をより詳細に表示します。</p>
+
+        <pre><code>ipconfig /all</code></pre>
+
+        <p><span class="label">何が分かる？</span><br>
+          MACアドレス、DHCP、DNSサーバー、リース情報など。
+        </p>
+
+        <p><span class="label">見るところ</span><br>
+          DHCPの有効状態、DNSサーバー、物理アドレス、複数NICの設定。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>ping</h3>
+        <div class="tags">
+          <span class="tag basic">基本</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>指定した相手との疎通と応答時間を確認します。</p>
+
+        <pre><code>ping 192.0.2.1</code></pre>
+
+        <p><span class="label">何が分かる？</span><br>
+          応答の有無、応答時間、パケット損失、TTL。
+        </p>
+
+        <p><span class="label">見るところ</span><br>
+          「応答」「時間」「損失」を確認します。
+        </p>
+
+        <div class="warning-box">
+          <strong>要注意：</strong>
+          pingが通らない＝相手が停止している、とは限りません。
+          FirewallなどでICMP応答を許可していない機器もあります。
+        </div>
+      </div>
+
+
+      <div class="command">
+        <h3>hostname</h3>
+        <div class="tags">
+          <span class="tag basic">基本</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>現在使用しているPCのホスト名を表示します。</p>
+
+        <pre><code>hostname</code></pre>
+
+        <p><span class="label">使いどころ</span><br>
+          リモート作業や複数PCを扱う際に、現在の端末を確認したいとき。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>getmac</h3>
+        <div class="tags">
+          <span class="tag basic">基本</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>ネットワークアダプターのMACアドレスを確認します。</p>
+
+        <pre><code>getmac /v</code></pre>
+
+        <p><span class="label">見るところ</span><br>
+          接続名、ネットワークアダプター、物理アドレス。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>arp -a</h3>
+        <div class="tags">
+          <span class="tag middle">中級</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>PCが現在保持しているARPキャッシュを表示します。</p>
+
+        <pre><code>arp -a</code></pre>
+
+        <p><span class="label">何が分かる？</span><br>
+          IPアドレスとMACアドレスの対応関係。
+        </p>
+
+        <div class="warning-box">
+          表示されない機器が「LAN上に存在しない」とは限りません。
+          ARPテーブルはLAN全体の機器一覧ではありません。
+        </div>
+      </div>
+
+    </div>
+
+    <a class="section-top" href="#menu">↑ カテゴリへ戻る</a>
+  </section>
+
+
+  <!-- DNS -->
+
+  <section id="dns">
+    <h2>DNS・名前解決</h2>
+
+    <div class="command-grid">
+
+      <div class="command">
+        <h3>nslookup</h3>
+        <div class="tags">
+          <span class="tag basic">基本</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>ホスト名やドメイン名がどのIPアドレスへ解決されるか確認します。</p>
+
+        <pre><code>nslookup example.com</code></pre>
+
+        <p><span class="label">見るところ</span><br>
+          使用されたDNSサーバーと、返されたIPアドレス。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>Resolve-DnsName</h3>
+        <div class="tags">
+          <span class="tag middle">中級</span>
+          <span class="tag">PowerShell</span>
+        </div>
+
+        <p>PowerShellからDNS問い合わせを行います。</p>
+
+        <pre><code>Resolve-DnsName example.com</code></pre>
+
+        <p><span class="label">何が分かる？</span><br>
+          A、AAAA、CNAMEなどのDNSレコードを詳しく確認できます。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>ipconfig /displaydns</h3>
+        <div class="tags">
+          <span class="tag middle">中級</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>Windowsが保持しているDNSキャッシュを表示します。</p>
+
+        <pre><code>ipconfig /displaydns</code></pre>
+
+        <p><span class="label">使いどころ</span><br>
+          名前解決結果がキャッシュされているか確認したい場合。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>ipconfig /flushdns</h3>
+        <div class="tags">
+          <span class="tag middle">中級</span>
+          <span class="tag warning">設定変更</span>
+        </div>
+
+        <p>WindowsのDNSリゾルバーキャッシュを消去します。</p>
+
+        <pre><code>ipconfig /flushdns</code></pre>
+
+        <p><span class="label">使いどころ</span><br>
+          DNS変更後など、古い名前解決情報を破棄したい場合。
+        </p>
+
+        <div class="warning-box">
+          キャッシュを消去する操作です。
+          「とりあえず実行」ではなく、名前解決の切り分け上必要な場合に使用します。
+        </div>
+      </div>
+
+    </div>
+
+    <a class="section-top" href="#menu">↑ カテゴリへ戻る</a>
+  </section>
+
+
+  <!-- ルーティング -->
+
+  <section id="route">
+    <h2>経路・ルーティング</h2>
+
+    <div class="command-grid">
+
+      <div class="command">
+        <h3>tracert</h3>
+        <div class="tags">
+          <span class="tag basic">基本</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>通信先までの経路をホップ単位で確認します。</p>
+
+        <pre><code>tracert example.com</code></pre>
+
+        <p><span class="label">見るところ</span><br>
+          どの区間まで応答があり、どこから応答がなくなるか。
+        </p>
+
+        <div class="warning-box">
+          途中の「*」だけで障害とは判断できません。
+          ICMPに応答しないルーターもあります。
+        </div>
+      </div>
+
+
+      <div class="command">
+        <h3>pathping</h3>
+        <div class="tags">
+          <span class="tag middle">中級</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>経路確認とパケット損失の調査を組み合わせたコマンドです。</p>
+
+        <pre><code>pathping example.com</code></pre>
+
+        <p><span class="label">使いどころ</span><br>
+          通信経路のどの付近で損失が発生しているか調査するとき。
+        </p>
+
+        <p>結果が出るまで時間がかかります。</p>
+      </div>
+
+
+      <div class="command">
+        <h3>route print</h3>
+        <div class="tags">
+          <span class="tag middle">中級</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>Windowsのルーティングテーブルを表示します。</p>
+
+        <pre><code>route print</code></pre>
+
+        <p><span class="label">見るところ</span><br>
+          デフォルトルート、宛先ネットワーク、ゲートウェイ、メトリック。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>Get-NetRoute</h3>
+        <div class="tags">
+          <span class="tag deep">Deep</span>
+          <span class="tag">PowerShell</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>PowerShellからルーティング情報を詳細に取得します。</p>
+
+        <pre><code>Get-NetRoute</code></pre>
+
+        <p><span class="label">使いどころ</span><br>
+          複数NICやVPNなど、経路選択を詳しく確認したい場合。
+        </p>
+      </div>
+
+    </div>
+
+    <a class="section-top" href="#menu">↑ カテゴリへ戻る</a>
+  </section>
+
+
+  <!-- ポート -->
+
+  <section id="port">
+    <h2>ポート・接続</h2>
+
+    <div class="command-grid">
+
+      <div class="command">
+        <h3>netstat -ano</h3>
+        <div class="tags">
+          <span class="tag middle">中級</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>TCP/UDPの接続状態とPIDを確認します。</p>
+
+        <pre><code>netstat -ano</code></pre>
+
+        <p><span class="label">見るところ</span><br>
+          ローカルアドレス、外部アドレス、状態、PID。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>Test-NetConnection</h3>
+        <div class="tags">
+          <span class="tag middle">中級</span>
+          <span class="tag">PowerShell</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>指定したTCPポートまで接続できるか確認します。</p>
+
+        <pre><code>Test-NetConnection 192.0.2.10 -Port 445</code></pre>
+
+        <p><span class="label">見るところ</span><br>
+          <code>TcpTestSucceeded</code> が True か False か。
+        </p>
+
+        <p>SMBなら445、HTTPSなら443など、サービス単位の切り分けに便利です。</p>
+      </div>
+
+
+      <div class="command">
+        <h3>Get-NetTCPConnection</h3>
+        <div class="tags">
+          <span class="tag deep">Deep</span>
+          <span class="tag">PowerShell</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>現在のTCP接続をPowerShellオブジェクトとして取得します。</p>
+
+        <pre><code>Get-NetTCPConnection</code></pre>
+
+        <p><span class="label">使いどころ</span><br>
+          状態やポート番号で絞り込みたい場合に便利です。
+        </p>
+      </div>
+
+    </div>
+
+    <a class="section-top" href="#menu">↑ カテゴリへ戻る</a>
+  </section>
+
+
+  <!-- NIC / Wi-Fi -->
+
+  <section id="wifi">
+    <h2>NIC・Wi-Fi</h2>
+
+    <div class="command-grid">
+
+      <div class="command">
+        <h3>Get-NetAdapter</h3>
+        <div class="tags">
+          <span class="tag middle">中級</span>
+          <span class="tag">PowerShell</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>ネットワークアダプターの状態を一覧表示します。</p>
+
+        <pre><code>Get-NetAdapter</code></pre>
+
+        <p><span class="label">見るところ</span><br>
+          Name、InterfaceDescription、Status、LinkSpeed、MacAddress。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>Get-NetIPConfiguration</h3>
+        <div class="tags">
+          <span class="tag middle">中級</span>
+          <span class="tag">PowerShell</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>NICごとのIP設定を見やすく確認します。</p>
+
+        <pre><code>Get-NetIPConfiguration</code></pre>
+
+        <p><span class="label">見るところ</span><br>
+          IPv4Address、IPv4DefaultGateway、DNSServer。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>netsh wlan show interfaces</h3>
+        <div class="tags">
+          <span class="tag middle">中級</span>
+          <span class="tag">Wi-Fi</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>現在のWi-Fi接続情報を表示します。</p>
+
+        <pre><code>netsh wlan show interfaces</code></pre>
+
+        <p><span class="label">何が分かる？</span><br>
+          SSID、BSSID、信号強度、無線方式、チャネルなど。
+        </p>
+
+        <div class="warning-box">
+          Windowsのプライバシー設定などにより、
+          一部のWi-Fi情報を取得できない場合があります。
+        </div>
+      </div>
+
+
+      <div class="command">
+        <h3>netsh wlan show drivers</h3>
+        <div class="tags">
+          <span class="tag deep">Deep</span>
+          <span class="tag">Wi-Fi</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>無線LANアダプターとドライバーの対応機能を表示します。</p>
+
+        <pre><code>netsh wlan show drivers</code></pre>
+
+        <p><span class="label">使いどころ</span><br>
+          対応無線方式やドライバー情報を確認したい場合。
+        </p>
+      </div>
+
+    </div>
+
+    <a class="section-top" href="#menu">↑ カテゴリへ戻る</a>
+  </section>
+
+
+  <!-- SMB -->
+
+  <section id="smb">
+    <h2>SMB・共有</h2>
+
+    <div class="command-grid">
+
+      <div class="command">
+        <h3>net use</h3>
+        <div class="tags">
+          <span class="tag basic">基本</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>現在のネットワーク接続や割り当てを確認します。</p>
+
+        <pre><code>net use</code></pre>
+
+        <p><span class="label">見るところ</span><br>
+          ドライブ文字、UNCパス、接続状態。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>net view</h3>
+        <div class="tags">
+          <span class="tag middle">中級</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>ネットワーク上の共有情報を確認するためのコマンドです。</p>
+
+        <pre><code>net view \\NAS-SAMPLE</code></pre>
+
+        <p><span class="label">使いどころ</span><br>
+          指定したコンピューターが公開している共有を確認したい場合。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>Get-SmbConnection</h3>
+        <div class="tags">
+          <span class="tag middle">中級</span>
+          <span class="tag">PowerShell</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>現在確立しているSMB接続を表示します。</p>
+
+        <pre><code>Get-SmbConnection</code></pre>
+
+        <p><span class="label">見るところ</span><br>
+          ServerName、ShareName、Dialectなど。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>Get-SmbMapping</h3>
+        <div class="tags">
+          <span class="tag deep">Deep</span>
+          <span class="tag">PowerShell</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>SMB共有へのマッピング状態を確認します。</p>
+
+        <pre><code>Get-SmbMapping</code></pre>
+
+        <p><span class="label">使いどころ</span><br>
+          ネットワークドライブの割り当て状態を詳しく確認したい場合。
+        </p>
+      </div>
+
+    </div>
+
+    <a class="section-top" href="#menu">↑ カテゴリへ戻る</a>
+  </section>
+
+
+  <!-- Windows System -->
+
+  <section id="system">
+    <h2>Windowsシステム</h2>
+
+    <div class="command-grid">
+
+      <div class="command">
+        <h3>systeminfo</h3>
+        <div class="tags">
+          <span class="tag basic">基本</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>WindowsやPCの基本的なシステム情報を表示します。</p>
+
+        <pre><code>systeminfo</code></pre>
+
+        <p><span class="label">何が分かる？</span><br>
+          OS、ビルド、起動時刻、メモリ、ネットワーク情報など。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>whoami</h3>
+        <div class="tags">
+          <span class="tag basic">基本</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>現在コマンドを実行しているユーザーを確認します。</p>
+
+        <pre><code>whoami</code></pre>
+
+        <p>権限やアカウントの切り分け時に便利です。</p>
+      </div>
+
+
+      <div class="command">
+        <h3>tasklist</h3>
+        <div class="tags">
+          <span class="tag basic">基本</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>現在実行中のプロセスを一覧表示します。</p>
+
+        <pre><code>tasklist</code></pre>
+
+        <p><span class="label">見るところ</span><br>
+          イメージ名、PID、メモリ使用量など。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>sc query</h3>
+        <div class="tags">
+          <span class="tag middle">中級</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>Windowsサービスの状態を確認します。</p>
+
+        <pre><code>sc query</code></pre>
+
+        <p>サービス障害の切り分けなどに利用できます。</p>
+      </div>
+
+    </div>
+
+    <a class="section-top" href="#menu">↑ カテゴリへ戻る</a>
+  </section>
+
+
+  <!-- 修復 -->
+
+  <section id="repair">
+    <h2>修復・診断</h2>
+
+    <div class="command-grid">
+
+      <div class="command">
+        <h3>sfc /scannow</h3>
+        <div class="tags">
+          <span class="tag middle">中級</span>
+          <span class="tag admin">管理者権限</span>
+          <span class="tag warning">修復あり</span>
+        </div>
+
+        <p>Windowsの保護されたシステムファイルを検査し、可能な場合は修復します。</p>
+
+        <pre><code>sfc /scannow</code></pre>
+
+        <div class="warning-box">
+          単なる情報表示ではなく、問題が検出された場合は修復が行われます。
+        </div>
+      </div>
+
+
+      <div class="command">
+        <h3>DISM /ScanHealth</h3>
+        <div class="tags">
+          <span class="tag deep">Deep</span>
+          <span class="tag admin">管理者権限</span>
+          <span class="tag">診断</span>
+        </div>
+
+        <p>Windowsイメージに破損がないか詳しくスキャンします。</p>
+
+        <pre><code>DISM /Online /Cleanup-Image /ScanHealth</code></pre>
+
+        <p>修復前の状態確認として使用できます。</p>
+      </div>
+
+
+      <div class="command">
+        <h3>DISM /RestoreHealth</h3>
+        <div class="tags">
+          <span class="tag deep">Deep</span>
+          <span class="tag admin">管理者権限</span>
+          <span class="tag warning">修復あり</span>
+        </div>
+
+        <p>Windowsイメージの破損を修復します。</p>
+
+        <pre><code>DISM /Online /Cleanup-Image /RestoreHealth</code></pre>
+
+        <div class="danger-box">
+          <strong>要注意！</strong><br>
+          システム修復を行うコマンドです。
+          状態確認だけが目的なら、先にScanHealthなどで状況を確認します。
+        </div>
+      </div>
+
+
+      <div class="command">
+        <h3>chkdsk</h3>
+        <div class="tags">
+          <span class="tag middle">中級</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>ファイルシステムの状態を確認します。</p>
+
+        <pre><code>chkdsk C:</code></pre>
+
+        <p>
+          オプションなしなら基本的には状態確認です。
+        </p>
+
+        <div class="danger-box">
+          <strong>要注意！</strong><br>
+          <code>/f</code> や <code>/r</code> などを付けると修復処理が伴います。
+          オプションの意味を確認してから使用してください。
+        </div>
+      </div>
+
+    </div>
+
+    <a class="section-top" href="#menu">↑ カテゴリへ戻る</a>
+  </section>
+
+
+  <!-- PowerShell -->
+
+  <section id="powershell">
+    <h2>PowerShell・Deep解析</h2>
+
+    <div class="command-grid">
+
+      <div class="command">
+        <h3>Get-Process</h3>
+        <div class="tags">
+          <span class="tag basic">基本</span>
+          <span class="tag">PowerShell</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>現在実行中のプロセスをPowerShellで取得します。</p>
+
+        <pre><code>Get-Process</code></pre>
+
+        <p>並べ替えや絞り込みと組み合わせると、より詳しい解析ができます。</p>
+      </div>
+
+
+      <div class="command">
+        <h3>Get-Service</h3>
+        <div class="tags">
+          <span class="tag basic">基本</span>
+          <span class="tag">PowerShell</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>Windowsサービスの状態を一覧表示します。</p>
+
+        <pre><code>Get-Service</code></pre>
+
+        <p><span class="label">見るところ</span><br>
+          Status、Name、DisplayName。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>Get-CimInstance Win32_OperatingSystem</h3>
+        <div class="tags">
+          <span class="tag middle">中級</span>
+          <span class="tag">PowerShell</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>WindowsのOS情報をCIM経由で取得します。</p>
+
+        <pre><code>Get-CimInstance Win32_OperatingSystem</code></pre>
+
+        <p>
+          OSバージョン、ビルド、メモリ、起動時刻などを
+          オブジェクトとして扱えます。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>Get-CimInstance Win32_Processor</h3>
+        <div class="tags">
+          <span class="tag middle">中級</span>
+          <span class="tag">PowerShell</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>CPU情報を取得します。</p>
+
+        <pre><code>Get-CimInstance Win32_Processor |
+Select-Object Name, NumberOfCores, NumberOfLogicalProcessors</code></pre>
+
+        <p>
+          CPU名、物理コア数、論理プロセッサ数などを確認できます。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>Get-WinEvent</h3>
+        <div class="tags">
+          <span class="tag deep">Deep</span>
+          <span class="tag">PowerShell</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>WindowsイベントログをPowerShellから取得します。</p>
+
+        <pre><code>Get-WinEvent -LogName System -MaxEvents 20</code></pre>
+
+        <p><span class="label">使いどころ</span><br>
+          障害発生時刻付近のシステムイベントを調査するとき。
+        </p>
+      </div>
+
+
+      <div class="command">
+        <h3>Get-NetIPInterface</h3>
+        <div class="tags">
+          <span class="tag deep">Deep</span>
+          <span class="tag">PowerShell</span>
+          <span class="tag">確認のみ</span>
+        </div>
+
+        <p>IPインターフェイスの詳細状態を確認します。</p>
+
+        <pre><code>Get-NetIPInterface</code></pre>
+
+        <p><span class="label">見るところ</span><br>
+          InterfaceAlias、AddressFamily、ConnectionState、InterfaceMetricなど。
+        </p>
+
+        <p>
+          複数NICやIPv4/IPv6、メトリックの調査に便利です。
+        </p>
+      </div>
+
+    </div>
+
+    <a class="section-top" href="#menu">↑ カテゴリへ戻る</a>
+  </section>
+
+
+  <!-- 危険な変更系 -->
+
+  <section id="advanced-warning">
+    <h2>設定を変更するコマンドについて</h2>
+
+    <div class="card">
+      <p>
+        Windowsには、ネットワーク設定やサービス、
+        ルーティングなどをコマンドから直接変更できる機能もあります。
+      </p>
+
+      <p>
+        たとえばルートの追加・削除、NICの有効化・無効化、
+        サービスの開始・停止などです。
+      </p>
+
+      <div class="danger-box">
+        <strong>要注意！</strong><br>
+        変更系コマンドは、実行したPCの通信断やサービス停止などを
+        引き起こす可能性があります。
+        このページでは「診断して原因を確認する」ことを優先し、
+        変更操作については必要性と影響を理解したうえで使用するものとします。
+      </div>
+
+      <p>
+        <strong>調べる → 判断する → 必要なら変更する。</strong><br>
+        いきなり設定を変更せず、まず現在の状態を確認するのが基本です。
+      </p>
+    </div>
+  </section>
+
+
+  <p class="back-top">
+    <a href="#top">Topへ戻る↑</a>
+  </p>
+
+</main>
+
+<footer>
+  © 2026 morhirc
+</footer>
+
+
+<script>
+(() => {
+  const params = new URLSearchParams(location.search);
+
+  if (params.get("analytics") === "off") {
+    localStorage.setItem("morhirc_no_analytics", "1");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (params.get("analytics") === "on") {
+    localStorage.removeItem("morhirc_no_analytics");
+    history.replaceState(null, "", location.pathname);
+  }
+
+  if (localStorage.getItem("morhirc_no_analytics") !== "1") {
+    const script = document.createElement("script");
+    script.type = "module";
+    script.src =
+      "https://static.cloudflareinsights.com/beacon.min.js";
+    script.dataset.cfBeacon =
+      '{"token":"b8af35d7e6e7422a9b5bc77c2c36d2ff"}';
+
+    document.head.appendChild(script);
+  }
+})();
+</script>
+
+</body>
+</html>

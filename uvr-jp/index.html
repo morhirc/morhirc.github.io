@@ -577,7 +577,6 @@
   © 2026 morhirc
 </footer>
 
-
 <script>
 (() => {
   const params = new URLSearchParams(location.search);
@@ -595,9 +594,7 @@
   if (localStorage.getItem("morhirc_no_analytics") !== "1") {
     const script = document.createElement("script");
     script.type = "module";
-    script.src =
-      "https://static.cloudflareinsights.com/beacon.min.js";
-
+    script.src = "https://static.cloudflareinsights.com/beacon.min.js";
     script.dataset.cfBeacon =
       '{"token":"b8af35d7e6e7422a9b5bc77c2c36d2ff"}';
 

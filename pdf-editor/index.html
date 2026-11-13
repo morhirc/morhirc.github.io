@@ -405,7 +405,7 @@ $('pageWrap').addEventListener('pointerup',e=>{
  const a=textCreation.start,b=textPoint(e);textCreation=null;$('textBoxPreview')?.remove();
  const isDrag=Math.hypot(b.x-a.x,b.y-a.y)>5;
  const x=isDrag?Math.min(a.x,b.x):a.x,y=isDrag?Math.min(a.y,b.y):a.y;
- const o={id:uuid(),type:'text',page,x,y,text:'',fontSize:18,color:'#172338',fontFamily:$('fontFamily').value};
+ const o={id:uuid(),type:'text',page,x,y,text:'',fontSize:18,color:'#000000',fontFamily:$('fontFamily').value};
  if(isDrag)o.w=Math.max(30,Math.abs(a.x-b.x));
  items.push(o);selected=o.id;pushHistory();setMode('select');drawObjects();updateProps();
  const el=$('objects').querySelector('.object.selected');if(el)startEdit(el,o);

@@ -5,6 +5,10 @@
     <loc>https://morhirc.github.io/</loc>
   </url>
 
+　 <url>
+    <loc>https://morhirc.github.io/pdf-editor/</loc>
+  </url>
+  
   <url>
     <loc>https://morhirc.github.io/netnalyze/</loc>
   </url>
@@ -35,6 +39,22 @@
 
   <url>
     <loc>https://morhirc.github.io/atokana/</loc>
+  </url>
+
+    <url>
+    <loc>https://morhirc.github.io/opendaw-jp/</loc>
+  </url>
+
+  <url>
+    <loc>https://morhirc.github.io/uvr-jp/</loc>
+  </url>
+
+  <url>
+    <loc>https://morhirc.github.io/ampforge/</loc>
+  </url>
+
+  <url>
+    <loc>https://morhirc.github.io/commands/</loc>
   </url>
 
 </urlset>

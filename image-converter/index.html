@@ -1,0 +1,1843 @@
+<!doctype html>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>morhirc | 画像変換ツール</title>
+<link rel="icon" type="image/png" href="/favicon.png">
+<style>
+:root{font-family:system-ui,-apple-system,'Segoe UI',Meiryo,sans-serif;color:#182235;background:#f5f6fb}*{box-sizing:border-box}body{margin:0}button,input{font:inherit}button{cursor:pointer}header{background:#111827;color:white;padding:19px max(22px,calc((100vw - 1160px)/2));display:flex;gap:24px;align-items:center}header strong{font-size:27px;letter-spacing:-1px}.sep{height:30px;border-left:1px solid #526077}.app{font-size:20px;font-weight:700}header nav{margin-left:auto;display:flex;gap:22px;align-items:center}header nav a{color:#c6cfdd;text-decoration:none;font-size:19.5px}header nav a:hover{color:white;text-decoration:underline}.app{color:white;text-decoration:none}.app:hover{text-decoration:underline}main{max-width:1150px;margin:auto;padding:42px 20px 65px;min-height:calc(100vh - 145px)}h1{text-align:center;font-size:clamp(28px,4vw,42px);margin:0 0 12px}.intro{text-align:center;font-size:17px;line-height:1.8;color:#475368;margin:0 0 38px}.primary{border:0;background:#4388fa;color:#fff;border-radius:14px;font-size:28.5px;font-weight:750;padding:25.5px 78px;box-shadow:0 4px 10px #2874e82a}.primary:hover{background:#2773ec}.primary:disabled{opacity:.45;cursor:not-allowed}.drop{min-height:355px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;cursor:pointer;border:2px dashed transparent;border-radius:18px}.drop.over{background:#e9f1ff;border-color:#4388fa}.hint{color:#566175;font-size:21px;margin:0}.drop .symbol{font-size:67.5px;color:#4388fa}.hidden{display:none!important}.workspace{background:#fff;border-radius:16px;box-shadow:0 7px 25px #1b2d4812;overflow:hidden}.workspace-head{display:flex;align-items:center;justify-content:space-between;padding:20px 25px;border-bottom:1px solid #e8edf4;gap:15px}.workspace-head h2{font-size:19px;margin:0}.small{background:#f0f5ff;color:#1665d7;border:1px solid #d3e1ff;border-radius:9px;padding:10px 15px;font-weight:650}.layout{display:grid;grid-template-columns:minmax(0,1fr) 315px;min-height:440px}.preview-area{background:#f5f6fb;padding:23px;display:flex;flex-direction:column;gap:18px}.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px}.thumb{border:1px solid #e5eaf2;border-radius:12px;background:white;overflow:hidden;position:relative;box-shadow:0 3px 10px #1526410d}.thumb .view{width:100%;height:145px;border:0;background:#fff;padding:10px;display:flex;align-items:center;justify-content:center}.thumb img{max-width:100%;max-height:100%;object-fit:contain}.thumb .filename{font-size:12px;color:#344155;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:9px 12px}.thumb .remove{position:absolute;right:6px;top:6px;border:0;background:#202b3bda;color:white;border-radius:50%;width:26px;height:26px;font-size:18px}.thumb .unsupported{font-size:13px;color:#b14c37;text-align:center;padding:15px}.preview-note{font-size:13px;color:#66758b}.sidebar{border-left:1px solid #e5eaf2;padding:25px 23px;display:flex;flex-direction:column;gap:18px}.sidebar h3{margin:0;font-size:18px}.formats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.fmt{border:1px solid #d8e1ee;background:white;padding:11px 3px;border-radius:9px;font-weight:700}.fmt.selected{background:#4388fa;border-color:#4388fa;color:white}.fmt:disabled{opacity:.4;cursor:not-allowed}.details{border:0;background:transparent;text-align:left;color:#1766ce;font-weight:650;padding:4px 0}.settings{display:grid;gap:14px;padding:10px 0}.settings-title{font-size:18px;font-weight:700}.current-info{font-size:13px;line-height:1.7;color:#526178;background:#f5f7fb;padding:10px;border-radius:8px}.settings .field{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.settings .field select{padding:7px;border:1px solid #ccd5e3;border-radius:7px}.settings .help{font-size:12px;color:#66758b;line-height:1.5}#estimate-note{height:20px;min-height:20px;line-height:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}.settings input[type=checkbox]{accent-color:#4388fa}.settings label{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px}.settings input[type=number]{width:110px;padding:7px;border:1px solid #ccd5e3;border-radius:7px}.sidebar .primary{margin-top:auto;width:100%;padding:15px 10px}.status{font-size:13px;color:#31537c;line-height:1.6;overflow-wrap:anywhere;min-height:18px}.feature-row{display:flex;justify-content:center;gap:32px;margin-top:36px;flex-wrap:wrap;color:#596679;font-size:13px}.feature-row span{display:flex;align-items:center;gap:8px}footer{text-align:center;padding:20px;color:#697487;font-size:12px}#fileinput{display:none}.modal{position:fixed;inset:0;background:#09111de8;z-index:10;display:flex;flex-direction:column;color:white}.modal-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 22px;background:#101b2c}.modal-top .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px}.modal button{background:#ffffff20;border:1px solid #ffffff40;border-radius:9px;color:white;padding:9px 13px}.modal-body{display:flex;align-items:center;justify-content:center;flex:1;min-height:0;gap:15px;padding:15px}.modal-imgbox{flex:1;height:100%;min-width:0;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:grab}.modal-imgbox img{max-width:100%;max-height:100%;object-fit:contain;transform-origin:center;user-select:none;pointer-events:none}.modal-bottom{display:flex;justify-content:center;align-items:center;gap:12px;padding:12px 20px;background:#101b2c;font-size:13px}.modal-bottom button{min-width:42px}@media(max-width:750px){header{padding:15px 18px;gap:12px}header strong{font-size:23px}.app{font-size:15px}header nav{gap:12px}header nav a{font-size:15px}main{padding:28px 14px}.intro{font-size:14px}.drop .primary{font-size:23px;padding:21px 40px}.drop .hint{font-size:16px}.drop{min-height:290px}.layout{grid-template-columns:1fr}.sidebar{border-left:0;border-top:1px solid #e5eaf2}.workspace-head{padding:16px}.preview-area{padding:15px}.thumbs{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}.thumb .view{height:120px}.feature-row{gap:14px}.modal-body{gap:5px;padding:8px}.modal-body>button{padding:8px}}
+@media(min-width:751px){
+main{padding-top:18px;padding-bottom:16px;min-height:0}
+.workspace-head{padding:11px 20px}
+.layout{min-height:0}
+.preview-area{padding:15px;gap:10px;max-height:calc(100dvh - 185px);overflow:auto}
+.thumbs{gap:10px;grid-template-columns:repeat(auto-fill,minmax(125px,1fr))}
+.thumb .view{height:110px}
+.sidebar{padding:14px 18px;gap:10px}
+.sidebar h3{font-size:17px}
+.formats{gap:6px}.fmt{padding:8px 3px}
+.settings{gap:9px;padding:2px 0}.settings-title{font-size:17px}
+.settings .help{font-size:11px;line-height:1.35}
+.settings input[type=number]{padding:5px;width:104px}
+.settings .field select{padding:5px}
+.settings label{font-size:13px}
+.current-info{padding:5px 0;background:transparent;font-size:11px}
+.sidebar .primary{padding:11px 8px;font-size:23px}
+.feature-row{margin-top:12px}footer{padding:10px}
+}
+
+.category-picker{display:flex;gap:8px;flex-wrap:wrap}.category-picker button{border:1px solid #d8e1ee;background:#fff;border-radius:9px;padding:10px 14px;font-weight:700;color:#26344a}.category-picker button.active{background:#4388fa;color:#fff;border-color:#4388fa}.category-picker button:focus-visible{outline:3px solid #91b8ff}.category-hint{font-size:12px;color:#65748a;line-height:1.5;min-height:18px}.landing-categories{justify-content:center;margin:12px auto 18px}.format-placeholder{border:1px dashed #d7e0ed;border-radius:9px;padding:12px;font-size:13px;color:#65748a;line-height:1.6}.category-picker button[aria-disabled=true]{opacity:.7}
+</style>
+<style id="morhirc-unified-menu">
+/* PDFエディターと統一したサイトメニュー */
+header{height:80px;padding:0 max(24px,calc((100vw - 1400px)/2));position:relative;z-index:40}
+header .site-menu{position:relative;flex:0 0 auto;margin-left:auto}
+.menu-toggle{width:43px;height:43px;display:flex;align-items:center;justify-content:center;border-radius:9px;border:1px solid #6a778e;background:transparent;color:#fff;font-size:30px;line-height:1;cursor:pointer;padding:0 0 5px}
+.menu-toggle:hover,.menu-toggle[aria-expanded="true"]{background:#27354c;border-color:#9aa8bf}
+.menu-toggle:focus-visible,.menu-popover :focus-visible{outline:3px solid #7eb1ff;outline-offset:3px}
+.menu-popover{position:absolute;right:0;top:calc(100% + 12px);width:200px;padding:7px;background:#111827;color:#c7dcff;border:1px solid #415674;border-radius:11px;box-shadow:0 12px 32px #0e1f3a55;z-index:45}
+.menu-popover a,.menu-popover button{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:11px 12px;color:#c7dcff;font-weight:550;font-size:14px;text-decoration:none;background:transparent;border:0;border-radius:7px;cursor:pointer}
+.menu-popover .menu-icon{display:block;flex:0 0 19px;width:19px;height:19px;fill:none;stroke:#8fb8ff;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.menu-popover .menu-icon.github-icon{stroke-width:1.7}
+.menu-popover a:hover .menu-icon,.menu-popover button:hover .menu-icon,.menu-popover a:focus-visible .menu-icon,.menu-popover button:focus-visible .menu-icon{stroke:#c7dcff}
+.menu-popover a:hover,.menu-popover button:hover,.menu-popover a:focus-visible,.menu-popover button:focus-visible{background:#263954;color:#f0f6ff}
+.feature-details-backdrop{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;background:#111827ab;padding:20px}
+.feature-details-dialog{width:min(880px,100%);max-height:calc(100dvh - 40px);overflow:auto;border-radius:15px;background:#fff;padding:25px 29px 23px;box-shadow:0 24px 60px #0004;outline:none}
+.feature-details-heading{display:flex;align-items:start;justify-content:space-between;gap:15px}
+.feature-details-eyebrow{font-size:12px;letter-spacing:.06em;color:#3d7cdb;font-weight:700}
+.feature-details-heading h2{font-size:26px;color:#182a44;margin:3px 0 7px}
+.feature-details-close{width:36px;height:36px;border-radius:8px;border:1px solid #d5deec;background:white;color:#52617a;font-size:26px;line-height:1;cursor:pointer}
+.feature-details-close:hover{background:#edf4ff;color:#1b5fbb}
+.feature-details-lead{font-size:14px;line-height:1.75;color:#50617a;margin:5px 0 18px}
+.feature-details-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.feature-details-grid article{padding:16px 17px;background:#f7f9fd;border:1px solid #e3eaf4;border-radius:11px}
+.feature-details-grid h3{font-size:16px;color:#1e447c;margin:0 0 8px}
+.feature-details-grid p{font-size:13px;line-height:1.8;color:#4d5e79;margin:0}
+.feature-details-actions{display:flex;justify-content:flex-end;margin-top:19px}
+.feature-details-actions button{padding:10px 24px;border:1px solid #d4ddeb;background:white;color:#223149;border-radius:8px}
+@media(max-width:750px){header{height:65px;padding:0 15px}.menu-popover{top:calc(100% + 9px)}}
+@media(max-width:700px){.feature-details-dialog{padding:17px}.feature-details-grid{grid-template-columns:1fr}.feature-details-heading h2{font-size:22px}}
+/* v14: 変換対象と変換先形式を共通ヘッダーに配置 */
+header{gap:18px}
+header .site-menu{margin-left:0}
+.header-controls{margin-left:auto;display:flex;align-items:center;gap:22px;min-width:0}
+.header-control-group{display:flex;align-items:center;gap:9px;flex-shrink:0}
+.header-control-label{font-size:13px;font-weight:650;color:#cbd5e1;white-space:nowrap}
+.header-categories{gap:5px;flex-wrap:nowrap}
+.header-categories button{padding:8px 12px;font-size:13px;line-height:1.2;color:#dbe5f4;background:#18253a;border-color:#60718b;border-radius:7px;white-space:nowrap}
+.header-categories button:hover{background:#2e405e}
+.header-categories button.active{background:#4388fa;border-color:#4388fa;color:white}
+.header-controls select{width:124px;padding:9px 27px 9px 12px;border:1px solid #9cabc2;border-radius:8px;background:#fff;color:#16253b;font-size:14px;cursor:pointer}
+.header-controls select:disabled{opacity:.68;cursor:not-allowed}
+.landing-pending{max-width:560px;margin:28px auto;text-align:center}
+@media(max-width:950px){header{gap:10px}.header-controls{gap:12px}.header-control-group{gap:6px}.header-categories button{padding:8px 9px}.header-controls select{width:110px}.header-control-label{font-size:12px}}
+@media(max-width:750px){
+  header{height:auto;min-height:65px;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;padding:10px 15px}
+  header .app{grid-column:1;grid-row:1;white-space:nowrap}
+  header .site-menu{grid-column:2;grid-row:1;justify-self:end}
+  .header-controls{grid-column:1/-1;grid-row:2;margin:0;width:100%;gap:13px;overflow-x:auto;padding:2px 0 5px;scrollbar-width:thin}
+  .header-control-group{gap:7px}
+  .header-categories button{padding:8px 10px}
+  .header-controls select{width:109px}
+}
+@media(max-width:520px){
+  .header-controls{display:grid;grid-template-columns:1fr;row-gap:7px;overflow:visible}
+  .header-control-group{width:100%;gap:10px}
+  .header-control-label{min-width:76px}
+  .header-controls select{width:140px}
+}
+/* v15: 現在の画像情報を変換設定と並べてヘッダーに表示 */
+.header-current{min-width:0;max-width:350px;gap:7px}
+.header-current .current-info{font-size:12px;line-height:1.45;color:#e0e9f7;background:transparent;padding:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:1180px) and (min-width:751px){
+  header{padding-left:20px;padding-right:20px}
+  .header-controls{gap:12px;flex-wrap:wrap;justify-content:flex-end}
+  .header-current{flex-basis:100%;max-width:none;justify-content:flex-end}
+}
+@media(max-width:750px){
+  .header-controls{flex-wrap:wrap;overflow:visible}
+  .header-current{flex-basis:100%;max-width:none;justify-content:flex-start}
+}
+@media(max-width:520px){
+  .header-current{width:100%}
+  .header-current .current-info{white-space:normal;overflow:visible}
+}
+/* v13: 画像選択エリアの縦位置を少し上へ調整 */
+#landing .intro{margin-bottom:30px}
+#landing .drop{min-height:295px}
+@media(max-width:750px){#landing .drop{min-height:255px}}
+
+/* v17: ファイル追加を上部へ、変換先の形式を選択画像の上へ配置 */
+.header-add{white-space:nowrap;font-size:13px;padding:9px 13px;min-height:38px}
+.header-add:hover{background:#dceaff;border-color:#a9c8ff}
+.workspace-format{display:flex;align-items:center;gap:12px;margin-left:auto;flex:0 0 auto}
+.workspace-format label{font-size:14px;font-weight:650;color:#26344a;white-space:nowrap}
+.workspace-format select{width:142px;min-height:39px;padding:8px 28px 8px 12px;border:1px solid #cbd6e7;border-radius:8px;background:#fff;color:#16253b;cursor:pointer;font-size:14px}
+.workspace-format select:disabled{opacity:.65;cursor:not-allowed}
+@media(max-width:750px){
+ .header-add-group{width:auto}
+ .workspace-head{flex-wrap:wrap;gap:12px}
+ .workspace-format{gap:8px}
+ .workspace-format select{width:118px}
+}
+@media(max-width:440px){
+ .workspace-head h2{font-size:16px}
+ .workspace-format{margin-left:0}
+ .workspace-format label{font-size:13px}
+ .workspace-format select{width:115px}
+}
+
+/* v27: PDFの入出力 */
+#pdfFileInput{display:none!important}
+.pdf-form-row{align-items:stretch!important}
+.pdf-drop{background:#fff;border:2px dashed #b9d0f5;max-width:820px;margin:18px auto;border-radius:18px}
+.pdf-drop:hover,.pdf-drop.over{background:#f0f6ff;border-color:#4388fa}
+.pdf-drop:focus-visible{outline:3px solid #7db0ff}
+.pdf-work{margin-top:14px}
+.pdf-stage{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:330px;gap:12px}
+.pdf-stage canvas{display:block;max-width:100%;height:auto;max-height:calc(100dvh - 330px);object-fit:contain;box-shadow:0 4px 20px #152d5128;background:white}
+.pdf-nav{display:flex;align-items:center;justify-content:center;gap:12px;color:#536581;font-size:13px}
+.pdf-nav .small{padding:6px 12px}
+.pdf-sidebar-note{font-size:12px;color:#60718b;line-height:1.7}
+.pdf-form-row{display:flex;flex-direction:column;gap:5px;font-size:13px;color:#35435b}
+.pdf-form-row select,.pdf-form-row input[type=text],.pdf-form-row input[type=number]{width:100%;border:1px solid #cbd6e7;border-radius:8px;background:#fff;padding:8px;color:#1a2b45}
+.pdf-form-row input[type=range]{width:100%;accent-color:#4388fa}
+.pdf-format{margin-left:auto;display:flex;gap:9px;align-items:center}
+.pdf-format label{font-size:13px;white-space:nowrap}
+.pdf-format select{border:1px solid #cbd6e7;border-radius:8px;padding:8px 9px;background:#fff;min-width:150px}
+#pdf-image-options{display:grid;gap:12px}
+#pdf-image-options .pdf-form-row{font-size:13px}
+.pdf-scale-input{display:flex;align-items:center;gap:8px}
+.pdf-scale-input input{max-width:128px}
+.pdf-scale-input span{color:#526178;font-size:13px}
+.thumb .reorder-row{display:none;gap:5px;padding:0 8px 8px;justify-content:center}
+.workspace.pdf-output-selected .thumb .reorder-row{display:flex}
+.thumb .reorder-row button{border:1px solid #d3e1ff;background:#f0f5ff;color:#1665d7;font-size:12px;flex:1;border-radius:6px;padding:4px}
+.thumb .reorder-row button:disabled{opacity:.35;cursor:not-allowed}
+.pdf-inline{display:flex;gap:10px;align-items:center}
+.pdf-inline>*{flex:1;min-width:0}
+@media(max-width:750px){.pdf-drop{min-height:270px;margin:15px auto}.pdf-stage canvas{max-height:45vh}.pdf-format{margin:0}}
+</style>
+<style id="morhirc-epub-v29">
+#epubFileInput{display:none!important}
+.epub-stage{width:100%;max-width:790px;margin:0 auto;display:flex;flex-direction:column;gap:12px}
+.epub-book-info{font-size:14px;color:#34465e;line-height:1.6;background:#fff;border:1px solid #dce5f3;border-radius:10px;padding:14px 16px;overflow-wrap:anywhere}
+.epub-chapter-label{display:flex!important;align-items:center;gap:12px;flex-wrap:wrap;font-weight:650}
+.epub-chapter-label select{max-width:100%;min-width:170px;flex:1;padding:9px;border:1px solid #cbd6e7;border-radius:8px;background:white}
+.epub-preview{min-height:290px;max-height:calc(100dvh - 310px);overflow:auto;padding:18px 22px;background:white;border:1px solid #e0e8f3;border-radius:10px;color:#263649;line-height:1.85;overflow-wrap:anywhere}
+.epub-preview h3{font-size:20px;margin:3px 0 13px}.epub-preview p{font-size:14px;margin:0 0 12px}
+.epub-preview img{display:block;max-width:100%;max-height:280px;object-fit:contain;margin:10px auto}
+.epub-work .preview-area{min-height:540px}.epub-work input[type="text"]{width:100%}
+#epub-image-options label{display:flex;flex-direction:column;gap:7px;margin-bottom:12px}#epub-image-options input[type="text"]{padding:9px;border:1px solid #cbd6e7;border-radius:8px}
+@media(max-width:750px){.epub-preview{max-height:45vh;min-height:240px;padding:13px}.epub-work .preview-area{min-height:0}}
+</style>
+<style id="morhirc-epub-v31">
+/* EPUB input: original / output preview, independent from EPUB reader tools. */
+.epub-preview-tabs{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.epub-preview-tabs button{border:1px solid #ccd9eb;border-radius:8px;background:white;color:#3b526f;font-size:13px;font-weight:650;padding:9px 15px}
+.epub-preview-tabs button.active{background:#4388fa;border-color:#4388fa;color:white}
+.epub-preview-tabs button:disabled{opacity:.45;cursor:not-allowed}
+.epub-result-note{font-size:12px;color:#60718b;line-height:1.65;margin:7px 0}
+.epub-page-preview{display:flex;flex-direction:column;align-items:center;gap:12px;min-height:320px}
+.epub-page-preview img{max-width:100%;max-height:min(63vh,680px);object-fit:contain;background:white;box-shadow:0 5px 20px #172b4728;display:block}
+.epub-page-nav{display:flex;align-items:center;justify-content:center;gap:10px;font-size:13px;color:#526178;flex-wrap:wrap}
+.epub-page-nav .small{padding:7px 12px}
+.epub-page-nav button:disabled{opacity:.42;cursor:not-allowed}
+.epub-pdf-status{font-size:12px;color:#536581;text-align:center;line-height:1.6}
+.epub-html-result{width:100%;max-width:680px;margin:0 auto}
+.epub-html-result h1{font-size:26px;line-height:1.4;margin:0 0 12px}
+.epub-html-result h2{font-size:19px;margin:26px 0 13px}
+.epub-html-result .author{font-size:13px;color:#65758f}
+.epub-output-preview-head{display:flex;flex-direction:column;align-items:center;gap:9px}
+.epub-output-preview-head .small{padding:7px 10px}
+.epub-chapter-meta{font-size:12px;color:#60718b;line-height:1.6;background:#f6f8fc;border:1px solid #dce5f3;border-radius:8px;padding:10px 12px}
+.epub-option-check{display:flex!important;flex-direction:row!important;align-items:center!important;gap:9px!important;font-size:13px;color:#35435b}
+.epub-option-check input{accent-color:#4388fa}
+.epub-preview-backdrop{position:fixed;inset:0;z-index:130;background:#0f1a2cb9;display:flex;align-items:center;justify-content:center;padding:16px}
+.epub-preview-dialog{width:min(780px,100%);max-height:calc(100dvh - 32px);min-height:300px;overflow:auto;border-radius:15px;background:#fff;padding:20px 24px;box-shadow:0 18px 55px #0004}
+.epub-preview-dialog-title{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.epub-preview-dialog-title h2{font-size:21px;color:#1a2b45;margin:0}
+.epub-preview-dialog-title button{border:1px solid #ccd9eb;border-radius:8px;background:white;font-size:18px;line-height:1;padding:8px 11px;color:#455c79}
+.epub-preview-subtitle{color:#64758e;font-size:13px;margin:8px 0 12px;overflow-wrap:anywhere}
+.epub-image-book{display:flex;align-items:center;justify-content:center;padding:18px;background:#eef1f7;border-radius:11px;min-height:280px}
+.epub-image-book-page{width:min(460px,100%);height:min(55vh,560px);min-height:200px;display:flex;align-items:center;justify-content:center;background:white;box-shadow:0 3px 18px #172c4d25;padding:14px}
+.epub-image-book-page img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+#epubImagePreviewOpen{padding:9px 13px;white-space:nowrap}
+@media(max-width:750px){.epub-preview-dialog{padding:15px}.epub-image-book{padding:10px}.epub-image-book-page{height:45vh}.epub-preview-tabs button{padding:8px 10px}.epub-page-preview img{max-height:47vh}}
+</style>
+</head><body>
+<header><a class="app" href="#" id="start-over" title="画像選択画面に戻る">▧ 画像変換ツール</a>
+<div class="header-controls" aria-label="変換の設定">
+  <div class="header-control-group"><span class="header-control-label" id="category-label">変換対象</span>
+    <div class="category-picker header-categories" role="group" aria-labelledby="category-label">
+      <button type="button" data-category="image" class="active">画像</button>
+      <button type="button" data-category="pdf">PDF</button>
+      <button type="button" data-category="epub">EPUB</button>
+    </div>
+  </div>
+  <div class="header-control-group header-add-group"><button class="small header-add" id="add" type="button">＋ 画像を追加</button></div>
+  <div class="header-control-group header-current hidden" id="header-current" aria-label="選択画像の現在形式とサイズ">
+    <span class="header-control-label" id="current-label">現在</span>
+    <span class="current-info" id="current-info" role="status"></span>
+  </div>
+</div>
+<div class="site-menu" id="siteMenu">
+  <button type="button" class="menu-toggle" id="menuToggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="menuPopover" title="メニュー">≡</button>
+  <div class="menu-popover hidden" id="menuPopover" aria-label="サイトメニュー">
+    <button type="button" id="menuFeatures"><svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6h13M8 12h13M8 18h13"/><path d="m3 6 1 1 2-2M3 12h3M3 18h3"/></svg><span>機能</span></button>
+    <a href="https://www.moa-kobo.com/" target="_blank" rel="noopener noreferrer"><svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94Z"/></svg><span>MOA工房</span></a>
+    <a href="https://morhirc.github.io/" target="_blank" rel="noopener noreferrer"><svg class="menu-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/></svg><span>morhirc</span></a>
+    <a href="https://github.com/morhirc" target="_blank" rel="noopener noreferrer"><svg class="menu-icon github-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 19 4.77 5.07 5.07 0 0 0 18.91 1S17.73.65 15 2.48a13.38 13.38 0 0 0-7 0C5.27.65 4.09 1 4.09 1A5.07 5.07 0 0 0 4 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 8 18.13V22"/></svg><span>GitHub</span></a>
+  </div>
+</div></header>
+<main><section id="landing"><h1 id="landing-title">画像を別の形式に変換</h1><p class="intro">JPEG・PNG・WebP・AVIF・HEIC・BMP・TIFF・JXLなどの画像形式を簡単に変換できます。<br>無料・登録不要。画像はブラウザ内で処理します。</p><div class="drop" id="drop" tabindex="0" role="button" aria-label="画像を選択"><div class="symbol">▧</div><button class="primary" id="choose" type="button">画像を選択</button><p class="hint">または、ここに画像をドラッグ＆ドロップ</p></div><div class="format-placeholder hidden landing-pending" id="future-formats" role="status"></div></section>
+
+<section id="pdfLanding" class="hidden">
+  <h1>PDFを画像・HTMLに変換</h1>
+  <p class="intro">PDFのページをPNG・JPEG・HTMLに変換します。<br>ファイルはブラウザ内で処理します。</p>
+  <div class="drop pdf-drop" id="pdfDrop" tabindex="0" role="button" aria-label="PDFを選択">
+    <div class="symbol">▧</div><button class="primary" id="pdfChoose" type="button">PDFを選択</button>
+    <p class="hint">または、ここにPDFをドラッグ＆ドロップ</p>
+  </div><p class="preview-note" style="text-align:center">初回はPDF描画エンジンの取得にネット接続が必要です。PDFデータは外部へ送信しません。</p>
+  <div class="status" id="pdfLandingStatus" role="status" style="text-align:center"></div>
+</section>
+<section id="pdfWorkspace" class="workspace pdf-work hidden">
+  <div class="workspace-head"><h2 id="pdfName">PDFを選択</h2>
+    <div class="pdf-format"><label for="pdfOutput">変換先の形式</label><select id="pdfOutput"><option value="" selected>－</option><option value="png">PNG</option><option value="jpeg">JPEG</option><option value="html">HTML（画像表示）</option></select></div>
+  </div>
+  <div class="layout"><div class="preview-area"><div class="pdf-stage"><canvas id="pdfPreview" aria-label="PDFプレビュー"></canvas>
+    <div class="pdf-nav"><button class="small" id="pdfPrev" type="button">前へ</button><span id="pdfPageInfo">0 / 0</span><button class="small" id="pdfNext" type="button">次へ</button></div>
+    <p class="preview-note" id="pdfPreviewStatus">PDFを表示しています…</p></div></div>
+    <aside class="sidebar"><div class="settings"><div class="settings-title">PDF変換設定</div>
+      <label class="pdf-form-row">ページ指定<input id="pdfPages" type="text" value="すべて" placeholder="すべて / 1-3,5"></label>
+      <span class="pdf-sidebar-note">「すべて」または「1-3,5」のように指定できます。</span>
+      <label class="pdf-form-row">解像度<select id="pdfDpi"><option value="96">96 DPI（軽量）</option><option value="150" selected>150 DPI（標準）</option><option value="200">200 DPI（高画質）</option></select></label>
+      <label class="pdf-form-row" id="pdfJpegQualityRow">JPEG画質<div class="pdf-inline"><input id="pdfJpegQuality" type="range" min="1" max="100" value="90"><output id="pdfJpegQualityOut">90%</output></div></label>
+      <p class="pdf-sidebar-note" id="pdfHelp">変換先の形式を選択してください。</p>
+    </div><button class="primary" id="pdfConvert" type="button" disabled>PDFを変換する</button>
+    <div class="status" id="pdfStatus" role="status"></div></aside>
+  </div>
+</section>
+
+<section id="epubLanding" class="hidden">
+  <h1>EPUBをHTML・PDFに変換</h1>
+  <p class="intro">電子書籍の文章・画像を変換できます。<br>DRM保護のないEPUBが対象です。ファイルはブラウザ内で処理します。</p>
+  <div class="drop pdf-drop" id="epubDrop" tabindex="0" role="button" aria-label="EPUBを選択">
+    <div class="symbol">▧</div><button class="primary" id="epubChoose" type="button">EPUBを選択</button>
+    <p class="hint">または、ここにEPUBをドラッグ＆ドロップ</p>
+  </div><p class="preview-note" style="text-align:center">対応ブラウザでは追加ライブラリ不要で処理します。DRM保護・暗号化されたEPUBは非対応です。</p>
+  <div class="status" id="epubLandingStatus" role="status" style="text-align:center"></div>
+</section>
+<section id="epubWorkspace" class="workspace epub-work hidden">
+  <div class="workspace-head"><h2 id="epubName">EPUBを選択</h2>
+    <div class="pdf-format"><label for="epubOutput">変換先の形式</label><select id="epubOutput"><option value="" selected>－</option><option value="html">HTML（文字検索可）</option><option value="pdf">PDF（ページ画像）</option></select></div>
+  </div>
+  <div class="layout"><div class="preview-area"><div class="epub-stage">
+    <div class="epub-book-info" id="epubBookInfo"></div>
+    <div class="epub-preview-tabs" role="group" aria-label="プレビュー切替">
+      <button type="button" class="active" id="epubSourceTab" aria-pressed="true">原文プレビュー</button>
+      <button type="button" id="epubResultTab" aria-pressed="false" disabled>変換後プレビュー</button>
+    </div>
+    <div id="epubSourcePane">
+      <label class="pdf-form-row epub-chapter-label">プレビューする章<select id="epubChapter"></select></label>
+      <div class="epub-chapter-meta" id="epubChapterMeta">章の概要を表示します。</div>
+      <div id="epubPreview" class="epub-preview" aria-label="EPUB本文プレビュー"></div>
+      <p class="preview-note" id="epubPreviewStatus">内容を確認できます。</p>
+    </div>
+    <div id="epubResultPane" class="hidden" aria-label="変換後プレビュー">
+      <div id="epubPdfPreviewPane" class="epub-page-preview hidden">
+        <img id="epubPdfPreviewImage" alt="PDF変換後のページイメージ">
+        <div class="epub-page-nav"><button type="button" class="small" id="epubPdfPrev">前のページ</button>
+          <span id="epubPdfPageInfo">1 / 1</span><button type="button" class="small" id="epubPdfNext">次のページ</button></div>
+        <p class="epub-pdf-status" id="epubPdfPreviewStatus" role="status">PDFの先頭ページを確認できます。</p>
+      </div>
+      <div id="epubHtmlPreviewPane" class="hidden">
+        <div class="epub-output-preview-head">
+          <label class="pdf-form-row epub-chapter-label">プレビューする章<select id="epubHtmlChapter"></select></label>
+        </div>
+        <div id="epubHtmlPreview" class="epub-preview epub-html-result" aria-label="HTML変換後の本文プレビュー"></div>
+        <p class="epub-result-note">HTML保存時は全章を含みます。画面には選択した章の一部を表示しています。</p>
+      </div>
+    </div>
+  </div></div>
+  <aside class="sidebar"><div class="settings"><div class="settings-title">EPUB変換設定</div>
+    <div id="epubPdfOptions" class="hidden">
+      <label class="pdf-form-row">用紙サイズ<select id="epubPaper">
+        <optgroup label="A判（ISO）"><option value="a2">A2（420 × 594 mm）</option><option value="a3">A3（297 × 420 mm）</option><option value="a4" selected>A4（210 × 297 mm）</option><option value="a5">A5（148 × 210 mm）</option><option value="a6">A6（105 × 148 mm）</option></optgroup>
+        <optgroup label="B判（JIS）"><option value="b4">B4（257 × 364 mm）</option><option value="b5">B5（182 × 257 mm）</option></optgroup>
+        <optgroup label="北米の用紙"><option value="letter">Letter（216 × 279 mm）</option><option value="legal">Legal（216 × 356 mm）</option><option value="tabloid">Tabloid（279 × 432 mm）</option></optgroup>
+        <optgroup label="その他"><option value="postcard">はがき（100 × 148 mm）</option></optgroup>
+      </select></label>
+      <label class="pdf-form-row">用紙の向き<select id="epubOrientation"><option value="portrait" selected>縦</option><option value="landscape">横</option></select></label>
+      <label class="pdf-form-row">余白<select id="epubMargin"><option value="0">なし</option><option value="10">10 mm</option><option value="15" selected>15 mm</option><option value="20">20 mm</option><option value="25">25 mm</option></select></label>
+      <label class="pdf-form-row">文字サイズ<select id="epubFont"><option value="12">12 pt</option><option value="14" selected>14 pt</option><option value="16">16 pt</option><option value="18">18 pt</option><option value="22">22 pt</option></select></label>
+      <label class="pdf-form-row">本文の倍率<select id="epubTextScale"><option value="75">75%</option><option value="100" selected>100%</option><option value="125">125%</option><option value="150">150%</option><option value="200">200%</option></select></label>
+      <label class="pdf-form-row">変換後プレビュー<select id="epubPreviewScope"><option value="book" selected>書籍の先頭から</option><option value="chapter">選択した章を優先</option></select></label>
+      <label class="epub-option-check"><input id="epubIncludeImages" type="checkbox" checked> 画像をPDFに含める</label>
+      <p class="pdf-sidebar-note">用紙サイズ・向き・余白・文字倍率はPDFのページ割りに反映されます。画像を含める場合は本文中の挿絵・漫画ページも配置します。変換後プレビューは先頭最大5ページ、または選択した章の冒頭を表示します。</p>
+    </div>
+    <p class="pdf-sidebar-note" id="epubHelp">変換先の形式を選択してください。</p>
+    <p class="pdf-sidebar-note">HTMLは文章の選択・検索に対応します。元のEPUBに含まれる独自CSS・縦書き・特殊なレイアウトなどは簡略化します。</p>
+  </div><button class="primary" id="epubConvert" type="button" disabled>EPUBを変換する</button>
+  <div class="status" id="epubStatus" role="status"></div></aside></div>
+</section>
+
+<section class="workspace hidden" id="workspace"><div class="workspace-head"><h2>選択した画像 <span id="count">0</span>件</h2><div class="workspace-format"><button class="small hidden" type="button" id="epubImagePreviewOpen">変換プレビュー</button><label for="formats">変換先の形式</label><select id="formats" aria-label="変換先の形式">
+<option value="" selected>－</option>
+<option value="image/jpeg" data-ext="jpg">JPEG</option>
+<option value="image/png" data-ext="png">PNG</option>
+<option value="image/webp" data-ext="webp">WebP</option>
+<option value="image/avif" data-ext="avif">AVIF</option>
+<option value="image/heic" data-ext="heic">HEIC</option>
+<option value="image/bmp" data-ext="bmp">BMP</option>
+<option value="image/tiff" data-ext="tiff">TIFF</option>
+<option value="image/jxl" data-ext="jxl">JXL</option>
+<option value="application/pdf" data-ext="pdf">PDF</option>
+<option value="application/epub+zip" data-ext="epub">EPUB</option>
+<option value="pending" id="pending-format" disabled hidden>準備中</option>
+</select></div></div><div class="layout"><div class="preview-area" id="drop-more"><div class="thumbs" id="thumbs"></div><p class="preview-note">画像をクリックすると拡大表示できます。ここに画像をドロップして追加することもできます。</p></div><aside class="sidebar"><div class="settings" id="settings"><div class="settings-title">設定</div><div id="pdf-image-options" class="hidden">
+  <label class="pdf-form-row">用紙サイズ<select id="pdf-paper">
+    <optgroup label="A判（ISO）">
+      <option value="a2">A2（420 × 594 mm）</option>
+      <option value="a3">A3（297 × 420 mm）</option>
+      <option value="a4" selected>A4（210 × 297 mm）</option>
+      <option value="a5">A5（148 × 210 mm）</option>
+      <option value="a6">A6（105 × 148 mm）</option>
+    </optgroup>
+    <optgroup label="B判（JIS）">
+      <option value="b4">B4（257 × 364 mm）</option>
+      <option value="b5">B5（182 × 257 mm）</option>
+    </optgroup>
+    <optgroup label="北米の用紙">
+      <option value="letter">Letter（216 × 279 mm）</option>
+      <option value="legal">Legal（216 × 356 mm）</option>
+      <option value="tabloid">Tabloid（279 × 432 mm）</option>
+    </optgroup>
+    <optgroup label="その他">
+      <option value="postcard">はがき（100 × 148 mm）</option>
+      <option value="photo-l">L判（89 × 127 mm）</option>
+      <option value="original">画像と同じ比率・サイズ</option>
+    </optgroup>
+  </select></label>
+  <label class="pdf-form-row">用紙の向き<select id="pdf-orientation">
+    <option value="portrait" selected>縦</option>
+    <option value="landscape">横</option>
+    <option value="auto">画像の向きに合わせる</option>
+  </select></label>
+  <label class="pdf-form-row">画像の配置倍率<select id="pdf-placement-mode">
+    <option value="fit" selected>用紙に合わせる</option>
+    <option value="actual">原寸大（100%）</option>
+    <option value="custom">指定倍率</option>
+  </select></label>
+  <label class="pdf-form-row hidden" id="pdf-placement-percent-row">指定倍率（25～200%）
+    <div class="pdf-scale-input"><input id="pdf-placement-percent" type="number" min="25" max="200" step="1" value="100" aria-label="PDF画像の配置倍率（パーセント）"><span>%</span></div>
+  </label>
+  <label class="pdf-form-row">余白<select id="pdf-margin"><option value="0">なし</option><option value="10" selected>10 mm</option><option value="20">20 mm</option></select></label>
+  <label class="pdf-form-row">画質（JPEG）<div class="pdf-inline"><input type="range" id="pdf-img-quality" min="40" max="100" value="90"><output id="pdf-img-quality-out">90%</output></div></label>
+  <label class="pdf-form-row">画像の解像度<select id="pdf-img-dpi"><option value="96">96 DPI（軽量）</option><option value="150" selected>150 DPI（標準）</option><option value="200">200 DPI（高画質）</option><option value="300">300 DPI（印刷向け）</option></select></label>
+  <p class="pdf-sidebar-note">選択画像を1ページずつ配置します。原寸大・指定倍率は96 DPI換算の印刷寸法です。用紙と余白からはみ出す部分は切り抜きます。画質と画像の解像度はPDF内画像の鮮明さを調整します。透明部分は白になります。PDF作成にネット接続は不要です。</p>
+</div><div id="epub-image-options" class="hidden">
+<label class="pdf-form-row">書籍タイトル<input id="epub-image-title" type="text" placeholder="画像集" maxlength="150"></label>
+<label class="pdf-form-row">著者名（任意）<input id="epub-image-author" type="text" placeholder="著者名" maxlength="150"></label>
+<label class="pdf-form-row">画像画質（JPEG）<div class="pdf-inline"><input id="epub-image-quality" type="range" min="50" max="100" value="92"><output id="epub-image-quality-out">92%</output></div></label>
+<p class="pdf-sidebar-note">選択した順序で1画像ずつページを作成します。一般的なEPUBリーダー向けのEPUB 3形式です。画像はJPEGに変換し、透明部分は白色になります。ネット接続不要です。</p>
+</div><label id="quality-row">画質 <input id="quality" type="range" min="1" max="100" value="100"><output id="qout">100%</output></label><div class="field"><label for="target">目標サイズ</label><input id="target" type="number" min="1" step="1" placeholder="現在の容量"><select id="targetunit" aria-label="目標サイズの単位"><option value="1024">KB</option><option value="1048576">MB</option></select></div><div class="help" id="estimate-note">変換後の容量を計算します。</div><div class="help hidden" id="avif-engine-note">目標サイズは容量の上限です。画質や画像内容によっては指定値より小さくなります。AVIFはバックグラウンドで処理します。初回は変換エンジンの読み込みにネット接続が必要です。画像は送信されません。</div><div class="help hidden" id="heic-engine-note">HEICはバックグラウンドで処理します。初回は変換エンジンの読み込みにネット接続が必要です。画像は送信されません。</div><div class="help hidden" id="bmp-engine-note">BMPは24bit・非圧縮形式です。画質調整はできません。透明部分は白色になります。目標サイズを指定した場合は画像の解像度を縮小して上限以内にします。</div><div class="help hidden" id="tiff-engine-note">TIFFは24bit RGB・非圧縮形式です。画質調整はありません。透明部分は白色になります。目標容量に応じて解像度を縮小します。</div><div class="help hidden" id="jxl-engine-note">JXL（JPEG XL）はブラウザ内のWebAssemblyで変換します。画質100%は可逆圧縮のため、99%台との間で容量が大きく変化する場合があります。目標容量は上限値です。初回は変換エンジンの読み込みにネット接続が必要です。画像は送信されません。Chromeなどでは出力したJXL画像を直接表示できない場合があります。</div><div class="field"><label for="maxwidth">幅 (px)</label><input id="maxwidth" type="number" min="1" placeholder="現在のpx"></div><div class="field"><label for="maxheight">高さ (px)</label><input id="maxheight" type="number" min="1" placeholder="現在のpx"></div><div class="field"><label for="resizepercent">縮小率 (%)</label><input id="resizepercent" type="number" min="1" max="100" step="1" value="100"><span class="help">1%単位</span></div><label><input id="aspect" type="checkbox" checked> 縦横比を維持する</label><div class="help">サイズ指定時は縮小します。目標容量に応じてさらに縮小する場合があります。</div></div><button class="primary" id="convert" type="button" disabled>画像を変換する</button><div class="status" id="status" role="status"></div></aside></div></section>
+<input id="fileinput" type="file" accept="image/*,.heic,.heif,.jxl,.tif,.tiff" multiple>
+<input id="pdfFileInput" type="file" accept="application/pdf,.pdf"><input id="epubFileInput" type="file" accept="application/epub+zip,.epub"><div class="feature-row"><span>✓ 完全無料・登録不要</span><span>✓ 複数画像を一括変換</span><span>✓ 画像は外部送信しません</span></div></main>
+<div class="feature-details-backdrop hidden" id="featureDetailsBackdrop">
+  <section class="feature-details-dialog" role="dialog" aria-modal="true" aria-labelledby="featureDetailsTitle" tabindex="-1">
+    <div class="feature-details-heading"><div><span class="feature-details-eyebrow">morhirc 画像変換ツール</span><h2 id="featureDetailsTitle">主な機能</h2></div><button type="button" class="feature-details-close" id="featureDetailsClose" aria-label="機能一覧を閉じる">×</button></div>
+    <p class="feature-details-lead">画像の形式変換・圧縮・サイズ変更を、登録不要でブラウザ内から利用できます。</p>
+    <div class="feature-details-grid">
+      <article><h3>画像形式の変換</h3><p>JPEG・PNG・WebP・AVIF・HEIC・BMP・TIFF・JXLへの出力に対応します。AVIF・HEIC・JXLではWebAssemblyを使用し、BMP・TIFFは24bit RGBの非圧縮形式で保存します。</p></article>
+      <article><h3>画質・目標容量の指定</h3><p>JPEG・WebP・AVIF・HEIC・JXLは画質を調整します。BMP・TIFFは非圧縮で、指定容量がある場合は解像度を縮小します。目標容量は上限値です。</p></article>
+      <article><h3>解像度の変更</h3><p>幅・高さ・縮小率を指定して変換。縦横比を保ったサイズ調整にも対応します。</p></article>
+      <article><h3>複数画像の一括変換</h3><p>画像をまとめて追加し、同じ設定で一括変換できます。変換結果は個別にダウンロードされます。</p></article>
+      <article><h3>プレビュー・拡大表示</h3><p>選択した画像の一覧表示と、拡大・縮小・前後画像への移動に対応します。</p></article>
+      <article><h3>ブラウザ内で処理</h3><p>画像ファイルをサーバーへ送信せず、ご利用のブラウザ内で処理します。AVIF・HEIC・JXLの変換エンジンは外部から読み込みます。</p></article>
+    </div>
+    <div class="feature-details-actions"><button type="button" id="featureDetailsDone">閉じる</button></div>
+  </section>
+</div>
+<div id="imageEpubPreviewDialog" class="epub-preview-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="imageEpubPreviewTitle">
+ <section class="epub-preview-dialog">
+  <div class="epub-preview-dialog-title"><h2 id="imageEpubPreviewTitle">EPUBの変換プレビュー</h2><button type="button" id="epubImagePreviewClose" aria-label="EPUB変換プレビューを閉じる">×</button></div>
+  <p class="epub-preview-subtitle" id="epubImagePreviewSubtitle"></p>
+  <div class="epub-image-book"><div class="epub-image-book-page"><img id="epubImagePreviewImg" alt="EPUBに収録する画像"></div></div>
+  <div class="epub-page-nav" style="margin:14px 0"><button type="button" class="small" id="epubImagePreviewPrev">前のページ</button><span id="epubImagePreviewCount"></span><button type="button" class="small" id="epubImagePreviewNext">次のページ</button></div>
+  <p class="epub-result-note">選択した画像の順序・縦横比を確認できます。保存時は指定画質でJPEGに変換されます。実際の表示領域はEPUBリーダーによって異なります。</p>
+ </section>
+</div>
+<div class="modal hidden" id="modal" role="dialog" aria-modal="true" aria-label="画像ビューア"><div class="modal-top"><span class="name" id="modalname"></span><button id="close" type="button">閉じる ×</button></div><div class="modal-body"><button id="prev" aria-label="前の画像">❮</button><div class="modal-imgbox" id="imgbox"><img id="modalimg" alt="画像プレビュー"></div><button id="next" aria-label="次の画像">❯</button></div><div class="modal-bottom"><span id="meta"></span><button id="minus" aria-label="縮小">−</button><button id="reset">100%</button><button id="plus" aria-label="拡大">＋</button></div></div>
+<script id="avif-worker-source" type="text/plain">
+// v21: classic Worker内で画像を保持し、画質探索中は画素データの再転送を省きます。
+const AVIF_CODEC_URL = 'https://cdn.jsdelivr.net/npm/@jsquash/avif@2.1.1/codec/enc/avif_enc.js';
+const AVIF_CODEC_BASE = 'https://cdn.jsdelivr.net/npm/@jsquash/avif@2.1.1/codec/enc/';
+let codecPromise = null;
+let cachedPixels = null, cachedImageKey = 0, cachedWidth = 0, cachedHeight = 0;
+async function getCodec() {
+  if (!codecPromise) {
+    codecPromise = (async () => {
+      const imported = await import(AVIF_CODEC_URL);
+      if (typeof imported.default !== 'function') throw Error('AVIFエンコーダーを読み込めません');
+      const codec = await imported.default({noInitialRun:true,locateFile:(name)=>AVIF_CODEC_BASE+name});
+      if (typeof codec.encode !== 'function') throw Error('AVIFエンコーダーを初期化できません');
+      return codec;
+    })().catch(error => { codecPromise = null; throw error; });
+  }
+  return codecPromise;
+}
+self.onmessage = async event => {
+  const {id,pixels,width,height,quality,imageKey} = event.data;
+  try {
+    if (pixels) {
+      cachedPixels = new Uint8Array(pixels);
+      cachedImageKey = imageKey;
+      cachedWidth = width;
+      cachedHeight = height;
+    }
+    if (!cachedPixels || cachedImageKey !== imageKey) throw Error('AVIF画像キャッシュが一致しません');
+    const codec = await getCodec();
+    const percent = Math.max(1,Math.min(100,Math.round(quality*100)));
+    const options = {quality:percent,qualityAlpha:-1,denoiseLevel:0,tileColsLog2:0,
+      tileRowsLog2:0,speed:8,subsample:1,chromaDeltaQ:false,sharpness:0,
+      tune:0,enableSharpYUV:false,bitDepth:8};
+    const encoded = codec.encode(cachedPixels,cachedWidth,cachedHeight,options);
+    if (!encoded || !encoded.byteLength) throw Error('AVIFエンコーダーから画像が返されませんでした');
+    // WebAssemblyが使用するメモリから切り離して返します。
+    const bytes = new Uint8Array(encoded);
+    if (bytes.length < 16 || String.fromCharCode(...bytes.subarray(4,8)) !== 'ftyp' ||
+        !String.fromCharCode(...bytes.subarray(8,Math.min(bytes.length,64))).includes('avif')) {
+      throw Error('AVIFファイルの検証に失敗しました');
+    }
+    self.postMessage({id,buffer:bytes.buffer},[bytes.buffer]);
+  } catch (error) {
+    self.postMessage({id,error:String(error && error.message || error)});
+  }
+};
+</script>
+<script id="heic-worker-source" type="text/plain">
+// HEIC：x265/libheif WebAssembly。Blob classic Workerで実行。
+const HEIC_MODULE_URL='https://cdn.jsdelivr.net/npm/@pbk20191/icodec@0.9.3/lib/index.js';
+const HEIC_WASM_URL='https://cdn.jsdelivr.net/npm/@pbk20191/icodec@0.9.3/dist/heic-enc.wasm';
+let encoderPromise=null, cached=null, cachedKey=0, cachedWidth=0, cachedHeight=0;
+async function encoder(){
+ if(!encoderPromise){
+  encoderPromise=(async()=>{
+   const module=await import(HEIC_MODULE_URL);
+   if(!module.heic || typeof module.heic.loadEncoder!=='function')throw Error('HEICエンコーダーの読み込みに失敗しました');
+   await module.heic.loadEncoder(HEIC_WASM_URL);
+   return module.heic;
+  })().catch(error=>{encoderPromise=null;throw error});
+ }
+ return encoderPromise;
+}
+self.onmessage=async e=>{
+ const {id,pixels,width,height,imageKey,quality}=e.data;
+ try{
+  if(pixels){cached=new Uint8ClampedArray(pixels);cachedKey=imageKey;cachedWidth=width;cachedHeight=height;}
+  if(!cached || imageKey!==cachedKey)throw Error('HEIC画像キャッシュが一致しません');
+  const codec=await encoder();
+  const output=codec.encode({data:cached,width:cachedWidth,height:cachedHeight}, {
+   quality:Math.max(1,Math.min(100,Math.round(quality*100))),
+   lossless:false,preset:'veryfast',tune:'ssim',complexity:10,chroma:'420'
+  });
+  if(!output || !output.byteLength)throw Error('HEIC変換結果が空です');
+  const bytes=output instanceof Uint8Array?output:new Uint8Array(output);
+  if(bytes.length<24 || String.fromCharCode(...bytes.subarray(4,8))!=='ftyp')throw Error('HEICファイルの検証に失敗しました');
+  const data=bytes.slice();
+  self.postMessage({id,buffer:data.buffer},[data.buffer]);
+ }catch(error){self.postMessage({id,error:String(error&&error.message||error)});}
+};
+</script>
+<script id="jxl-worker-source" type="text/plain">
+// JXL: @jsquash/jxl/libjxl (Apache-2.0 + BSD), single-threaded WASM in classic Blob Worker.
+// Load only when JXL is chosen, retaining the last canvas pixels for quality searches.
+const JXL_CODEC_BASE='https://cdn.jsdelivr.net/npm/@jsquash/jxl@1.3.0/codec/enc/';
+let encoderPromise=null, cachedPixels=null, cachedKey=0, cachedWidth=0, cachedHeight=0;
+async function getEncoder(){
+ if(!encoderPromise){
+  encoderPromise=(async()=>{
+   const module=await import(JXL_CODEC_BASE+'jxl_enc.js');
+   if(typeof module.default!=='function')throw Error('JXLエンコーダーを読み込めません');
+   const codec=await module.default({noInitialRun:true,locateFile:(name)=>JXL_CODEC_BASE+name});
+   if(typeof codec.encode!=='function')throw Error('JXLエンコーダーを初期化できません');
+   return codec;
+  })().catch(error=>{encoderPromise=null;throw error;});
+ }
+ return encoderPromise;
+}
+self.onmessage=async event=>{
+ const {id,pixels,width,height,imageKey,quality,effort=4}=event.data;
+ try{
+  if(pixels){cachedPixels=new Uint8ClampedArray(pixels);cachedKey=imageKey;cachedWidth=width;cachedHeight=height;}
+  if(!cachedPixels||cachedKey!==imageKey)throw Error('JXL画像キャッシュが一致しません');
+  const codec=await getEncoder();
+  const percent=Math.max(1,Math.min(100,Number(quality)*100));
+  // Keep fractional qualities close to 100: 100% is lossless, while <100% is lossy.
+  const options={effort:Math.max(1,Math.min(9,Math.round(effort))),quality:percent,progressive:false,epf:-1,
+   lossyPalette:false,decodingSpeedTier:0,photonNoiseIso:0,lossyModular:false,lossless:false};
+  const raw=codec.encode(cachedPixels,cachedWidth,cachedHeight,options);
+  if(!raw||!raw.byteLength)throw Error('JXLの出力が空です');
+  const bytes=new Uint8Array(raw); // copy off Emscripten's memory
+  // A raw JXL codestream begins FF 0A; a boxed JXL starts 00 00 00 0C 'JXL '.
+  const codestream=bytes.length>2&&bytes[0]===255&&bytes[1]===10;
+  const container=bytes.length>12&&bytes[0]===0&&bytes[1]===0&&bytes[2]===0&&bytes[3]===12&&
+   bytes[4]===74&&bytes[5]===88&&bytes[6]===76&&bytes[7]===32&&
+   bytes[8]===13&&bytes[9]===10&&bytes[10]===135&&bytes[11]===10;
+  if(!codestream&&!container)throw Error('JXLファイルの形式確認に失敗しました');
+  self.postMessage({id,buffer:bytes.buffer},[bytes.buffer]);
+ }catch(error){self.postMessage({id,error:String(error&&error.message||error)});}
+};
+</script>
+<script>
+'use strict';const $=id=>document.getElementById(id);
+// PDFエディターと同じ右上メニュー。
+const siteMenu=$('siteMenu'),menuToggle=$('menuToggle'),menuPopover=$('menuPopover');
+const featureBackdrop=$('featureDetailsBackdrop');
+let featureReturnFocus=null;
+function closeSiteMenu(){menuPopover.classList.add('hidden');menuToggle.setAttribute('aria-expanded','false');menuToggle.setAttribute('aria-label','メニューを開く')}
+function setSiteMenu(open){menuPopover.classList.toggle('hidden',!open);menuToggle.setAttribute('aria-expanded',String(open));menuToggle.setAttribute('aria-label',open?'メニューを閉じる':'メニューを開く')}
+menuToggle.addEventListener('click',()=>setSiteMenu(menuPopover.classList.contains('hidden')));
+document.addEventListener('pointerdown',e=>{if(!siteMenu.contains(e.target))closeSiteMenu()});
+function closeFeatureDetails(){if(featureBackdrop.classList.contains('hidden'))return;featureBackdrop.classList.add('hidden');(featureReturnFocus?.isConnected?featureReturnFocus:menuToggle).focus();featureReturnFocus=null}
+function openFeatureDetails(){featureReturnFocus=menuToggle;closeSiteMenu();featureBackdrop.classList.remove('hidden');$('featureDetailsClose').focus()}
+$('menuFeatures').addEventListener('click',openFeatureDetails);
+$('featureDetailsClose').addEventListener('click',closeFeatureDetails);
+$('featureDetailsDone').addEventListener('click',closeFeatureDetails);
+featureBackdrop.addEventListener('click',e=>{if(e.target===featureBackdrop)closeFeatureDetails()});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){if(!featureBackdrop.classList.contains('hidden'))closeFeatureDetails();else closeSiteMenu()}});
+
+let category='image';
+let pdfDocFile=null,pdfDocument=null,pdfPageCount=0,pdfPreviewPage=1,pdfPreviewToken=0,pdfLoadToken=0,pdfBusy=false;
+const categoryConfig={image:{title:'画像を別の形式に変換',intro:'JPEG・PNG・WebP・AVIF・HEIC・BMP・TIFF・JXLなどの画像形式を簡単に変換できます。<br>無料・登録不要。画像はブラウザ内で処理します。',hint:'画像形式の変換・圧縮・縮小に対応しています。'},pdf:{title:'PDFを画像・HTMLに変換',intro:'PDFの各ページをPNG・JPEG・HTMLに変換できます。',hint:'PDFページの変換に対応しています。'},epub:{title:'EPUBをHTML・PDFに変換',intro:'EPUBの文章と画像をHTML・PDFに変換します。<br>DRM保護のない電子書籍に対応します。',hint:'EPUB → HTML・PDFに対応しています。'}};
+function setCategory(next){
+ if(next===category)return;
+ if((selected.length||pdfDocFile||epubDocFile)&&!confirm('変換対象を切り替えると選択済みファイルが解除されます。続けますか？'))return;
+ for(const f of [...urls.keys()])cleanup(f);selected=[];clearPdfState();clearEpubState();$('imageEpubPreviewDialog').classList.add('hidden');++infoVersion;
+ type='';ext='';$('avif-engine-note').classList.add('hidden');$('heic-engine-note').classList.add('hidden');$('bmp-engine-note').classList.add('hidden');$('tiff-engine-note').classList.add('hidden');$('jxl-engine-note').classList.add('hidden');$('quality-row').classList.remove('hidden');
+ category=next;document.querySelectorAll('[data-category]').forEach(b=>{const active=b.dataset.category===next;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active))});
+ const config=categoryConfig[next];$('landing-title').textContent=config.title;document.querySelector('.intro').innerHTML=config.intro;
+ const ready=next==='image';$('drop').classList.toggle('hidden',!ready);$('future-formats').classList.toggle('hidden',ready);
+  $('formats').disabled=!ready;$('pending-format').hidden=ready;$('formats').value=ready?'':'pending';
+  $('settings').classList.toggle('hidden',!ready);$('convert').classList.toggle('hidden',!ready);$('add').classList.toggle('hidden',false);$('add').textContent=next==='pdf'?'＋ PDFを変更':next==='epub'?'＋ EPUBを変更':'＋ 画像を追加';
+ if(next==='epub')$('future-formats').textContent='EPUB → HTML・PDF';
+ updateImagePdfSettings();
+ $('status').textContent='';$('fileinput').value='';render();
+}
+document.querySelectorAll('[data-category]').forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.category==='image'));b.onclick=()=>setCategory(b.dataset.category)});
+let selected=[],type='',ext='',viewIndex=0,zoom=1;const urls=new Map();function urlFor(file){if(!urls.has(file))urls.set(file,URL.createObjectURL(file));return urls.get(file)}function cleanup(file){if(urls.has(file)){URL.revokeObjectURL(urls.get(file));urls.delete(file)}}function choose(){ if(category==='pdf')$('pdfFileInput').click();else if(category==='epub')$('epubFileInput').click();else $('fileinput').click() }$('choose').onclick=e=>{e.stopPropagation();choose()};$('drop').onclick=choose;$('drop').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose()}};$('add').onclick=choose;$('fileinput').onchange=e=>{addFiles(e.target.files);e.target.value=''};for(const area of [$('drop'),$('drop-more')]){area.ondragover=e=>{e.preventDefault();area.classList.add('over')};area.ondragleave=()=>area.classList.remove('over');area.ondrop=e=>{e.preventDefault();area.classList.remove('over');addFiles(e.dataTransfer.files)}}
+$('start-over').onclick=e=>{e.preventDefault();if((selected.length||pdfDocFile||epubDocFile)&&!confirm('選択したファイルを解除し、最初の画面に戻りますか？'))return;for(const f of [...urls.keys()])cleanup(f);selected=[];clearPdfState();clearEpubState();$('modal').classList.add('hidden');$('imageEpubPreviewDialog').classList.add('hidden');$('status').textContent='';$('fileinput').value='';manualTarget=false;type='';ext='';$('formats').value='';$('avif-engine-note').classList.add('hidden');$('heic-engine-note').classList.add('hidden');$('bmp-engine-note').classList.add('hidden');$('tiff-engine-note').classList.add('hidden');$('jxl-engine-note').classList.add('hidden');$('quality-row').classList.remove('hidden');updateImagePdfSettings();render();window.scrollTo(0,0)};function addFiles(files){const added=Array.from(files).filter(f=>f.type.startsWith('image/')||/\.(heic|heif|jxl|tif|tiff|bmp|avif)$/i.test(f.name));selected.push(...added);render();$('status').textContent=added.length?'':'画像ファイルを選択してください'}let isConverting=false;function updateConvertAvailability(){ $('convert').disabled=isConverting||category!=='image'||!type||selected.length===0; }function render(){
+ if(category==='pdf'){
+  $('epubLanding').classList.add('hidden');$('epubWorkspace').classList.add('hidden');
+  $('landing').classList.add('hidden');$('workspace').classList.add('hidden');
+  $('pdfLanding').classList.toggle('hidden',!!pdfDocFile);$('pdfWorkspace').classList.toggle('hidden',!pdfDocFile);
+  $('header-current').classList.toggle('hidden',!pdfDocFile);
+  if(pdfDocFile){$('current-label').textContent='現在';$('current-info').textContent=`PDF ・ ${readable(pdfDocFile.size)}${pdfPageCount?' ・ '+pdfPageCount+'ページ':''}`;}
+  return;
+ }
+ $('pdfLanding').classList.add('hidden');$('pdfWorkspace').classList.add('hidden');
+ if(category==='epub'){
+   $('landing').classList.add('hidden');$('workspace').classList.add('hidden');
+   $('epubLanding').classList.toggle('hidden',!!epubDocFile);$('epubWorkspace').classList.toggle('hidden',!epubDocFile);
+   $('header-current').classList.toggle('hidden',!epubDocFile);
+   if(epubDocFile){$('current-label').textContent='現在';$('current-info').textContent=`EPUB ・ ${readable(epubDocFile.size)}${epubChapters.length?' ・ '+epubChapters.length+'章':''}`;}
+   return;
+ }
+ $('epubLanding').classList.add('hidden');$('epubWorkspace').classList.add('hidden');
+ const has=selected.length>0;updateConvertAvailability();$('landing').classList.toggle('hidden',has);$('workspace').classList.toggle('hidden',!has);$('count').textContent=selected.length;const wrap=$('thumbs');wrap.replaceChildren();selected.forEach((file,i)=>{const item=document.createElement('div');item.className='thumb';const btn=document.createElement('button');btn.className='view';btn.type='button';btn.title='拡大表示';const img=new Image();img.src=urlFor(file);img.alt=file.name;img.onerror=()=>{btn.replaceChildren();const note=document.createElement('span');note.className='unsupported';note.textContent='この形式のプレビューには対応していません';btn.append(note)};btn.append(img);btn.onclick=()=>openViewer(i);const name=document.createElement('div');name.className='filename';name.title=file.name;name.textContent=file.name;const remove=document.createElement('button');remove.className='remove';remove.type='button';remove.textContent='×';remove.title='画像を削除';remove.onclick=()=>{cleanup(file);selected.splice(i,1);render()};item.append(btn,name,remove);
+  const order=document.createElement('div');order.className='reorder-row';
+  for(const [delta,text] of [[-1,'↑ 前へ'],[1,'↓ 次へ']]){
+   const move=document.createElement('button');move.type='button';move.textContent=text;move.disabled=i+delta<0||i+delta>=selected.length;
+   move.onclick=()=>{const j=i+delta;[selected[i],selected[j]]=[selected[j],selected[i]];render()};order.append(move);
+  }
+  item.append(order);wrap.append(item)});updateCurrentInfo()}
+function openViewer(i){viewIndex=i;zoom=1;$('modal').classList.remove('hidden');showViewer()}function showViewer(){const f=selected[viewIndex];if(!f){$('modal').classList.add('hidden');return}$('modalname').textContent=f.name;$('modalimg').src=urlFor(f);$('meta').textContent=`${viewIndex+1} / ${selected.length}　・　${(f.size/1024/1024).toFixed(2)} MB`;$('prev').disabled=selected.length<2;$('next').disabled=selected.length<2;applyZoom()}function applyZoom(){$('modalimg').style.transform=`scale(${zoom})`;$('reset').textContent=Math.round(zoom*100)+'%'}function move(d){viewIndex=(viewIndex+d+selected.length)%selected.length;zoom=1;showViewer()}$('prev').onclick=()=>move(-1);$('next').onclick=()=>move(1);$('close').onclick=()=> $('modal').classList.add('hidden');$('plus').onclick=()=>{zoom=Math.min(5,zoom+.25);applyZoom()};$('minus').onclick=()=>{zoom=Math.max(.25,zoom-.25);applyZoom()};$('reset').onclick=()=>{zoom=1;applyZoom()};$('imgbox').addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.25,Math.min(5,zoom+(e.deltaY<0?.15:-.15)));applyZoom()},{passive:false});document.addEventListener('keydown',e=>{if($('modal').classList.contains('hidden'))return;if(e.key==='Escape')$('modal').classList.add('hidden');if(e.key==='ArrowLeft')move(-1);if(e.key==='ArrowRight')move(1)});
+$('formats').addEventListener('change',e=>{const option=e.target.selectedOptions[0];if(!option||option.disabled)return;type=option.value;ext=option.dataset.ext||'';$('avif-engine-note').classList.toggle('hidden',type!=='image/avif');$('heic-engine-note').classList.toggle('hidden',type!=='image/heic');$('bmp-engine-note').classList.toggle('hidden',type!=='image/bmp');$('tiff-engine-note').classList.toggle('hidden',type!=='image/tiff');$('jxl-engine-note').classList.toggle('hidden',type!=='image/jxl');$('quality-row').classList.toggle('hidden',type==='image/bmp'||type==='image/tiff');updateConvertAvailability();updateImagePdfSettings();scheduleEstimate()});$('quality').oninput=()=>{$('qout').textContent=$('quality').value+'%';scheduleEstimate()};
+function readable(bytes){return bytes>=1048576?(bytes/1048576).toFixed(2)+' MB':(bytes/1024).toFixed(1)+' KB'}
+let infoVersion=0, estimateVersion=0, estimateTimer=0, manualTarget=false, dimensions={width:0,height:0}, sizeEdited=false;
+function targetDisplay(bytes){const unit=Number($('targetunit').value);return unit===1024?String(Math.max(1,Math.round(bytes/1024))):String(Math.max(.01,Math.round(bytes/1048576*100)/100))}
+function desiredDimensions(img){
+ const ow=img.naturalWidth,oh=img.naturalHeight;
+ const w=Math.max(1,Number($('maxwidth').value)||ow),h=Math.max(1,Number($('maxheight').value)||oh);
+ if($('aspect').checked){const scale=Math.min(w/ow,h/oh);return [Math.max(1,Math.round(ow*scale)),Math.max(1,Math.round(oh*scale))]}
+ return [w,h];
+}
+function makeCanvas(img,w,h){if(w*h>80000000||w>16384||h>16384)throw Error('指定寸法が大きすぎます');const c=document.createElement('canvas');c.width=w;c.height=h;const ctx=c.getContext('2d');if(type==='image/jpeg'||type==='image/heic'||type==='image/bmp'||type==='image/tiff'){ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h)}ctx.drawImage(img,0,0,w,h);return c}
+function scheduleEstimate(){
+ clearTimeout(estimateTimer);const token=++estimateVersion;
+ if(!type){$('estimate-note').textContent='変換先の形式を選択してください。';return;}
+ if(type==='application/pdf'||type==='application/epub+zip'){$('estimate-note').textContent='作成後に容量を表示します。';return;}
+ if(!selected.length){$('estimate-note').textContent='画像を選択してください。';return;}
+ if(type==='image/tiff'){
+  if(!dimensions.width||!dimensions.height){$('estimate-note').textContent='画像寸法を取得しています…';return;}
+  try{
+   const [width,height]=desiredDimensions({naturalWidth:dimensions.width,naturalHeight:dimensions.height});
+   const size=tiffLayout(width,height).size;
+   if(!manualTarget){$('target').value=targetDisplay(size);$('target').placeholder='現在の容量';$('estimate-note').textContent='TIFF推定容量：約 '+readable(size)+'（非圧縮）';}
+   else{
+    const limit=Math.floor(Number($('target').value)*Number($('targetunit').value));
+    if(!Number.isFinite(limit)||limit<1){$('estimate-note').textContent='目標サイズを正しく入力してください。';return;}
+    const [tw,th]=tiffFitDimensions(width,height,limit);
+    $('estimate-note').textContent=tw===width&&th===height?'TIFF推定容量：約 '+readable(size)+'（上限以内）':`TIFF縮小後：約 ${readable(tiffLayout(tw,th).size)}（${tw}×${th} px）`;
+   }
+  }catch(error){$('estimate-note').textContent=error.message;}
+  return;
+ }
+ if(type==='image/bmp'){
+  if(!dimensions.width||!dimensions.height){$('estimate-note').textContent='画像寸法を取得しています…';return;}
+  try{
+   const [width,height]=desiredDimensions({naturalWidth:dimensions.width,naturalHeight:dimensions.height});
+   const size=bmpByteSize(width,height);
+   if(!manualTarget){$('target').value=targetDisplay(size);$('target').placeholder='現在の容量';$('estimate-note').textContent='BMP推定容量：約 '+readable(size)+'（非圧縮）';}
+   else{
+    const limit=Math.floor(Number($('target').value)*Number($('targetunit').value));
+    if(!Number.isFinite(limit)||limit<1){$('estimate-note').textContent='目標サイズを正しく入力してください。';return;}
+    const [tw,th]=bmpFitDimensions(width,height,limit);
+    $('estimate-note').textContent=tw===width&&th===height?'BMP推定容量：約 '+readable(size)+'（上限以内）':`BMP縮小後：約 ${readable(bmpByteSize(tw,th))}（${tw}×${th} px）`;
+   }
+  }catch(error){$('estimate-note').textContent=error.message;}
+  return;
+ }
+ if(type==='image/avif'||type==='image/heic'||type==='image/jxl'){
+  const label=type==='image/heic'?'HEIC':type==='image/jxl'?'JXL':'AVIF';
+  $('estimate-note').textContent=manualTarget?'指定容量以下を目指して変換します（容量は変換後に確認）。':label+'容量は変換後に表示します（事前計算なし）。';
+  if(!manualTarget){$('target').value='';$('target').placeholder='任意で指定';}
+  return;
+ }
+ $('target').placeholder='現在の容量';
+ $('estimate-note').textContent='計算中…';
+ estimateTimer=setTimeout(async()=>{
+ const f=selected[0];if(!f)return;
+ try{
+  const img=await loadImage(f);if(token!==estimateVersion)return;
+  const [w,h]=desiredDimensions(img);
+  const c=makeCanvas(img,w,h);
+  const blob=await encodeCanvas(c,type,Number($('quality').value)/100);
+  if(token!==estimateVersion)return;
+  const current=readable(blob.size);
+  if(!manualTarget){$('target').value=targetDisplay(blob.size);$('estimate-note').textContent='推定容量：約 '+current}
+  else{
+   const limit=Number($('target').value)*Number($('targetunit').value);
+   if(!Number.isFinite(limit)||limit<=0){$('estimate-note').textContent='目標サイズを正しく入力してください。';return}
+   if(type==='image/png'){$('estimate-note').textContent='PNGは目標容量への自動調整に対応していません。';return}
+   $('estimate-note').textContent='容量優先・推定：約 '+current;
+  }
+ }catch(e){if(token===estimateVersion)$('estimate-note').textContent=e.message||'容量を計算できませんでした'}
+ },220)
+}
+function sourceFormat(file){
+ const extension=(file.name.split('.').pop()||'').toUpperCase();
+ const names={'image/jpeg':'JPEG','image/png':'PNG','image/webp':'WebP','image/avif':'AVIF','image/heic':'HEIC','image/heif':'HEIF','image/svg+xml':'SVG','image/bmp':'BMP','image/tiff':'TIFF','image/gif':'GIF'};
+ return names[file.type]||({'JPG':'JPEG','TIF':'TIFF'}[extension]||extension||'不明');
+}
+async function updateCurrentInfo(){
+ const version=++infoVersion,f=selected[0],headerCurrent=$('header-current');
+ if(!f){headerCurrent.classList.add('hidden');$('current-info').textContent='';dimensions={width:0,height:0};scheduleEstimate();return}
+ headerCurrent.classList.remove('hidden');$('current-label').textContent=selected.length>1?'先頭画像':'現在';
+ const base=`${sourceFormat(f)} ・ ${readable(f.size)}`;
+ $('current-info').textContent=base+' ・ 読み込み中…';
+ manualTarget=false;sizeEdited=false;$('resizepercent').value='100';$('target').value=targetDisplay(f.size);$('maxwidth').value='';$('maxheight').value='';
+ try{
+  const img=await loadImage(f);if(version!==infoVersion)return;
+  dimensions={width:img.naturalWidth,height:img.naturalHeight};
+  $('current-info').textContent=`${base} ・ ${img.naturalWidth}×${img.naturalHeight} px`;
+  $('maxwidth').value=String(img.naturalWidth);$('maxheight').value=String(img.naturalHeight);
+  $('maxwidth').placeholder='現在のpx';$('maxheight').placeholder='現在のpx';
+  scheduleEstimate();
+ }catch{
+  if(version!==infoVersion)return;
+  dimensions={width:0,height:0};$('current-info').textContent=base+' ・ 寸法取得不可';
+  $('maxwidth').placeholder='取得不可';$('maxheight').placeholder='取得不可';
+ }
+}
+$('target').addEventListener('input',()=>{manualTarget=$('target').value.trim()!=='';scheduleEstimate()});
+$('targetunit').onchange=()=>{const current=Number($('target').value),old=Number($('targetunit').dataset.previous||1024);if(current>0)$('target').value=String(Math.max(.001,Math.round(current*old/Number($('targetunit').value)*1000)/1000));$('targetunit').dataset.previous=$('targetunit').value;scheduleEstimate()};
+for(const id of ['maxwidth','maxheight'])$(id).addEventListener('input',()=>{
+ if($('aspect').checked&&dimensions.width&&dimensions.height){
+ const value=Number($(id).value);if(value>0){const other=id==='maxwidth'?'maxheight':'maxwidth';$(other).value=String(Math.max(1,Math.round(value*(id==='maxwidth'?dimensions.height/dimensions.width:dimensions.width/dimensions.height))))}
+ }
+ const width=Number($('maxwidth').value)||dimensions.width;
+ const height=Number($('maxheight').value)||dimensions.height;
+ $('resizepercent').value=String(Math.max(1,Math.min(100,Math.round(Math.min(width/dimensions.width,height/dimensions.height)*100))))
+ scheduleEstimate();
+});
+$('resizepercent').addEventListener('input',()=>{
+ if(!dimensions.width)return;
+ const pct=Math.max(1,Math.min(100,Number($('resizepercent').value)||1));
+ $('maxwidth').value=String(Math.max(1,Math.round(dimensions.width*pct/100)));
+ $('maxheight').value=String(Math.max(1,Math.round(dimensions.height*pct/100)));
+ scheduleEstimate();
+});
+$('aspect').addEventListener('change',scheduleEstimate);
+function loadImage(file){return new Promise((resolve,reject)=>{const img=new Image();img.onload=()=>resolve(img);img.onerror=()=>reject(Error('この画像形式はブラウザで読み込めません'));img.src=urlFor(file)})}function blobFromCanvas(c,mime,q){return new Promise(resolve=>c.toBlob(resolve,mime,q))}function save(blob,name){const a=document.createElement('a'),url=URL.createObjectURL(blob);a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),60000)}/* AVIF: jSquash / libavif (Apache-2.0), supplied by a version-pinned CDN.
+   Raw image pixels and the converted file remain inside this browser. */
+let avifWorker=null, avifWorkerUrl=null, avifTaskId=0;
+let avifImageKey=0, avifCanvasCache=new WeakMap();
+const avifPending=new Map();
+function stopAvifWorker(reason){
+ if(avifWorker){avifWorker.terminate();avifWorker=null;}
+ if(avifWorkerUrl){URL.revokeObjectURL(avifWorkerUrl);avifWorkerUrl=null;}
+ if(reason){for(const task of avifPending.values())task.reject(Error(reason));}
+ avifPending.clear();
+ avifCanvasCache=new WeakMap();
+}
+function getAvifWorker(){
+ if(avifWorker)return avifWorker;
+ if(typeof Worker==='undefined')throw Error('このブラウザはAVIFのバックグラウンド処理に対応していません');
+ avifWorkerUrl=URL.createObjectURL(new Blob([$('avif-worker-source').textContent],{type:'text/javascript'}));
+ // file:// 等の不透明なオリジンでは blob: の module Worker が Chrome で失敗するため、
+ // 動的 import() を実行できる classic Worker を使用します。エンコード自体は別スレッドのままです。
+ try{avifWorker=new Worker(avifWorkerUrl,{type:'classic'});}catch(error){stopAvifWorker();throw Error('AVIF変換エンジンを起動できません：'+(error.message||String(error)));}
+ avifWorker.onmessage=event=>{
+  const {id,buffer,error}=event.data;
+  const task=avifPending.get(id);if(!task)return;
+  avifPending.delete(id);
+  if(error){console.error('AVIF encode error:',error);task.reject(Error('AVIF変換に失敗しました：'+error));return;}
+  task.resolve(new Blob([buffer],{type:'image/avif'}));
+ };
+ avifWorker.onerror=event=>{
+  console.error('AVIF Worker error',event.message||event);
+  // Workerの読み込みエラーはブラウザによってメッセージが伏せられる場合があります。
+  stopAvifWorker('AVIFのバックグラウンド処理を開始できませんでした。ブラウザのコンソールも確認してください');
+ };
+ return avifWorker;
+}
+function encodeAvif(canvas,quality){
+ // 同一Canvasでの複数回エンコードでは、最初の画素転送のみを実行します。
+ const worker=getAvifWorker();
+ const id=++avifTaskId;
+ let imageKey=avifCanvasCache.get(canvas);
+ const payload={id,quality,imageKey};
+ const transfers=[];
+ if(!imageKey){
+  const ctx=canvas.getContext('2d',{willReadFrequently:true});
+  if(!ctx)throw Error('画像データを取得できません');
+  const raw=ctx.getImageData(0,0,canvas.width,canvas.height);
+  imageKey=++avifImageKey;
+  avifCanvasCache.set(canvas,imageKey);
+  Object.assign(payload,{imageKey,pixels:raw.data.buffer,width:raw.width,height:raw.height});
+  transfers.push(raw.data.buffer);
+ }
+ return new Promise((resolve,reject)=>{
+  avifPending.set(id,{resolve,reject});
+  try{worker.postMessage(payload,transfers);}
+  catch(error){avifPending.delete(id);avifCanvasCache.delete(canvas);reject(Error('AVIF変換の開始に失敗しました'));}
+ });
+}
+
+/* HEIC: @pbk20191/icodec (libheif+x265). Codec fetched once on first use. */
+let heicWorker=null,heicWorkerUrl=null,heicTaskId=0,heicImageKey=0,heicCanvasCache=new WeakMap();
+const heicPending=new Map();
+function stopHeicWorker(reason){
+ if(heicWorker){heicWorker.terminate();heicWorker=null;}
+ if(heicWorkerUrl){URL.revokeObjectURL(heicWorkerUrl);heicWorkerUrl=null;}
+ if(reason)for(const task of heicPending.values())task.reject(Error(reason));
+ heicPending.clear();heicCanvasCache=new WeakMap();
+}
+function getHeicWorker(){
+ if(heicWorker)return heicWorker;
+ if(typeof Worker==='undefined')throw Error('HEICのバックグラウンド処理に対応していません');
+ heicWorkerUrl=URL.createObjectURL(new Blob([$('heic-worker-source').textContent],{type:'text/javascript'}));
+ try{heicWorker=new Worker(heicWorkerUrl,{type:'classic'});}
+ catch(error){stopHeicWorker();throw Error('HEIC Workerを起動できません：'+(error.message||error));}
+ heicWorker.onmessage=event=>{
+  const {id,buffer,error}=event.data,task=heicPending.get(id);
+  if(!task)return;
+  heicPending.delete(id);
+  if(error){task.reject(Error('HEIC変換に失敗しました：'+error));return;}
+  task.resolve(new Blob([buffer],{type:'image/heic'}));
+ };
+ heicWorker.onerror=event=>{console.error('HEIC Worker:',event.message||event);stopHeicWorker('HEIC変換エンジンが起動できませんでした。ネット接続とブラウザ設定をご確認ください');};
+ return heicWorker;
+}
+function encodeHeic(canvas,quality){
+ if(canvas.width*canvas.height>25000000)throw Error('HEICは現在2500万画素以下の画像に対応しています');
+ const worker=getHeicWorker(),id=++heicTaskId;
+ let key=heicCanvasCache.get(canvas),payload={id,quality,imageKey:key},transfers=[];
+ if(!key){
+  const raw=canvas.getContext('2d',{willReadFrequently:true}).getImageData(0,0,canvas.width,canvas.height);
+  key=++heicImageKey;heicCanvasCache.set(canvas,key);
+  payload={id,quality,imageKey:key,pixels:raw.data.buffer,width:raw.width,height:raw.height};
+  transfers=[raw.data.buffer];
+ }
+ return new Promise((resolve,reject)=>{
+  heicPending.set(id,{resolve,reject});
+  try{worker.postMessage(payload,transfers)}
+  catch(error){heicPending.delete(id);heicCanvasCache.delete(canvas);reject(Error('HEIC変換処理を開始できません'));}
+ });
+}
+async function compressHeicToTarget(canvas,limit,baseQuality){
+ let current=canvas;
+ const maxQ=Math.max(1,Math.min(100,Math.round(baseQuality*100)));
+ // CPU負荷の大きいHEVCは少なめの試行回数に抑える。
+ for(let round=0;round<5;round++){
+  const full=await encodeHeic(current,maxQ/100);
+  if(full.size<=limit)return full;
+  const low=await encodeHeic(current,.01);
+  if(low.size<=limit){
+   let best=low,left=2,right=maxQ-1;
+   for(let tries=0;tries<5 && left<=right;tries++){
+    const mid=Math.floor((left+right)/2),candidate=await encodeHeic(current,mid/100);
+    if(candidate.size<=limit){if(candidate.size>best.size)best=candidate;left=mid+1;if(best.size>=limit*.98)break;}
+    else right=mid-1;
+   }
+   return best;
+  }
+  if(current.width<=1&&current.height<=1)break;
+  const factor=Math.max(.1,Math.min(.85,Math.sqrt(limit/low.size)*.94));
+  const w=Math.max(1,Math.floor(current.width*factor)),h=Math.max(1,Math.floor(current.height*factor));
+  if(w===current.width&&h===current.height)break;
+  const next=document.createElement('canvas');next.width=w;next.height=h;
+  const ctx=next.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);ctx.drawImage(current,0,0,w,h);
+  current=next;
+ }
+ throw Error('HEICの目標容量を達成できませんでした。目標サイズを大きくするか解像度を下げてください');
+}
+
+
+/* JPEG XL: single-threaded libjxl WASM runs entirely inside a classic Worker.
+   No image pixels are uploaded; CDN downloads only the module and wasm binary. */
+let jxlWorker=null,jxlWorkerUrl=null,jxlTaskId=0,jxlImageKey=0,jxlCanvasCache=new WeakMap();
+const jxlPending=new Map();
+function stopJxlWorker(reason){
+ if(jxlWorker){jxlWorker.terminate();jxlWorker=null;}
+ if(jxlWorkerUrl){URL.revokeObjectURL(jxlWorkerUrl);jxlWorkerUrl=null;}
+ if(reason)for(const task of jxlPending.values())task.reject(Error(reason));
+ jxlPending.clear();jxlCanvasCache=new WeakMap();
+}
+function getJxlWorker(){
+ if(jxlWorker)return jxlWorker;
+ if(typeof Worker==='undefined')throw Error('このブラウザはJXLのバックグラウンド変換に対応していません');
+ jxlWorkerUrl=URL.createObjectURL(new Blob([$('jxl-worker-source').textContent],{type:'text/javascript'}));
+ try{jxlWorker=new Worker(jxlWorkerUrl,{type:'classic'});}
+ catch(error){stopJxlWorker();throw Error('JXL変換処理を起動できません：'+(error.message||error));}
+ jxlWorker.onmessage=event=>{
+  const {id,buffer,error}=event.data,task=jxlPending.get(id);
+  if(!task)return;
+  jxlPending.delete(id);
+  if(error){task.reject(Error('JXL変換に失敗しました：'+error));return;}
+  task.resolve(new Blob([buffer],{type:'image/jxl'}));
+ };
+ jxlWorker.onerror=event=>{console.error('JXL Worker:',event.message||event);stopJxlWorker('JXL変換エンジンを読み込めませんでした。ネット接続とブラウザ設定をご確認ください');};
+ return jxlWorker;
+}
+function encodeJxl(canvas,quality,effort=4){
+ if(canvas.width*canvas.height>25000000)throw Error('JXLは現在2500万画素以下の画像に対応しています');
+ const worker=getJxlWorker(),id=++jxlTaskId;
+ let key=jxlCanvasCache.get(canvas),payload={id,quality,effort,imageKey:key},transfers=[];
+ if(!key){
+  const ctx=canvas.getContext('2d',{willReadFrequently:true});
+  if(!ctx)throw Error('JXLに渡す画素データを取得できません');
+  const raw=ctx.getImageData(0,0,canvas.width,canvas.height);
+  key=++jxlImageKey;jxlCanvasCache.set(canvas,key);
+  payload={id,quality,effort,imageKey:key,pixels:raw.data.buffer,width:canvas.width,height:canvas.height};
+  transfers=[raw.data.buffer];
+ }
+ return new Promise((resolve,reject)=>{
+  jxlPending.set(id,{resolve,reject});
+  try{worker.postMessage(payload,transfers);}
+  catch(error){jxlPending.delete(id);jxlCanvasCache.delete(canvas);reject(Error('JXL変換処理を開始できません：'+(error.message||error)));}
+ });
+}
+async function compressJxlToTarget(canvas,limit,baseQuality){
+ let current=canvas;
+ const topQuality=Math.max(1,Math.min(100,baseQuality*100));
+ // JXL quality=100 is mathematically lossless. A small reduction below 100 can
+ // abruptly reduce file size; do not round off the fractional part of quality.
+ // The target is a ceiling, not a request to add artificial padding.
+ for(let round=0;round<6;round++){
+  const full=await encodeJxl(current,topQuality/100);
+  if(full.size<=limit)return full;
+  // If a lossless JXL narrowly exceeds the limit, a denser lossless effort
+  // may fit without degrading any image pixels. Only pay this cost near limit.
+  if(topQuality===100&&round===0&&full.size<=limit*1.10){
+   const stronger=await encodeJxl(current,1,7);
+   if(stronger.size<=limit)return stronger;
+  }
+  const minQuality=1;
+  const low=await encodeJxl(current,minQuality/100);
+  if(low.size<=limit){
+   let best=low,bestQuality=minQuality;
+   let left=minQuality,right=topQuality===100?99.999:topQuality;
+   // Explore decimal qualities, particularly 99–99.999%. Six integer-only
+   // probes previously left a large gap below the user's requested ceiling.
+   for(let i=0;i<12&&right-left>0.0005;i++){
+    const q=(left+right)/2;
+    const blob=await encodeJxl(current,q/100);
+    if(blob.size<=limit){
+     // Prioritize pixel quality; use size as a tie-breaker only.
+     if(q>bestQuality||(Math.abs(q-bestQuality)<0.00001&&blob.size>best.size)){
+      best=blob;bestQuality=q;
+     }
+     left=q;
+     if(best.size>=limit*.99)break;
+    }else right=q;
+   }
+   // Highest near-lossless fractional probe. Useful when a narrow encoder
+   // quality step sits above the bisection window.
+   if(topQuality===100&&best.size<limit*.98&&bestQuality<99.999){
+    const nearLossless=await encodeJxl(current,.99999);
+    if(nearLossless.size<=limit&&nearLossless.size>best.size)best=nearLossless;
+   }
+   return best;
+  }
+  if(current.width===1&&current.height===1)break;
+  const scale=Math.max(.10,Math.min(.83,Math.sqrt(limit/low.size)*.94));
+  const w=Math.max(1,Math.floor(current.width*scale)),h=Math.max(1,Math.floor(current.height*scale));
+  if(w===current.width&&h===current.height)break;
+  const next=document.createElement('canvas');next.width=w;next.height=h;
+  next.getContext('2d').drawImage(current,0,0,w,h);
+  current=next;
+ }
+ throw Error('JXLの目標容量を達成できませんでした。容量を増やすか解像度を下げてください');
+}
+
+/* BMP 24-bit BI_RGB: 54-byte header and bottom-up, BGR pixel rows padded to four bytes.
+   No external codec is needed. The worker keeps large loops off the UI thread. */
+const bmpPending=new Map();
+let bmpWorker=null,bmpWorkerUrl=null,bmpTaskId=0;
+function bmpByteSize(width,height){
+ const rowBytes=Math.ceil(width*3/4)*4,bytes=54+rowBytes*height;
+ if(!Number.isSafeInteger(bytes)||bytes>268435456)throw Error('BMPの出力容量が大きすぎます。画像を縮小してください（256 MB以内）。');
+ return bytes;
+}
+function bmpFitDimensions(width,height,limit){
+ if(bmpByteSize(width,height)<=limit)return [width,height];
+ if(bmpByteSize(1,1)>limit)throw Error('目標サイズがBMPの最小容量より小さいため変換できません。');
+ let low=0,high=1,best=[1,1];
+ for(let i=0;i<32;i++){
+  const mid=(low+high)/2,w=Math.max(1,Math.floor(width*mid)),h=Math.max(1,Math.floor(height*mid));
+  if(bmpByteSize(w,h)<=limit){best=[w,h];low=mid;}else high=mid;
+ }
+ return best;
+}
+function stopBmpWorker(reason){
+ if(bmpWorker){bmpWorker.terminate();bmpWorker=null;}
+ if(bmpWorkerUrl){URL.revokeObjectURL(bmpWorkerUrl);bmpWorkerUrl=null;}
+ if(reason)for(const task of bmpPending.values())task.reject(Error(reason));
+ bmpPending.clear();
+}
+function getBmpWorker(){
+ if(bmpWorker)return bmpWorker;
+ if(typeof Worker==='undefined')throw Error('BMP変換に必要なバックグラウンド処理に対応していません');
+ const source=`self.onmessage=e=>{
+  const {id,width,height,pixels}=e.data;
+  try{
+   const rowBytes=Math.ceil(width*3/4)*4,total=54+rowBytes*height;
+   const bytes=new Uint8Array(total),view=new DataView(bytes.buffer),rgba=new Uint8Array(pixels);
+   view.setUint16(0,0x4d42,true);view.setUint32(2,total,true);view.setUint32(10,54,true);
+   view.setUint32(14,40,true);view.setInt32(18,width,true);view.setInt32(22,height,true);
+   view.setUint16(26,1,true);view.setUint16(28,24,true);
+   view.setUint32(34,rowBytes*height,true);
+   view.setInt32(38,2835,true);view.setInt32(42,2835,true);
+   for(let y=0;y<height;y++){
+    const sourceY=height-1-y,base=54+y*rowBytes;
+    for(let x=0;x<width;x++){
+     const i=(sourceY*width+x)*4,j=base+x*3;
+     bytes[j]=rgba[i+2];bytes[j+1]=rgba[i+1];bytes[j+2]=rgba[i];
+    }
+   }
+   self.postMessage({id,buffer:bytes.buffer},[bytes.buffer]);
+  }catch(error){self.postMessage({id,error:error.message||String(error)});}
+ };`;
+ bmpWorkerUrl=URL.createObjectURL(new Blob([source],{type:'text/javascript'}));
+ try{bmpWorker=new Worker(bmpWorkerUrl,{type:'classic'});}
+ catch(error){stopBmpWorker();throw Error('BMP変換処理を起動できません：'+(error.message||error));}
+ bmpWorker.onmessage=e=>{
+  const {id,buffer,error}=e.data,task=bmpPending.get(id);
+  if(!task)return;
+  bmpPending.delete(id);
+  if(error)task.reject(Error('BMP変換に失敗しました：'+error));
+  else task.resolve(new Blob([buffer],{type:'image/bmp'}));
+ };
+ bmpWorker.onerror=e=>{console.error('BMP Worker:',e.message||e);stopBmpWorker('BMP変換のバックグラウンド処理でエラーが発生しました');};
+ return bmpWorker;
+}
+function encodeBmp(canvas){
+ bmpByteSize(canvas.width,canvas.height);
+ const worker=getBmpWorker(),id=++bmpTaskId;
+ const context=canvas.getContext('2d',{willReadFrequently:true});
+ const rgba=context.getImageData(0,0,canvas.width,canvas.height);
+ return new Promise((resolve,reject)=>{
+  bmpPending.set(id,{resolve,reject});
+  try{worker.postMessage({id,width:canvas.width,height:canvas.height,pixels:rgba.data.buffer},[rgba.data.buffer]);}
+  catch(error){bmpPending.delete(id);reject(Error('BMP画像データを送信できません：'+(error.message||error)));}
+ });
+}
+async function compressBmpToTarget(canvas,limit){
+ const [w,h]=bmpFitDimensions(canvas.width,canvas.height,limit);
+ if(w===canvas.width&&h===canvas.height)return encodeBmp(canvas);
+ const reduced=document.createElement('canvas');reduced.width=w;reduced.height=h;
+ const ctx=reduced.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);ctx.drawImage(canvas,0,0,w,h);
+ return encodeBmp(reduced);
+}
+
+
+/* Baseline TIFF 6.0: little-endian, uncompressed, 24-bit RGB with short strips.
+   No external codec. Encoding loops run in a classic Worker, including file://. */
+const tiffPending=new Map();
+let tiffWorker=null,tiffWorkerUrl=null,tiffTaskId=0;
+function tiffLayout(width,height){
+ if(!Number.isSafeInteger(width)||!Number.isSafeInteger(height)||width<1||height<1)throw Error('TIFFの画像寸法が不正です');
+ const rowBytes=width*3;
+ const rowsPerStrip=Math.max(1,Math.floor(65536/rowBytes));
+ const strips=Math.ceil(height/rowsPerStrip);
+ const offsetList=204;
+ const countList=strips>1?offsetList+strips*4:0;
+ const pixelOffset=strips>1?countList+strips*4:offsetList;
+ const size=pixelOffset+rowBytes*height;
+ if(!Number.isSafeInteger(size)||size>268435456)throw Error('TIFFの出力容量が大きすぎます。画像を縮小してください（256 MB以内）。');
+ return {width,height,rowBytes,rowsPerStrip,strips,offsetList,countList,pixelOffset,size};
+}
+function tiffFitDimensions(width,height,limit){
+ if(tiffLayout(width,height).size<=limit)return [width,height];
+ if(tiffLayout(1,1).size>limit)throw Error('目標サイズがTIFFの最小容量より小さいため変換できません。');
+ let low=0,high=1,best=[1,1];
+ for(let i=0;i<34;i++){
+  const mid=(low+high)/2,w=Math.max(1,Math.floor(width*mid)),h=Math.max(1,Math.floor(height*mid));
+  if(tiffLayout(w,h).size<=limit){best=[w,h];low=mid;}else high=mid;
+ }
+ return best;
+}
+function stopTiffWorker(reason){
+ if(tiffWorker){tiffWorker.terminate();tiffWorker=null;}
+ if(tiffWorkerUrl){URL.revokeObjectURL(tiffWorkerUrl);tiffWorkerUrl=null;}
+ if(reason)for(const task of tiffPending.values())task.reject(Error(reason));
+ tiffPending.clear();
+}
+function getTiffWorker(){
+ if(tiffWorker)return tiffWorker;
+ if(typeof Worker==='undefined')throw Error('TIFF変換に必要なバックグラウンド処理に対応していません');
+ const source=`${tiffLayout.toString()}
+ self.onmessage=e=>{
+  const {id,width,height,pixels}=e.data;
+  try{
+   const info=tiffLayout(width,height),bytes=new Uint8Array(info.size),dv=new DataView(bytes.buffer),rgba=new Uint8Array(pixels);
+   // TIFF header: II, magic 42 and first IFD offset 8.
+   bytes[0]=73;bytes[1]=73;dv.setUint16(2,42,true);dv.setUint32(4,8,true);
+   const tags=[
+    [256,4,1,width],[257,4,1,height],[258,3,3,182],[259,3,1,1],
+    [262,3,1,2],[273,4,info.strips,info.strips===1?info.pixelOffset:info.offsetList],
+    [274,3,1,1],[277,3,1,3],[278,4,1,info.rowsPerStrip],
+    [279,4,info.strips,info.strips===1?info.rowBytes*height:info.countList],
+    [282,5,1,188],[283,5,1,196],[284,3,1,1],[296,3,1,2]
+   ];
+   dv.setUint16(8,tags.length,true);
+   tags.forEach(([tag,kind,count,value],i)=>{
+    const p=10+i*12;dv.setUint16(p,tag,true);dv.setUint16(p+2,kind,true);
+    dv.setUint32(p+4,count,true);
+    if(kind===3 && count===1)dv.setUint16(p+8,value,true);
+    else dv.setUint32(p+8,value,true);
+   });
+   dv.setUint32(10+tags.length*12,0,true);
+   dv.setUint16(182,8,true);dv.setUint16(184,8,true);dv.setUint16(186,8,true);
+   dv.setUint32(188,72,true);dv.setUint32(192,1,true);dv.setUint32(196,72,true);dv.setUint32(200,1,true);
+   for(let strip=0;strip<info.strips;strip++){
+    const y=strip*info.rowsPerStrip;
+    const rowCount=Math.min(info.rowsPerStrip,height-y);
+    if(info.strips>1){
+     dv.setUint32(info.offsetList+strip*4,info.pixelOffset+y*info.rowBytes,true);
+     dv.setUint32(info.countList+strip*4,rowCount*info.rowBytes,true);
+    }
+   }
+   for(let src=0,dst=info.pixelOffset;src<rgba.length;src+=4,dst+=3){
+    bytes[dst]=rgba[src];bytes[dst+1]=rgba[src+1];bytes[dst+2]=rgba[src+2];
+   }
+   self.postMessage({id,buffer:bytes.buffer},[bytes.buffer]);
+  }catch(error){self.postMessage({id,error:error.message||String(error)});}
+ };`;
+ tiffWorkerUrl=URL.createObjectURL(new Blob([source],{type:'text/javascript'}));
+ try{tiffWorker=new Worker(tiffWorkerUrl,{type:'classic'});}
+ catch(error){stopTiffWorker();throw Error('TIFF変換処理を起動できません：'+(error.message||error));}
+ tiffWorker.onmessage=e=>{
+  const {id,buffer,error}=e.data,task=tiffPending.get(id);
+  if(!task)return;
+  tiffPending.delete(id);
+  if(error)task.reject(Error('TIFF変換に失敗しました：'+error));
+  else task.resolve(new Blob([buffer],{type:'image/tiff'}));
+ };
+ tiffWorker.onerror=e=>{console.error('TIFF Worker:',e.message||e);stopTiffWorker('TIFF変換のバックグラウンド処理でエラーが発生しました');};
+ return tiffWorker;
+}
+function encodeTiff(canvas){
+ tiffLayout(canvas.width,canvas.height);
+ const worker=getTiffWorker(),id=++tiffTaskId;
+ const pixels=canvas.getContext('2d',{willReadFrequently:true}).getImageData(0,0,canvas.width,canvas.height);
+ return new Promise((resolve,reject)=>{
+  tiffPending.set(id,{resolve,reject});
+  try{worker.postMessage({id,width:canvas.width,height:canvas.height,pixels:pixels.data.buffer},[pixels.data.buffer]);}
+  catch(error){tiffPending.delete(id);reject(Error('TIFF画像データを送信できません：'+(error.message||error)));}
+ });
+}
+async function compressTiffToTarget(canvas,limit){
+ const [w,h]=tiffFitDimensions(canvas.width,canvas.height,limit);
+ if(w===canvas.width&&h===canvas.height)return encodeTiff(canvas);
+ const reduced=document.createElement('canvas');reduced.width=w;reduced.height=h;
+ const ctx=reduced.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,w,h);ctx.drawImage(canvas,0,0,w,h);
+ return encodeTiff(reduced);
+}
+
+async function encodeCanvas(canvas,mime,quality){
+ if(mime==='image/avif')return encodeAvif(canvas,quality);
+ if(mime==='image/heic')return encodeHeic(canvas,quality);
+ if(mime==='image/jxl')return encodeJxl(canvas,quality);
+ if(mime==='image/bmp')return encodeBmp(canvas);
+ if(mime==='image/tiff')return encodeTiff(canvas);
+ const b=await blobFromCanvas(canvas,mime,quality);
+ if(!b||b.type!==mime)throw Error('このブラウザは出力形式に対応していません');
+ return b;
+}
+async function compressAvifToTarget(canvas,limit,baseQuality){
+ let current=canvas;
+ const maxQuality=Math.max(1,Math.min(100,Math.round(baseQuality*100)));
+ // 指定容量は上限です。解像度を保てる範囲では、上限に最も近い画質を探索します。
+ // Worker側で画素を使い回すため、繰り返しエンコードによる主スレッド負荷を抑えます。
+ for(let step=0;step<6;step++){
+  const maximum=await encodeAvif(current,maxQuality/100);
+  if(maximum.size<=limit)return maximum; // 最高指定画質でも既に上限以下
+
+  const minimum=await encodeAvif(current,.01);
+  if(minimum.size<=limit){
+   let best=minimum,lower=2,upper=maxQuality-1;
+   for(let attempt=0;attempt<7&&lower<=upper;attempt++){
+    const q=Math.floor((lower+upper)/2);
+    const sample=await encodeAvif(current,q/100);
+    // 一部の画像では画質と容量が完全な単調増加にならないため、実容量でも比較します。
+    if(sample.size<=limit){
+     if(sample.size>best.size)best=sample;
+     lower=q+1;
+     if(best.size>=limit*.98)break; // 容量差2%以内なら終了
+    }else upper=q-1;
+   }
+   return best;
+  }
+
+  // 最低画質でも容量超過する場合だけ、画像全体を縮小して再探索します。
+  if(current.width===1&&current.height===1)break;
+  const factor=Math.max(.10,Math.min(.85,Math.sqrt(limit/minimum.size)*.94));
+  const w=Math.max(1,Math.floor(current.width*factor));
+  const h=Math.max(1,Math.floor(current.height*factor));
+  if(w===current.width&&h===current.height)break;
+  const next=document.createElement('canvas');next.width=w;next.height=h;
+  next.getContext('2d').drawImage(current,0,0,w,h);
+  current=next;
+ }
+ throw Error('AVIFの目標容量以下にできませんでした。目標サイズを大きくするか画像サイズを下げてください');
+}
+async function compressToTarget(canvas,mime,limit,baseQuality){
+ if(mime==='image/png')throw Error('PNGでは目標容量への自動調整に対応していません。JPEG・WebP・AVIF・HEIC・JXL・BMP・TIFFを選択してください');
+ if(mime==='image/avif')return compressAvifToTarget(canvas,limit,baseQuality);
+ if(mime==='image/heic')return compressHeicToTarget(canvas,limit,baseQuality);
+ if(mime==='image/jxl')return compressJxlToTarget(canvas,limit,baseQuality);
+ if(mime==='image/bmp')return compressBmpToTarget(canvas,limit);
+ if(mime==='image/tiff')return compressTiffToTarget(canvas,limit);
+ let current=canvas;
+ const first=await encodeCanvas(current,mime,baseQuality);if(first.size<=limit)return first;
+ for(let shrink=0;shrink<14;shrink++){
+  let low=.01,high=Math.min(1,baseQuality),best=null;
+  for(let i=0;i<10;i++){const q=(low+high)/2;const blob=await encodeCanvas(current,mime,q);if(blob.size<=limit){best=blob;low=q}else{high=q}}
+  if(best)return best;
+  const smallest=await encodeCanvas(current,mime,.01);
+  if(smallest.size<=limit)return smallest;
+  if(current.width<=1&&current.height<=1)break;
+  const scale=Math.min(.85,Math.sqrt(limit/smallest.size)*.95);
+  const next=document.createElement('canvas');next.width=Math.max(1,Math.floor(current.width*scale));next.height=Math.max(1,Math.floor(current.height*scale));const cx=next.getContext('2d');if(mime==='image/jpeg'){cx.fillStyle='#fff';cx.fillRect(0,0,next.width,next.height)}cx.drawImage(current,0,0,next.width,next.height);current=next;
+ }
+ throw Error('指定した目標サイズを達成できませんでした');
+}
+$('convert').onclick=async()=>{if(isConverting||!type||!selected.length||category!=='image')return;
+ if(type==='application/pdf'){await createPdfFromImages();return;}
+ if(type==='application/epub+zip'){await createEpubFromImages();return;}isConverting=true;const button=$('convert');button.disabled=true;let ok=0,fail=[],results=[];const targetRaw=manualTarget?$('target').value.trim():'',targetValue=Number(targetRaw),limit=targetRaw?Math.floor(targetValue*Number($('targetunit').value)):0;if(targetRaw&&(!Number.isFinite(limit)||limit<1)){$('status').textContent='目標サイズには正の数値を入力してください。';isConverting=false;updateConvertAvailability();return}
+ for(let i=0;i<selected.length;i++){const file=selected[i];$('status').textContent=type==='image/avif'||type==='image/heic'||type==='image/jxl'?`${type==='image/heic'?'HEIC':type==='image/jxl'?'JXL':'AVIF'}変換中 ${i+1} / ${selected.length}（変換処理に時間がかかる場合があります）`:`変換中 ${i+1} / ${selected.length}`;await new Promise(resolve=>setTimeout(resolve,0));try{const img=await loadImage(file);let cw,ch;
+ if(selected.length>1 && dimensions.width && dimensions.height){
+  const rw=(Number($('maxwidth').value)||dimensions.width)/dimensions.width;
+  const rh=(Number($('maxheight').value)||dimensions.height)/dimensions.height;
+  cw=Math.max(1,Math.round(img.naturalWidth*rw));ch=Math.max(1,Math.round(img.naturalHeight*rh));
+ }else{[cw,ch]=desiredDimensions(img)}
+ const canvas=makeCanvas(img,cw,ch);
+ const blob=limit?await compressToTarget(canvas,type,limit,Number($('quality').value)/100):await encodeCanvas(canvas,type,Number($('quality').value)/100);save(blob,file.name.replace(/\.[^.]+$/,'')+'.'+ext);results.push(file.name+' → '+readable(blob.size)+(limit?'（上限 '+readable(limit)+'）':''));ok++}catch(e){fail.push(file.name+'：'+e.message)}}$('status').textContent=`${ok}件変換しました。`+(results.length?' '+results.join(' / '):'')+(fail.length?' 失敗：'+fail.join(' / '):'')+(ok>1?' ※複数ファイルは個別にダウンロードされます。':'');isConverting=false;updateConvertAvailability()};
+
+// v27: 画像からPDFを直接生成。外部ライブラリなし、JPEG DCTストリームをPDFページに埋め込みます。
+function updateImagePdfSettings(){
+ const pdf=type==='application/pdf',epub=type==='application/epub+zip',documentMode=pdf||epub;
+ $('pdf-image-options').classList.toggle('hidden',!pdf);
+ $('epub-image-options').classList.toggle('hidden',!epub);
+ for(const el of $('settings').children){
+  if(el.classList.contains('settings-title')||el.id==='pdf-image-options'||el.id==='epub-image-options')continue;
+  if(documentMode)el.classList.add('hidden');
+  else if(!['avif-engine-note','heic-engine-note','bmp-engine-note','tiff-engine-note','jxl-engine-note'].includes(el.id))el.classList.remove('hidden');
+ }
+ if(!documentMode)$('quality-row').classList.toggle('hidden',type==='image/bmp'||type==='image/tiff');
+ $('convert').textContent=pdf?'PDFを作成する':epub?'EPUBを作成する':'画像を変換する';
+ $('workspace').classList.toggle('pdf-output-selected',documentMode);
+ $('epubImagePreviewOpen').classList.toggle('hidden',!epub);
+ if(!epub)$('imageEpubPreviewDialog').classList.add('hidden');
+}
+// 用紙の向きは全サイズに共通。原寸では画像側の向きを使用します。
+function updatePdfPaperControls(){
+ const original=$('pdf-paper').value==='original';
+ $('pdf-orientation').disabled=original;
+ $('pdf-orientation').title=original?'画像と同じ比率・サイズでは向きの指定は不要です。':'';
+}
+$('pdf-paper').addEventListener('change',updatePdfPaperControls);
+updatePdfPaperControls();
+// 倍率の指定欄は手動指定時だけ表示します。
+function updatePdfPlacementControls(){
+ $('pdf-placement-percent-row').classList.toggle('hidden',$('pdf-placement-mode').value!=='custom');
+}
+$('pdf-placement-mode').addEventListener('change',updatePdfPlacementControls);
+updatePdfPlacementControls();
+$('pdf-img-quality').oninput=()=>$('pdf-img-quality-out').textContent=$('pdf-img-quality').value+'%';
+function concatBuffers(chunks){let length=0;for(const c of chunks)length+=c.length;const out=new Uint8Array(length);let i=0;for(const c of chunks){out.set(c,i);i+=c.length;}return out;}
+function makePdfBytes(pages){
+ const enc=new TextEncoder(),chunks=[],offsets=[0];let length=0;
+ function put(x){const b=typeof x==='string'?enc.encode(x):x;chunks.push(b);length+=b.length;}
+ function objStart(n){offsets[n]=length;put(`${n} 0 obj\n`);}
+ function objEnd(){put('\nendobj\n');}
+ put('%PDF-1.4\n%PDF-Image\n');
+ objStart(1);put('<< /Type /Catalog /Pages 2 0 R >>');objEnd();
+ const pageIds=pages.map((p,i)=>3+i*3);
+ objStart(2);put(`<< /Type /Pages /Kids [${pageIds.map(n=>n+' 0 R').join(' ')}] /Count ${pages.length} >>`);objEnd();
+ for(let i=0;i<pages.length;i++){
+  const p=pages[i],pid=3+i*3,cid=pid+1,iid=pid+2;
+  objStart(pid);put(`<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${p.pageW.toFixed(3)} ${p.pageH.toFixed(3)}] /Resources << /ProcSet [/PDF /ImageC] /XObject << /Im1 ${iid} 0 R >> >> /Contents ${cid} 0 R >>`);objEnd();
+  const content=`q\n${p.clipX.toFixed(3)} ${p.clipY.toFixed(3)} ${p.clipW.toFixed(3)} ${p.clipH.toFixed(3)} re W n\n${p.drawW.toFixed(3)} 0 0 ${p.drawH.toFixed(3)} ${p.x.toFixed(3)} ${p.y.toFixed(3)} cm\n/Im1 Do\nQ\n`;
+  objStart(cid);put(`<< /Length ${enc.encode(content).length} >>\nstream\n`);put(content);put('endstream');objEnd();
+  objStart(iid);put(`<< /Type /XObject /Subtype /Image /Width ${p.width} /Height ${p.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${p.jpeg.length} >>\nstream\n`);put(p.jpeg);put('\nendstream');objEnd();
+ }
+ const xref=length,count=3+pages.length*3;put(`xref\n0 ${count}\n0000000000 65535 f \n`);
+ for(let i=1;i<count;i++)put(String(offsets[i]).padStart(10,'0')+' 00000 n \n');
+ put(`trailer\n<< /Size ${count} /Root 1 0 R >>\nstartxref\n${xref}\n%%EOF\n`);
+ return concatBuffers(chunks);
+}
+async function createPdfFromImages(){
+ isConverting=true;updateConvertAvailability();
+ const pages=[],quality=Number($('pdf-img-quality').value)/100,dpi=Number($('pdf-img-dpi').value),paper=$('pdf-paper').value,marginMm=Number($('pdf-margin').value);
+ const orientation=$('pdf-orientation').value,placement=$('pdf-placement-mode').value;
+ const placementPercent=Number($('pdf-placement-percent').value);
+ if(placement==='custom'&&(!Number.isFinite(placementPercent)||placementPercent<25||placementPercent>200)){
+  $('status').textContent='指定倍率は25～200%で入力してください。';isConverting=false;updateConvertAvailability();return;
+ }
+ // 幅・高さはmm。向きの変更をすべての用紙で共通化します。
+ const paperSizes={
+  a2:[420,594],a3:[297,420],a4:[210,297],a5:[148,210],a6:[105,148],
+  b4:[257,364],b5:[182,257],letter:[215.9,279.4],legal:[215.9,355.6],
+  tabloid:[279.4,431.8],postcard:[100,148], 'photo-l':[89,127]
+ };
+ try{
+  for(let i=0;i<selected.length;i++){
+   const f=selected[i];$('status').textContent=`PDF作成中 ${i+1} / ${selected.length}`;await new Promise(r=>setTimeout(r,0));
+   const img=await loadImage(f);let pw,ph;
+   if(paper==='original'){
+    pw=Math.min(14400,Math.max(10,img.naturalWidth*72/96));
+    ph=Math.min(14400,Math.max(10,img.naturalHeight*72/96));
+   }else{
+    const dims=paperSizes[paper];
+    if(!dims)throw Error('用紙サイズが正しくありません');
+    let [wmm,hmm]=dims;
+    const useLandscape=orientation==='landscape'||(orientation==='auto'&&img.naturalWidth>img.naturalHeight);
+    if(useLandscape)[wmm,hmm]=[hmm,wmm];
+    [pw,ph]=[wmm*72/25.4,hmm*72/25.4];
+   }
+   const mm=marginMm*72/25.4,margin=Math.min(mm,(Math.min(pw,ph)-10)/2);
+   const areaW=pw-2*margin,areaH=ph-2*margin;
+   // 用紙に合わせる: 印刷可能な領域へフィット。
+   // 原寸・指定倍率: 96px=1インチを基準にした印刷寸法（超過分はクリップ）。
+   const scale=placement==='fit'
+    ?Math.min(areaW/img.naturalWidth,areaH/img.naturalHeight)
+    :(72/96)*(placement==='actual'?1:placementPercent/100);
+   const drawW=img.naturalWidth*scale,drawH=img.naturalHeight*scale;
+   const maxPixels=Math.min(35e6,Math.max(1,drawW*drawH*dpi*dpi/72/72));
+   const scalePx=Math.min(1,drawW*dpi/72/img.naturalWidth,drawH*dpi/72/img.naturalHeight,Math.sqrt(maxPixels/(img.naturalWidth*img.naturalHeight)));
+   const width=Math.max(1,Math.round(img.naturalWidth*scalePx)),height=Math.max(1,Math.round(img.naturalHeight*scalePx));
+   const canvas=document.createElement('canvas');canvas.width=width;canvas.height=height;
+   const cx=canvas.getContext('2d');if(!cx)throw Error('画像描画に失敗しました');cx.fillStyle='#fff';cx.fillRect(0,0,width,height);cx.drawImage(img,0,0,width,height);
+   const jpeg=await new Promise(resolve=>canvas.toBlob(resolve,'image/jpeg',quality));if(!jpeg)throw Error('JPEG生成に失敗しました');
+   pages.push({pageW:pw,pageH:ph,drawW,drawH,x:(pw-drawW)/2,y:(ph-drawH)/2,
+    clipX:margin,clipY:margin,clipW:areaW,clipH:areaH,
+    width,height,jpeg:new Uint8Array(await jpeg.arrayBuffer())});
+  }
+  const bytes=makePdfBytes(pages),blob=new Blob([bytes],{type:'application/pdf'});
+  save(blob,selected.length===1?selected[0].name.replace(/\.[^.]+$/,'')+'.pdf':'images-'+selected.length+'pages.pdf');
+  $('status').textContent=`${pages.length}ページのPDFを作成しました（${readable(blob.size)}）。`;
+ }catch(e){$('status').textContent='PDF作成失敗：'+(e.message||e);}
+ finally{isConverting=false;updateConvertAvailability();}
+}
+// PDF -> 画像 / HTML。PDF.jsのみ初回CDN読み込み、ページ描画はローカル実行。
+let pdfjsLoading=null;
+async function loadPdfJS(){
+ if(window.pdfjsLib)return window.pdfjsLib;
+ if(pdfjsLoading)return pdfjsLoading;
+ pdfjsLoading=(async()=>{
+  const sources=['https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js','https://unpkg.com/pdfjs-dist@3.11.174/build/pdf.min.js'];
+  let error;
+  for(const url of sources){
+   try{await new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=url;script.onload=resolve;script.onerror=()=>reject(Error('変換ライブラリを取得できませんでした'));document.head.append(script)});if(window.pdfjsLib)break;}
+   catch(e){error=e;}
+  }
+  if(!window.pdfjsLib)throw error||Error('PDF描画エンジンが利用できません');
+  window.pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+  return window.pdfjsLib;
+ })();
+ try{return await pdfjsLoading;}catch(e){pdfjsLoading=null;throw e;}
+}
+function clearPdfState(){
+ ++pdfLoadToken;++pdfPreviewToken;
+ const doc=pdfDocument;pdfDocument=null;pdfDocFile=null;pdfPageCount=0;pdfPreviewPage=1;
+ if(doc)try{doc.destroy()}catch{}
+ $('pdfStatus').textContent='';$('pdfLandingStatus').textContent='';$('pdfOutput').value='';$('pdfPages').value='すべて';
+ updatePdfConvertAvailability();
+}
+function updatePdfConvertAvailability(){ $('pdfConvert').disabled=pdfBusy||!pdfDocument||!$('pdfOutput').value; }
+async function acceptPdfFile(file){
+ if(!file||!(file.type==='application/pdf'||/\.pdf$/i.test(file.name))){$('pdfLandingStatus').textContent='PDFファイルを選択してください。';return;}
+ clearPdfState();pdfDocFile=file;const token=++pdfLoadToken;render();
+ $('pdfName').textContent=file.name;$('pdfPreviewStatus').textContent='PDFを読み込み中…';
+ try{
+  const lib=await loadPdfJS();const bytes=new Uint8Array(await file.arrayBuffer());
+  const task=lib.getDocument({data:bytes,useSystemFonts:true});const doc=await task.promise;
+  if(token!==pdfLoadToken){doc.destroy();return;}
+  pdfDocument=doc;pdfPageCount=doc.numPages;pdfPreviewPage=1;
+  $('pdfPages').value='すべて';render();updatePdfConvertAvailability();await showPdfPreview();
+ }catch(e){if(token!==pdfLoadToken)return;$('pdfPreviewStatus').textContent='PDF読み込み失敗：'+(e.message||e);$('pdfStatus').textContent='暗号化PDFや破損ファイルの場合、変換できないことがあります。';}
+}
+async function showPdfPreview(){
+ if(!pdfDocument)return;const token=++pdfPreviewToken;
+ $('pdfPageInfo').textContent=`${pdfPreviewPage} / ${pdfPageCount}`;$('pdfPrev').disabled=pdfPreviewPage<=1;$('pdfNext').disabled=pdfPreviewPage>=pdfPageCount;
+ $('pdfPreviewStatus').textContent='プレビュー作成中…';
+ try{
+  const page=await pdfDocument.getPage(pdfPreviewPage);if(token!==pdfPreviewToken)return;
+  const base=page.getViewport({scale:1});const scale=Math.min(1.5,620/base.width,730/base.height);
+  const view=page.getViewport({scale});const canvas=$('pdfPreview');canvas.width=Math.ceil(view.width);canvas.height=Math.ceil(view.height);
+  const cx=canvas.getContext('2d',{alpha:false});cx.fillStyle='#fff';cx.fillRect(0,0,canvas.width,canvas.height);
+  await page.render({canvasContext:cx,viewport:view}).promise;
+  if(token===pdfPreviewToken)$('pdfPreviewStatus').textContent=`${pdfPageCount}ページ・${readable(pdfDocFile.size)}`;
+  page.cleanup();
+ }catch(e){if(token===pdfPreviewToken)$('pdfPreviewStatus').textContent='プレビューできません：'+(e.message||e);}
+}
+$('pdfPrev').onclick=()=>{if(pdfPreviewPage>1){--pdfPreviewPage;showPdfPreview();}};
+$('pdfNext').onclick=()=>{if(pdfPreviewPage<pdfPageCount){++pdfPreviewPage;showPdfPreview();}};
+$('pdfChoose').onclick=e=>{e.stopPropagation();$('pdfFileInput').click()};
+$('pdfDrop').onclick=()=>$('pdfFileInput').click();
+$('pdfDrop').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('pdfFileInput').click()}};
+$('pdfDrop').ondragover=e=>{e.preventDefault();$('pdfDrop').classList.add('over')};
+$('pdfDrop').ondragleave=()=>$('pdfDrop').classList.remove('over');
+$('pdfDrop').ondrop=e=>{e.preventDefault();$('pdfDrop').classList.remove('over');acceptPdfFile(e.dataTransfer.files[0])};
+$('pdfFileInput').onchange=e=>{acceptPdfFile(e.target.files[0]);e.target.value='';};
+$('pdfOutput').onchange=()=>{const f=$('pdfOutput').value; $('pdfJpegQualityRow').classList.toggle('hidden',f!=='jpeg');
+ $('pdfHelp').textContent=f==='html'?'各ページを画像化し、1つのHTMLに埋め込みます。文字の編集・検索はできません。':f?'1ページは画像ファイル、複数ページはZIPで保存します。':'変換先の形式を選択してください。';
+ updatePdfConvertAvailability();};
+$('pdfJpegQuality').oninput=()=>$('pdfJpegQualityOut').textContent=$('pdfJpegQuality').value+'%';
+$('pdfJpegQualityRow').classList.add('hidden');
+function parsePdfPages(raw,count){
+ const text=raw.trim();if(!text||text==='すべて'||/^all$/i.test(text))return Array.from({length:count},(_,i)=>i+1);
+ const seen=new Set(),pages=[];
+ for(const part of text.replace(/、/g,',').split(/[\s,]+/).filter(Boolean)){
+  const match=part.match(/^(\d+)(?:\s*-\s*(\d+))?$/);if(!match)throw Error('ページ範囲は 1-3,5 の形式で指定してください');
+  const a=Number(match[1]),b=Number(match[2]||match[1]);if(a<1||b<a||b>count)throw Error(`ページ番号は1～${count}の範囲で指定してください`);
+  for(let p=a;p<=b;p++)if(!seen.has(p)){seen.add(p);pages.push(p);}
+ }
+ if(!pages.length)throw Error('ページ番号を指定してください');
+ return pages;
+}
+async function renderPdfPageBlob(n,mime,dpi,quality){
+ const page=await pdfDocument.getPage(n);
+ try{
+  const view=page.getViewport({scale:dpi/72}),pixels=Math.ceil(view.width)*Math.ceil(view.height);
+  if(pixels>28e6||view.width>16000||view.height>16000)throw Error(`${n}ページは画像が大きすぎます。解像度を下げてください`);
+  const canvas=document.createElement('canvas');canvas.width=Math.ceil(view.width);canvas.height=Math.ceil(view.height);
+  const ctx=canvas.getContext('2d',{alpha:false});if(!ctx)throw Error('画像生成に失敗しました');
+  ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);
+  await page.render({canvasContext:ctx,viewport:view}).promise;
+  const blob=await new Promise(resolve=>canvas.toBlob(resolve,mime,quality));if(!blob)throw Error('画像の保存に失敗しました');
+  return blob;
+ }finally{page.cleanup();}
+}
+function crcTable(){const t=[];for(let i=0;i<256;i++){let c=i;for(let k=0;k<8;k++)c=c&1?(0xedb88320^(c>>>1)):(c>>>1);t.push(c>>>0);}return t;}
+const ZIP_CRC_TABLE=crcTable();
+function crc32(bytes){let c=0xffffffff;for(const b of bytes)c=ZIP_CRC_TABLE[(c^b)&255]^(c>>>8);return (c^0xffffffff)>>>0;}
+function zipStored(files){
+ const enc=new TextEncoder(),chunks=[],central=[];let offset=0;
+ function push(a){chunks.push(a);offset+=a.length;}
+ function u16(view,off,v){view.setUint16(off,v,true);}function u32(view,off,v){view.setUint32(off,v>>>0,true);}
+ for(const item of files){
+  const name=enc.encode(item.name),bytes=item.bytes,crc=crc32(bytes),here=offset;
+  const local=new Uint8Array(30+name.length),h=new DataView(local.buffer);u32(h,0,0x04034b50);u16(h,4,20);u16(h,6,0x0800);u16(h,8,0);u32(h,14,crc);u32(h,18,bytes.length);u32(h,22,bytes.length);u16(h,26,name.length);local.set(name,30);push(local);push(bytes);
+  const cent=new Uint8Array(46+name.length),v=new DataView(cent.buffer);u32(v,0,0x02014b50);u16(v,4,20);u16(v,6,20);u16(v,8,0x0800);u32(v,16,crc);u32(v,20,bytes.length);u32(v,24,bytes.length);u16(v,28,name.length);u32(v,42,here);cent.set(name,46);central.push(cent);
+ }
+ const centralOffset=offset;for(const c of central)push(c);
+ const end=new Uint8Array(22),dv=new DataView(end.buffer);u32(dv,0,0x06054b50);u16(dv,8,files.length);u16(dv,10,files.length);u32(dv,12,offset-centralOffset);u32(dv,16,centralOffset);push(end);
+ return new Blob(chunks,{type:'application/zip'});
+}
+async function blobDataUrl(blob){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=()=>reject(Error('画像をHTMLに埋め込めませんでした'));r.readAsDataURL(blob);});}
+function htmlEscape(str){return String(str).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+$('pdfConvert').onclick=async()=>{
+ if(pdfBusy||!pdfDocument||!$('pdfOutput').value)return;
+ let pages;try{pages=parsePdfPages($('pdfPages').value,pdfPageCount);if(pages.length>200)throw Error('一度に変換できるのは200ページまでです');}catch(e){$('pdfStatus').textContent=e.message;return;}
+ const fmt=$('pdfOutput').value,dpi=Number($('pdfDpi').value),mime=fmt==='png'?'image/png':'image/jpeg',quality=Number($('pdfJpegQuality').value)/100;
+ pdfBusy=true;updatePdfConvertAvailability();const results=[],htmlImages=[];
+ try{
+  for(let i=0;i<pages.length;i++){
+   const n=pages[i];$('pdfStatus').textContent=`ページを変換中 ${i+1} / ${pages.length}`;await new Promise(r=>setTimeout(r,0));
+   const blob=await renderPdfPageBlob(n,mime,dpi,fmt==='html'?.88:quality);
+   if(fmt==='html')htmlImages.push({n,url:await blobDataUrl(blob)});
+   else results.push({name:`page-${String(n).padStart(3,'0')}.${fmt==='png'?'png':'jpg'}`,bytes:new Uint8Array(await blob.arrayBuffer())});
+  }
+  const base=pdfDocFile.name.replace(/\.pdf$/i,'');
+  if(fmt==='html'){
+   const html=`<!doctype html>\n<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${htmlEscape(base)}</title><style>body{background:#e7ebf2;margin:0;font-family:system-ui,sans-serif;color:#1b2d45}header{text-align:center;padding:15px}main{padding:10px;display:flex;flex-direction:column;align-items:center;gap:24px}figure{margin:0;max-width:100%;background:white;box-shadow:0 4px 22px #0002}img{display:block;max-width:100%;height:auto}figcaption{padding:8px;text-align:center;font-size:12px;color:#63758d}</style></head><body><header>${htmlEscape(base)}（画像化したHTML）</header><main>${htmlImages.map(p=>`<figure><img src="${p.url}" alt="${p.n}ページ"><figcaption>${p.n}ページ</figcaption></figure>`).join('')}</main></body></html>`;
+   save(new Blob([html],{type:'text/html;charset=utf-8'}),base+'.html');
+  }else if(results.length===1){save(new Blob([results[0].bytes],{type:mime}),base+'-'+results[0].name);}
+  else save(zipStored(results),base+'-'+fmt+'.zip');
+  $('pdfStatus').textContent=`${pages.length}ページ変換しました。${fmt==='html'?'HTMLは画像表示方式です。':pages.length>1?'ZIPにまとめて保存しました。':''}`;
+ }catch(e){$('pdfStatus').textContent='変換失敗：'+(e.message||e);}
+ finally{pdfBusy=false;updatePdfConvertAvailability();}
+};
+
+// v29: EPUB 3 (ZIP) reader/writer. EPUB contents never leave this browser.
+let epubDocFile=null,epubArchive=null,epubChapters=[],epubBookTitle='',epubBookAuthor='',epubBusy=false,epubLoadToken=0;
+const EPUB_TEXT_DECODER=new TextDecoder('utf-8');
+function clearEpubState(){++epubLoadToken;epubDocFile=null;epubArchive=null;epubChapters=[];epubBookTitle='';epubBookAuthor='';epubBusy=false;
+ ++epubRenderToken;++epubHtmlPreviewToken;clearTimeout(epubPreviewTimer);epubPdfPreviewPages=[];epubPdfPreviewPage=0;
+ $('epubStatus').textContent='';$('epubLandingStatus').textContent='';$('epubOutput').value='';$('epubResultTab').disabled=true;$('epubPdfOptions').classList.add('hidden');$('epubHelp').textContent='変換先の形式を選択してください。';$('epubChapter').replaceChildren();$('epubHtmlChapter').replaceChildren();$('epubPreview').replaceChildren();$('epubHtmlPreview').replaceChildren();$('epubPdfPreviewImage').removeAttribute('src');$('epubChapterMeta').textContent='章の概要を表示します。';$('epubPreviewScope').value='book';$('epubIncludeImages').checked=true;
+ setEpubPreviewTab('source');updateEpubConvertAvailability();}
+function updateEpubConvertAvailability(){$('epubConvert').disabled=epubBusy||!epubArchive||!epubChapters.length||!$('epubOutput').value;}
+function epubNormalize(base,href){
+ if(!href||/^([a-z][a-z0-9+.-]*:|\/|\\)/i.test(href))return null;
+ let path;try{path=decodeURIComponent(href.split(/[?#]/)[0]);}catch{return null;}
+ const stack=base?base.split('/').slice(0,-1):[];
+ for(const part of path.replace(/\\/g,'/').split('/')){if(!part||part==='.')continue;if(part==='..'){if(!stack.length)return null;stack.pop();}else stack.push(part);}
+ return stack.join('/');
+}
+function epubZipReader(array){
+ const bytes=new Uint8Array(array),d=new DataView(array),entries=new Map();
+ let eocd=-1;for(let p=bytes.length-22;p>=Math.max(0,bytes.length-65557);p--){if(d.getUint32(p,true)===0x06054b50){eocd=p;break;}}
+ if(eocd<0)throw Error('EPUBのZIP構造を読み取れません');
+ const count=d.getUint16(eocd+10,true),offset=d.getUint32(eocd+16,true);
+ if(count>5000||count===65535||offset===0xffffffff)throw Error('このEPUBのZIP形式には対応していません');
+ let pos=offset,total=0;
+ for(let i=0;i<count;i++){
+  if(pos+46>bytes.length||d.getUint32(pos,true)!==0x02014b50)throw Error('EPUB内のファイル一覧が破損しています');
+  const flags=d.getUint16(pos+8,true),method=d.getUint16(pos+10,true),csize=d.getUint32(pos+20,true),usize=d.getUint32(pos+24,true),nlen=d.getUint16(pos+28,true),elen=d.getUint16(pos+30,true),clen=d.getUint16(pos+32,true),local=d.getUint32(pos+42,true);
+  if(flags&1)throw Error('暗号化ZIP形式のEPUBには対応していません');
+  if(usize>45*1048576||(total+=usize)>350*1048576)throw Error('EPUBの展開サイズが上限を超えています');
+  const name=EPUB_TEXT_DECODER.decode(bytes.subarray(pos+46,pos+46+nlen));
+  if(!name.endsWith('/'))entries.set(name,{method,csize,usize,local});
+  pos+=46+nlen+elen+clen;
+ }
+ return {entries,async read(path){
+  const ent=entries.get(path);if(!ent)return null;
+  const loc=ent.local;if(loc+30>bytes.length||d.getUint32(loc,true)!==0x04034b50)throw Error('EPUBの内容が破損しています');
+  const start=loc+30+d.getUint16(loc+26,true)+d.getUint16(loc+28,true),end=start+ent.csize;
+  if(end>bytes.length)throw Error('EPUB内のデータが不完全です');
+  const compressed=bytes.subarray(start,end);
+  let out;
+  if(ent.method===0)out=compressed;
+  else if(ent.method===8){
+   try{out=new Uint8Array(await new Response(new Blob([compressed]).stream().pipeThrough(new DecompressionStream('deflate-raw'))).arrayBuffer());}
+   catch(e){throw Error('EPUBの解凍に失敗しました。Chromeなどの対応ブラウザでお試しください');}
+  }else throw Error('EPUBに未対応の圧縮方式が使われています');
+  if(out.byteLength!==ent.usize)throw Error('EPUBデータのサイズが一致しません');
+  return out;
+ },async text(path){const bytes=await this.read(path);return bytes?EPUB_TEXT_DECODER.decode(bytes):null;}};
+}
+function epubParseXml(s,label){const doc=new DOMParser().parseFromString(s,'application/xml');if(doc.querySelector('parsererror'))throw Error(label+'のXMLが正しくありません');return doc;}
+function epubElements(root,name){return Array.from(root.getElementsByTagName('*')).filter(e=>e.localName===name);}
+function epubPlain(s){return String(s||'').replace(/\s+/g,' ').trim();}
+function epubChapterBlocks(xhtml,path){
+ let doc;try{doc=epubParseXml(xhtml,'本文');}catch{doc=new DOMParser().parseFromString(xhtml,'text/html');}
+ const body=epubElements(doc,'body')[0];if(!body)return [];
+ const blocks=[],ignore=new Set(['script','style','iframe','object','embed','link','head','nav','form','video','audio','math']);
+ function walk(node){
+  if(node.nodeType===3){const t=epubPlain(node.textContent);if(t)blocks.push({kind:'paragraph',text:t});return;}
+  if(node.nodeType!==1)return;
+  const kind=node.localName.toLowerCase();if(ignore.has(kind))return;
+  if(/^h[1-6]$/.test(kind)){const text=epubPlain(node.textContent);if(text)blocks.push({kind:'heading',text,level:Number(kind[1])});return;}
+  if(kind==='img'||kind==='image'){const src=node.getAttribute('src')||node.getAttribute('href')||node.getAttribute('xlink:href');const key=epubNormalize(path,src);if(key)blocks.push({kind:'image',path:key,alt:node.getAttribute('alt')||''});return;}
+  if(['p','li','pre','blockquote','dt','dd','figcaption'].includes(kind)){
+   const text=epubPlain(node.textContent);
+   if(text)blocks.push({kind:'paragraph',text:kind==='li'?'・ '+text:text});
+   for(const img of epubElements(node,'img')){const key=epubNormalize(path,img.getAttribute('src'));if(key)blocks.push({kind:'image',path:key,alt:img.getAttribute('alt')||''});}
+   return;
+  }
+  for(const child of node.childNodes)walk(child);
+ }
+ for(const child of body.childNodes)walk(child);
+ return blocks;
+}
+async function acceptEpubFile(file){
+ if(!file||!(/\.epub$/i.test(file.name)||file.type==='application/epub+zip')){$('epubLandingStatus').textContent='EPUBファイルを選択してください。';return;}
+ if(file.size>100*1048576){$('epubLandingStatus').textContent='100MB以下のEPUBを選択してください。';return;}
+ clearEpubState();epubDocFile=file;const token=++epubLoadToken;render();
+ $('epubName').textContent=file.name;$('epubPreviewStatus').textContent='EPUBの構造を読み込み中…';
+ try{
+  const zip=epubZipReader(await file.arrayBuffer());
+  const encFile=await zip.text('META-INF/encryption.xml');
+  if(encFile)throw Error('暗号化されたリソースを含むEPUBには対応していません');
+  const container=await zip.text('META-INF/container.xml');if(!container)throw Error('META-INF/container.xmlがありません');
+  const root=epubElements(epubParseXml(container,'container.xml'),'rootfile')[0];
+  const opfPath=root?.getAttribute('full-path');if(!opfPath)throw Error('書籍の構成情報が見つかりません');
+  const opfText=await zip.text(opfPath);if(!opfText)throw Error('書籍の構成情報が破損しています');
+  const opf=epubParseXml(opfText,'OPF');
+  const metadata=epubElements(opf,'metadata')[0];
+  const title=metadata?epubElements(metadata,'title')[0]?.textContent:null;
+  const author=metadata?epubElements(metadata,'creator')[0]?.textContent:null;
+  const manifest=epubElements(opf,'manifest')[0],spine=epubElements(opf,'spine')[0];
+  if(!manifest||!spine)throw Error('EPUBの本文構成を取得できません');
+  const items=new Map();for(const item of epubElements(manifest,'item'))items.set(item.getAttribute('id'),item);
+  const chapters=[];
+  for(const r of epubElements(spine,'itemref')){
+   const item=items.get(r.getAttribute('idref'));if(!item)continue;
+   const path=epubNormalize(opfPath,item.getAttribute('href'));if(!path)continue;
+   const mime=item.getAttribute('media-type')||'';
+   if(!(/xhtml\+xml|text\/html/.test(mime)))continue;
+   const xhtml=await zip.text(path);if(!xhtml)continue;
+   const blocks=epubChapterBlocks(xhtml,path);if(!blocks.length)continue;
+   const heading=blocks.find(b=>b.kind==='heading');
+   const imageCount=blocks.filter(b=>b.kind==='image').length;
+   chapters.push({path,blocks,title:heading?.text||`第${chapters.length+1}章`,imageCount});
+   if(chapters.length>300)throw Error('この版では300章を超えるEPUBには対応していません');
+   if(token!==epubLoadToken)return;
+  }
+  if(!chapters.length)throw Error('読み取れる本文がありません。画像のみの特殊なEPUBは非対応の場合があります');
+  if(token!==epubLoadToken)return;
+  epubArchive=zip;epubChapters=chapters;epubBookTitle=epubPlain(title)||file.name.replace(/\.epub$/i,'');epubBookAuthor=epubPlain(author)||'（著者情報なし）';
+  $('epubName').textContent=epubBookTitle;$('epubBookInfo').textContent=`${epubBookTitle} ／ ${epubBookAuthor} ／ ${chapters.length}章 ／ ${readable(file.size)}`;
+  for(const id of ['epubChapter','epubHtmlChapter']){
+   const choices=$(id);choices.replaceChildren();chapters.forEach((ch,i)=>{const option=document.createElement('option');option.value=String(i);option.textContent=`${i+1}. ${ch.title.slice(0,56)}`;choices.append(option);});
+  }
+  render();await showEpubPreview();$('epubStatus').textContent='読み込み完了です。変換先を選択してください。';
+ }catch(e){if(token!==epubLoadToken)return;$('epubPreviewStatus').textContent='読み込み失敗：'+(e.message||e);$('epubStatus').textContent='DRM保護や特殊なEPUB形式には対応していません。';}
+}
+async function epubImageData(path){
+ const data=await epubArchive.read(path);if(!data)return null;
+ const ext=path.split('.').pop()?.toLowerCase(),mime=({jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',gif:'image/gif',webp:'image/webp',bmp:'image/bmp'}[ext]);
+ if(!mime)return null;return await blobDataUrl(new Blob([data],{type:mime}));
+}
+async function showEpubPreview(){
+ const chapter=epubChapters[Number($('epubChapter').value)||0];if(!chapter)return;
+ const host=$('epubPreview');host.replaceChildren();let visible=0,textCount=0,imageShown=0;
+ for(const block of chapter.blocks){
+  if(visible>=35)break;
+  if(block.kind==='image'){
+   try{const src=await epubImageData(block.path);if(src){const img=new Image();img.src=src;img.alt=block.alt||'章内の画像';host.append(img);visible++;imageShown++;}}catch{};
+  }else{
+   const tag=block.kind==='heading'?'h3':'p',el=document.createElement(tag);el.textContent=block.text;host.append(el);visible++;textCount++;
+  }
+ }
+ const totalImages=chapter.imageCount||0;
+ $('epubChapterMeta').textContent=`${chapter.title} ／ 文章 ${chapter.blocks.filter(b=>b.kind!=='image').length}件 ・ 画像 ${totalImages}枚`;
+ $('epubPreviewStatus').textContent=`${epubChapters.length}章を読み込みました。プレビューは章の冒頭のみ表示します。画像 ${imageShown}/${totalImages}枚、テキスト ${textCount}件を表示中です。`;
+}
+$('epubChapter').addEventListener('change',()=>{showEpubPreview();if(epubPreviewTab==='result'&&$('epubOutput').value==='pdf'&&$('epubPreviewScope').value==='chapter')scheduleEpubOutputPreview();});
+$('epubChoose').onclick=e=>{e.stopPropagation();$('epubFileInput').click()};
+$('epubDrop').onclick=()=>$('epubFileInput').click();
+$('epubDrop').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();$('epubFileInput').click()}};
+$('epubDrop').ondragover=e=>{e.preventDefault();$('epubDrop').classList.add('over')};
+$('epubDrop').ondragleave=()=>$('epubDrop').classList.remove('over');
+$('epubDrop').ondrop=e=>{e.preventDefault();$('epubDrop').classList.remove('over');acceptEpubFile(e.dataTransfer.files[0]);};
+$('epubFileInput').onchange=e=>{acceptEpubFile(e.target.files[0]);e.target.value=''};
+$('epubOutput').onchange=()=>{
+ const fmt=$('epubOutput').value;$('epubPdfOptions').classList.toggle('hidden',fmt!=='pdf');
+ $('epubHelp').textContent=fmt==='html'?'書籍の文章を検索できる単一HTMLとして保存します。画像も埋め込みます。':fmt==='pdf'?'日本語対応のページ画像PDFに変換します。チェック中は本文中の画像も含めます。':'変換先の形式を選択してください。';
+ $('epubResultTab').disabled=!fmt;setEpubPreviewTab(fmt?'result':'source');updateEpubConvertAvailability();
+};
+$('epub-image-quality').oninput=()=>$('epub-image-quality-out').textContent=$('epub-image-quality').value+'%';
+// HTML is built only from escaped text and locally embedded raster images. Active EPUB content is not executed.
+async function epubToHtml(){
+ const title=epubBookTitle,chapters=[],cache=new Map();
+ for(let i=0;i<epubChapters.length;i++){
+  $('epubStatus').textContent=`HTMLを作成中 ${i+1} / ${epubChapters.length}`;
+  const book=epubChapters[i],html=[];
+  for(const [index,block] of book.blocks.entries()){
+   if(index===0&&block.kind==='heading'&&block.text===book.title)continue;
+   if(block.kind==='image'){
+    if(!cache.has(block.path))cache.set(block.path,await epubImageData(block.path));
+    const src=cache.get(block.path);if(src)html.push(`<figure><img src="${src}" alt="${htmlEscape(block.alt)}"></figure>`);
+   }else if(block.kind==='heading'){
+    const level=Math.min(4,Math.max(2,block.level));html.push(`<h${level}>${htmlEscape(block.text)}</h${level}>`);
+   }else html.push(`<p>${htmlEscape(block.text)}</p>`);
+  }
+  chapters.push(`<section class="chapter" id="chapter-${i+1}"><h2>${htmlEscape(book.title)}</h2>${html.join('\n')}</section>`);
+  if(i%5===0)await new Promise(r=>setTimeout(r,0));
+ }
+ const toc=epubChapters.map((ch,i)=>`<li><a href="#chapter-${i+1}">${htmlEscape(ch.title)}</a></li>`).join('');
+ return `<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${htmlEscape(title)}</title><style>body{font-family:system-ui,'Yu Gothic',Meiryo,sans-serif;color:#202a36;background:#f4f6fa;margin:0;line-height:1.9}main{max-width:780px;margin:auto;background:white;padding:45px clamp(18px,5vw,65px);min-height:100vh}h1{font-size:2em;line-height:1.5}h2{margin:38px 0 22px;font-size:1.55em}h3,h4{margin:25px 0 12px}p{margin:0 0 1.1em;white-space:pre-wrap;overflow-wrap:anywhere}figure{margin:24px auto;text-align:center}img{max-width:100%;height:auto}nav{padding:15px 20px;background:#f4f7fc;border-radius:10px}nav a{color:#2866bb}.chapter{border-top:1px solid #dce4ef;margin:28px 0 50px;padding-top:12px}@media print{body{background:white}main{padding:0}.chapter{break-before:page}}</style></head><body><main><h1>${htmlEscape(title)}</h1><p>${htmlEscape(epubBookAuthor)}</p><nav aria-label="目次"><strong>目次</strong><ol>${toc}</ol></nav>${chapters.join('\n')}</main></body></html>`;
+}
+// v30: PDF preview and file generation use the same pagination and page-rendering code.
+let epubRenderToken=0,epubPreviewTimer=0,epubPdfPreviewPages=[],epubPdfPreviewPage=0,epubPreviewTab='source';
+const EPUB_PAPER_MM={a2:[420,594],a3:[297,420],a4:[210,297],a5:[148,210],a6:[105,148],b4:[257,364],b5:[182,257],letter:[215.9,279.4],legal:[215.9,355.6],tabloid:[279.4,431.8],postcard:[100,148]};
+function epubPdfSettings(){
+ const dims=EPUB_PAPER_MM[$('epubPaper').value];if(!dims)throw Error('用紙サイズが不正です');
+ const [mmW,mmH]=$('epubOrientation').value==='landscape'?[dims[1],dims[0]]:dims;
+ const pageW=mmW*72/25.4,pageH=mmH*72/25.4;
+ const marginPt=Number($('epubMargin').value)*72/25.4;
+ const fontPt=Number($('epubFont').value)*Number($('epubTextScale').value)/100;
+ if(!Number.isFinite(fontPt)||fontPt<8||fontPt>48)throw Error('文字サイズと倍率を確認してください');
+ return {pageW,pageH,marginPt,fontPt};
+}
+function setEpubPreviewTab(next){
+ epubPreviewTab=next==='result'?'result':'source';
+ $('epubSourcePane').classList.toggle('hidden',epubPreviewTab!=='source');
+ $('epubResultPane').classList.toggle('hidden',epubPreviewTab!=='result');
+ for(const [id,active] of [['epubSourceTab',epubPreviewTab==='source'],['epubResultTab',epubPreviewTab==='result']]){
+  $(id).classList.toggle('active',active);$(id).setAttribute('aria-pressed',String(active));
+ }
+ if(epubPreviewTab==='result')scheduleEpubOutputPreview();
+}
+$('epubSourceTab').onclick=()=>setEpubPreviewTab('source');
+$('epubResultTab').onclick=()=>{if(!$('epubResultTab').disabled)setEpubPreviewTab('result')};
+function showEpubPdfPage(){
+ const n=epubPdfPreviewPages.length;
+ $('epubPdfPreviewImage').classList.toggle('hidden',!n);
+ if(n)$('epubPdfPreviewImage').src=epubPdfPreviewPages[epubPdfPreviewPage];
+ $('epubPdfPageInfo').textContent=n?`${epubPdfPreviewPage+1} / ${n}（冒頭のみ）`:'－';
+ $('epubPdfPrev').disabled=!n||epubPdfPreviewPage===0;
+ $('epubPdfNext').disabled=!n||epubPdfPreviewPage>=n-1;
+}
+$('epubPdfPrev').onclick=()=>{if(epubPdfPreviewPage>0){epubPdfPreviewPage--;showEpubPdfPage();}};
+$('epubPdfNext').onclick=()=>{if(epubPdfPreviewPage+1<epubPdfPreviewPages.length){epubPdfPreviewPage++;showEpubPdfPage();}};
+async function showEpubHtmlPreview(){
+ if(!epubArchive)return;
+ const token=++epubHtmlPreviewToken,chapter=epubChapters[Number($('epubHtmlChapter').value)||0];if(!chapter)return;
+ const host=$('epubHtmlPreview');host.replaceChildren();
+ const title=document.createElement('h1');title.textContent=epubBookTitle;host.append(title);
+ const author=document.createElement('p');author.className='author';author.textContent=epubBookAuthor;host.append(author);
+ const heading=document.createElement('h2');heading.textContent=chapter.title;host.append(heading);
+ let visible=0;
+ for(const [i,block] of chapter.blocks.entries()){
+  if(token!==epubHtmlPreviewToken)return;
+  if(visible>=35)break;
+  if(i===0&&block.kind==='heading'&&block.text===chapter.title)continue;
+  if(block.kind==='image'){
+   try{const src=await epubImageData(block.path);if(token!==epubHtmlPreviewToken)return;if(src){const img=new Image();img.src=src;img.alt=block.alt||'章内の画像';host.append(img);visible++;}}catch{}
+  }else{
+   const tag=block.kind==='heading'?'h3':'p',el=document.createElement(tag);el.textContent=block.text;host.append(el);visible++;
+  }
+ }
+}
+let epubHtmlPreviewToken=0;
+$('epubHtmlChapter').onchange=showEpubHtmlPreview;
+function scheduleEpubOutputPreview(){
+ clearTimeout(epubPreviewTimer);const token=++epubRenderToken;
+ const fmt=$('epubOutput').value,ready=epubPreviewTab==='result'&&!!epubArchive&&!!fmt;
+ $('epubPdfPreviewPane').classList.toggle('hidden',!ready||fmt!=='pdf');
+ $('epubHtmlPreviewPane').classList.toggle('hidden',!ready||fmt!=='html');
+ if(!ready)return;
+ if(fmt==='html'){showEpubHtmlPreview();return;}
+ $('epubPdfPreviewStatus').textContent='指定した用紙設定でプレビューを作成中…';
+ epubPreviewTimer=setTimeout(async()=>{
+  try{
+   const pages=await renderEpubPdf({previewLimit:5,cancelled:()=>token!==epubRenderToken,startChapter:$('epubPreviewScope').value==='chapter'?(Number($('epubChapter').value)||0):0,previewMode:$('epubPreviewScope').value,includeImages:$('epubIncludeImages').checked});
+   if(token!==epubRenderToken||!pages)return;
+   epubPdfPreviewPages=pages;epubPdfPreviewPage=0;showEpubPdfPage();
+   $('epubPdfPreviewStatus').textContent=`${$('epubPreviewScope').value==='chapter'?'選択した章':'書籍の先頭'}から ${pages.length}ページ分の変換後イメージです。${$('epubIncludeImages').checked?'画像も反映しています。':'画像は除外しています。'} 実際のPDFは全ページを保存します。`;
+  }catch(e){if(token===epubRenderToken){epubPdfPreviewPages=[];showEpubPdfPage();$('epubPdfPreviewStatus').textContent='プレビュー失敗：'+(e.message||e);}}
+ },260);
+}
+for(const id of ['epubPaper','epubOrientation','epubMargin','epubFont','epubTextScale','epubPreviewScope']){
+ $(id).addEventListener('change',scheduleEpubOutputPreview);
+}
+$('epubIncludeImages').addEventListener('change',scheduleEpubOutputPreview);
+async function renderEpubPdf({previewLimit=0,cancelled=()=>false,startChapter=0,previewMode='book',includeImages=true}={}){
+ if(!epubArchive||!epubChapters.length)throw Error('EPUBを読み込んでください');
+ const {pageW,pageH,marginPt,fontPt}=epubPdfSettings();
+ const preview=previewLimit>0,scale=preview?1.35:2;
+ const width=Math.round(pageW*scale),height=Math.round(pageH*scale),margin=marginPt*scale;
+ if(width*height>30000000)throw Error('用紙が大きすぎます。別のサイズを選択してください');
+ const canvas=document.createElement('canvas');canvas.width=width;canvas.height=height;
+ const cx=canvas.getContext('2d',{alpha:false});if(!cx)throw Error('PDFページを描画できません');
+ const pages=[],contentWidth=width-margin*2;
+ const regular=fontPt*scale,bodyTop=Math.max(margin,12*scale),bottom=height-Math.max(margin,24*scale);
+ if(contentWidth<regular*1.5||bottom-bodyTop<regular*3)throw Error('用紙と余白が本文サイズに対して小さすぎます');
+ let y=bodyTop+regular,pageNumber=0,hasContent=false,stopped=false;
+ function check(){if(cancelled())throw Error('プレビューを更新しました');}
+ function start(){cx.fillStyle='#fff';cx.fillRect(0,0,width,height);cx.textBaseline='alphabetic';cx.textAlign='left';cx.fillStyle='#222';y=bodyTop+regular;hasContent=false;}
+ async function finish(){
+  check();if(stopped)return;
+  if(!hasContent&&pages.length)return;
+  cx.font=`${11*scale}px system-ui,sans-serif`;cx.textAlign='right';cx.fillStyle='#777';
+  cx.fillText(String(++pageNumber),width-Math.max(margin,12*scale),height-8*scale);cx.textAlign='left';
+  if(preview){pages.push(canvas.toDataURL('image/jpeg',.83));}
+  else{
+   const blob=await blobFromCanvas(canvas,'image/jpeg',.85);if(!blob)throw Error('PDFページの保存に失敗しました');
+   pages.push({pageW,pageH,width,height,x:0,y:0,drawW:pageW,drawH:pageH,clipX:0,clipY:0,clipW:pageW,clipH:pageH,jpeg:new Uint8Array(await blob.arrayBuffer())});
+   if(pages.length>250)throw Error('PDFの上限250ページを超えました。HTML変換をご利用ください');
+  }
+  if(preview&&pages.length>=previewLimit){stopped=true;return;}
+  start();await new Promise(r=>setTimeout(r,0));
+ }
+ async function ensure(needed){if(!stopped&&y+needed>bottom)await finish();}
+ async function writeText(raw,heading=false){
+  check();if(stopped)return;
+  const text=String(raw||'').trim();if(!text)return;
+  const font=(heading?Math.min(fontPt+5,32):fontPt)*scale;
+  cx.font=`${heading?'700 ':''}${font}px 'Yu Gothic',Meiryo,system-ui,sans-serif`;
+  const lineHeight=font*1.55,lines=[];let line='',lineWidth=0;
+  for(const char of Array.from(text)){
+   if(char==='\n'){if(line)lines.push(line);line='';lineWidth=0;continue;}
+   const w=cx.measureText(char).width;
+   if(line&&lineWidth+w>contentWidth){lines.push(line);line=char;lineWidth=w;}
+   else{line+=char;lineWidth+=w;}
+  }if(line)lines.push(line);
+  for(const item of lines){
+   check();if(stopped)return;
+   await ensure(lineHeight);if(stopped)return;
+   cx.font=`${heading?'700 ':''}${font}px 'Yu Gothic',Meiryo,system-ui,sans-serif`;
+   cx.fillStyle='#222';cx.fillText(item,margin,y);y+=lineHeight;hasContent=true;
+  }
+  y+=heading?font*.35:regular*.5;
+ }
+ async function drawImg(path){
+  check();if(stopped||!includeImages)return;
+  const data=await epubArchive.read(path);if(!data)return;
+  const mime=({jpg:'image/jpeg',jpeg:'image/jpeg',png:'image/png',webp:'image/webp',gif:'image/gif',bmp:'image/bmp'}[path.split('.').pop().toLowerCase()]);if(!mime)return;
+  const url=URL.createObjectURL(new Blob([data],{type:mime}));
+  try{
+   const img=new Image();await new Promise((resolve,reject)=>{img.onload=resolve;img.onerror=()=>reject(Error('画像を読み込めません'));img.src=url;});
+   if(stopped)return;
+   const maxH=Math.max(bottom-bodyTop-regular*2,regular*4),fit=Math.min(contentWidth/img.naturalWidth,maxH/img.naturalHeight,1.5);
+   const dw=Math.max(1,img.naturalWidth*fit),dh=Math.max(1,img.naturalHeight*fit);
+   await ensure(dh+regular*1.5);if(stopped)return;
+   cx.drawImage(img,margin+(contentWidth-dw)/2,y,dw,dh);y+=dh+regular*1.5;hasContent=true;
+  }finally{URL.revokeObjectURL(url);}
+ }
+ start();
+ const chapterStart=Math.max(0,Math.min(epubChapters.length-1,startChapter|0));
+ const includeFrontMatter=!(preview&&previewMode==='chapter');
+ const chapterEnd=preview&&previewMode==='chapter'?Math.min(chapterStart+1,epubChapters.length):epubChapters.length;
+ if(includeFrontMatter){await writeText(epubBookTitle,true);await writeText(epubBookAuthor);}
+ for(let i=chapterStart;i<chapterEnd&&!stopped;i++){
+  check();const ch=epubChapters[i];
+  if(!preview)$('epubStatus').textContent=`PDFに変換中 ${i+1} / ${epubChapters.length}章（${pages.length}ページ）`;
+  if(y>height*.65)await finish();if(stopped)break;
+  await writeText(ch.title,true);
+  for(const [index,b] of ch.blocks.entries()){
+   check();if(stopped)break;
+   if(index===0&&b.kind==='heading'&&b.text===ch.title)continue;
+   if(b.kind==='image'){
+    if(includeImages){try{await drawImg(b.path)}catch{await writeText('［画像を表示できませんでした］');}}
+   } else await writeText(b.text,b.kind==='heading');
+  }
+ }
+ if(!stopped&&(hasContent||pages.length===0))await finish();
+ return preview?pages:new Blob([makePdfBytes(pages)],{type:'application/pdf'});
+}
+async function epubToPdf(){return renderEpubPdf({includeImages:$('epubIncludeImages').checked,startChapter:0,previewMode:'book'});}
+$('epubConvert').onclick=async()=>{
+ if(epubBusy||!epubArchive||!$('epubOutput').value)return;
+ epubBusy=true;updateEpubConvertAvailability();
+ try{
+  const fmt=$('epubOutput').value,blob=fmt==='html'?new Blob([await epubToHtml()],{type:'text/html;charset=utf-8'}):await epubToPdf();
+  save(blob,(epubDocFile.name.replace(/\.epub$/i,'')||'book')+'.'+fmt);
+  $('epubStatus').textContent=`${fmt.toUpperCase()}を作成しました（${readable(blob.size)}）。${fmt==='pdf'?`ページ画像形式のため、文字検索はできません。${$('epubIncludeImages').checked?'本文中の画像も含めました。':'本文中の画像は含めていません。'}`:''}`;
+ }catch(e){$('epubStatus').textContent='EPUB変換失敗：'+(e.message||e);}
+ finally{epubBusy=false;updateEpubConvertAvailability();}
+};
+function epubCreateUUID(){
+ const a=new Uint8Array(16);if(crypto&&typeof crypto.getRandomValues==='function')crypto.getRandomValues(a);
+ else for(let i=0;i<a.length;i++)a[i]=Math.floor(Math.random()*256);
+ a[6]=(a[6]&15)|64;a[8]=(a[8]&63)|128;
+ const hex=Array.from(a,b=>b.toString(16).padStart(2,'0')).join('');
+ return `${hex.slice(0,8)}-${hex.slice(8,12)}-${hex.slice(12,16)}-${hex.slice(16,20)}-${hex.slice(20)}`;
+}
+async function createEpubFromImages(){
+ isConverting=true;updateConvertAvailability();
+ const title=$('epub-image-title').value.trim()||'画像集',author=$('epub-image-author').value.trim()||'morhirc',q=Number($('epub-image-quality').value)/100;
+ const files=[],enc=new TextEncoder(),add=(name,data)=>files.push({name,bytes:typeof data==='string'?enc.encode(data):data});
+ const esc=htmlEscape;
+ try{
+  if(selected.length>200)throw Error('一度に作成できるEPUBは200画像までです');
+  add('mimetype','application/epub+zip');
+  add('META-INF/container.xml','<?xml version="1.0" encoding="utf-8"?><container xmlns="urn:oasis:names:tc:opendocument:xmlns:container" version="1.0"><rootfiles><rootfile full-path="OEBPS/package.opf" media-type="application/oebps-package+xml"/></rootfiles></container>');
+  add('OEBPS/style.css','body{margin:0;padding:0;background:#fff;text-align:center}img{max-width:100%;height:auto}figure{margin:0;padding:0}');
+  let manifest='<item id="nav" href="nav.xhtml" media-type="application/xhtml+xml" properties="nav"/><item id="css" href="style.css" media-type="text/css"/>',spine='',nav='<nav epub:type="toc" id="toc"><h1>目次</h1><ol>';
+  for(let i=0;i<selected.length;i++){
+   $('status').textContent=`EPUB作成中 ${i+1} / ${selected.length}`;await new Promise(r=>setTimeout(r,0));
+   const img=await loadImage(selected[i]);if(img.naturalWidth*img.naturalHeight>35e6)throw Error('大きすぎる画像があります。縮小してからお試しください');
+   const canvas=document.createElement('canvas');canvas.width=img.naturalWidth;canvas.height=img.naturalHeight;
+   const cx=canvas.getContext('2d');cx.fillStyle='#fff';cx.fillRect(0,0,canvas.width,canvas.height);cx.drawImage(img,0,0);
+   const jpeg=await blobFromCanvas(canvas,'image/jpeg',q);if(!jpeg)throw Error('JPEG変換に失敗しました');
+   const num=String(i+1).padStart(3,'0'),imgName=`images/p${num}.jpg`,pageName=`p${num}.xhtml`;
+   add('OEBPS/'+imgName,new Uint8Array(await jpeg.arrayBuffer()));
+   const pageTitle=`${i+1}ページ`;
+   add('OEBPS/'+pageName,`<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ja" lang="ja"><head><meta charset="utf-8"/><title>${pageTitle}</title><link rel="stylesheet" href="style.css" type="text/css"/></head><body><figure><img src="${imgName}" alt="${pageTitle}"/></figure></body></html>`);
+   manifest+=`<item id="page${num}" href="${pageName}" media-type="application/xhtml+xml"/><item id="img${num}" href="${imgName}" media-type="image/jpeg"/>`;
+   spine+=`<itemref idref="page${num}"/>`;nav+=`<li><a href="${pageName}">${pageTitle}</a></li>`;
+  }
+  nav+='</ol></nav>';
+  add('OEBPS/nav.xhtml',`<?xml version="1.0" encoding="utf-8"?><!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops" xml:lang="ja" lang="ja"><head><title>目次</title></head><body>${nav}</body></html>`);
+  const identifier='urn:uuid:'+epubCreateUUID(),modified=new Date().toISOString().slice(0,19)+'Z';
+  add('OEBPS/package.opf',`<?xml version="1.0" encoding="utf-8"?><package xmlns="http://www.idpf.org/2007/opf" xmlns:dc="http://purl.org/dc/elements/1.1/" unique-identifier="bookid" version="3.0" xml:lang="ja"><metadata><dc:identifier id="bookid">${identifier}</dc:identifier><dc:title>${esc(title)}</dc:title><dc:creator>${esc(author)}</dc:creator><dc:language>ja</dc:language><meta property="dcterms:modified">${modified}</meta></metadata><manifest>${manifest}</manifest><spine>${spine}</spine></package>`);
+  const blob=zipStored(files);save(blob,(title.replace(/[\\/:*?"<>|]/g,'_').slice(0,75)||'images')+'.epub');
+  $('status').textContent=`${selected.length}ページのEPUBを作成しました（${readable(blob.size)}）。`;
+ }catch(e){$('status').textContent='EPUB作成失敗：'+(e.message||e);}
+ finally{isConverting=false;updateConvertAvailability();}
+}
+
+// v30: image -> EPUB output preview. Source page order matches the EPUB spine.
+let epubImagePage=0;
+function showImageEpubPreview(){
+ if(!selected.length){$('imageEpubPreviewDialog').classList.add('hidden');return;}
+ epubImagePage=Math.max(0,Math.min(epubImagePage,selected.length-1));
+ const file=selected[epubImagePage];
+ $('epubImagePreviewImg').src=urlFor(file);
+ const title=$('epub-image-title').value.trim()||'画像集',author=$('epub-image-author').value.trim()||'morhirc';
+ $('epubImagePreviewSubtitle').textContent=`${title} ／ ${author}`;
+ $('epubImagePreviewCount').textContent=`${epubImagePage+1} / ${selected.length}ページ ・ ${file.name}`;
+ $('epubImagePreviewPrev').disabled=epubImagePage===0;
+ $('epubImagePreviewNext').disabled=epubImagePage>=selected.length-1;
+}
+$('epubImagePreviewOpen').onclick=()=>{
+ if(type!=='application/epub+zip'||!selected.length)return;
+ epubImagePage=0;$('imageEpubPreviewDialog').classList.remove('hidden');showImageEpubPreview();$('epubImagePreviewClose').focus();
+};
+$('epubImagePreviewClose').onclick=()=>$('imageEpubPreviewDialog').classList.add('hidden');
+$('imageEpubPreviewDialog').addEventListener('click',e=>{if(e.target===$('imageEpubPreviewDialog'))$('imageEpubPreviewDialog').classList.add('hidden')});
+$('epubImagePreviewPrev').onclick=()=>{if(epubImagePage>0){epubImagePage--;showImageEpubPreview();}};
+$('epubImagePreviewNext').onclick=()=>{if(epubImagePage+1<selected.length){epubImagePage++;showImageEpubPreview();}};
+document.addEventListener('keydown',e=>{
+ if($('imageEpubPreviewDialog').classList.contains('hidden'))return;
+ if(e.key==='Escape'){$('imageEpubPreviewDialog').classList.add('hidden');$('epubImagePreviewOpen').focus();}
+ else if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();const delta=e.key==='ArrowRight'?1:-1;epubImagePage=Math.max(0,Math.min(selected.length-1,epubImagePage+delta));showImageEpubPreview();}
+});
+window.addEventListener('pagehide',()=>{stopJxlWorker();stopTiffWorker();stopBmpWorker();stopHeicWorker();stopAvifWorker();for(const f of urls.keys())cleanup(f)});
+</script></body></html>

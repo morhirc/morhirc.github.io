@@ -108,6 +108,12 @@
 @media(max-width:540px){.site-header{height:66px}.brand{font-size:21px}.hero{padding:25px 16px 30px}.hero h1{font-size:36px}.hero-lead{font-size:19px}.hero-copy{font-size:14px}.upload-zone{padding:25px 15px;min-height:350px}.book-illustration{width:91px;height:85px;margin-bottom:12px}.upload-zone h2{font-size:19px;margin:0 0 22px}.menu-popover{top:calc(100% + 8px)}.feature-details-backdrop{padding:12px}.feature-details-dialog{max-height:calc(100dvh - 24px);padding:17px}.feature-details-heading h2{font-size:21px}}
 @media(prefers-reduced-motion:reduce){.menu-toggle{transition:none}}
 </style>
+<style id="bookreader-touch-v14">
+/* スマートフォンでは読書面を指で操作し、ブラウザのページ移動ジェスチャーを抑止します。 */
+@media (pointer: coarse) {
+  #reader #gestureLayer { touch-action: none; }
+}
+</style>
 </head>
 <body>
 <header class="site-header" id="siteHeader">
@@ -131,8 +137,8 @@
     <p class="feature-details-lead" id="featureLead">作品を読みやすく表示し、必要な操作だけを呼び出せるブラウザ型リーダーです。</p>
     <div class="feature-details-grid">
       <article><h3>対応ファイル</h3><p>JPG・PNG・WebP・AVIFなどの画像、ZIP / CBZ、TAR / CBT、RAR / CBR、PDF、EPUBに対応します。</p></article>
-      <article><h3>4つの閲覧モード</h3><p>単ページ・見開き・縦スクロール・横スクロールを切り替えられます。右開き／左開き、表紙の単独表示、見開きの1ページずらしにも対応します。</p></article>
-      <article><h3>シンプルなページ操作</h3><p>左右キーや画面端のクリックで移動し、中央クリックで設定を表示します。閲覧中はメニューを隠して作品を大きく表示できます。</p></article>
+      <article><h3>4つの閲覧モード</h3><p>単ページ・見開き・縦スクロール・横スクロールを切り替えられます。スマートフォンでは指でスクロールできます。右開き／左開き、表紙の単独表示、見開きの1ページずらしにも対応します。</p></article>
+      <article><h3>シンプルなページ操作</h3><p>左右キーや画面端のクリック、スマートフォンの左右スワイプで移動し、中央タップで設定を表示します。閲覧中はメニューを隠して作品を大きく表示できます。</p></article>
       <article><h3>拡大と表示調整</h3><p>左クリック長押しで拡大し、マウスで見る位置を移動できます。再クリックで解除。Ctrl＋ホイールでも拡大・縮小できます。</p></article>
       <article><h3>自動再生・読書位置</h3><p>自動送りは、ゆっくり24秒・標準12秒・はやい6秒の3段階です。縦横スクロールの自動移動、しおり、続きからの再開にも対応します。</p></article>
       <article><h3>ローカル処理と制限事項</h3><p>作品をサーバーにアップロードしません。一部のPDF・RAR等は初回に外部ライブラリの取得が必要です。パスワード付き・分割書庫には対応しません。</p></article>
@@ -222,7 +228,7 @@
       </section>
       <section class="menu-section">
         <h3>操作方法</h3>
-        <div class="keyboard-help"><kbd>←</kbd> <kbd>→</kbd> ページ送り（読む方向に対応）<br>画面の左右端をクリック：前後のページ<br>中央をクリック：メニューを表示／非表示<br>ホイール：ページ送り／縦・横スクロール<br>Ctrl＋ホイール：拡大縮小<br>長押し：拡大モード、もう一度クリック：解除<br><kbd>M</kbd> メニュー　<kbd>Esc</kbd> 閉じる／拡大解除<br><kbd>F</kbd> 全画面表示　<kbd>A</kbd> 自動再生開始・停止<br>再生中は本文クリックまたは <kbd>Space</kbd> で停止</div>
+        <div class="keyboard-help"><kbd>←</kbd> <kbd>→</kbd> ページ送り（読む方向に対応）<br>画面の左右端をクリック：前後のページ<br>スマホは左右スワイプでページ移動（右開きは右へ、左開きは左へ進む）<br>縦・横スクロールは上下・左右に指で移動<br>中央をクリック／タップ：メニューを表示／非表示<br>ホイール：ページ送り／縦・横スクロール<br>Ctrl＋ホイール：拡大縮小<br>長押し：拡大モード、もう一度クリック：解除<br><kbd>M</kbd> メニュー　<kbd>Esc</kbd> 閉じる／拡大解除<br><kbd>F</kbd> 全画面表示　<kbd>A</kbd> 自動再生開始・停止<br>再生中は本文クリックまたは <kbd>Space</kbd> で停止</div>
       </section>
     </div>
   </aside>
@@ -578,10 +584,10 @@ function startNativePdf(file,reason){
 }
 function saveProgress(){if(!state.id)return;storeJSON(state.id,{page:state.current,bookmarks:state.bookmarks,epubCFI:state.epubCFI})}
 function scheduleProgress(){clearTimeout(progressTimer);progressTimer=setTimeout(saveProgress,300)}
-function cleanReader(){stopAuto(false);state.renderSeq++;if(state.scrollObserver){state.scrollObserver.disconnect();state.scrollObserver=null}if(state.rendition){try{state.rendition.destroy()}catch{}state.rendition=null}if(state.epub){try{state.epub.destroy()}catch{}state.epub=null}if(state.pdf){try{state.pdf.destroy()}catch{}state.pdf=null}for(const url of state.imageUrls.values())URL.revokeObjectURL(url);state.imageUrls.clear();state.zip=null;state.epubFrame=null;if(state.epubOffline){for(const url of state.epubOffline.urls.values())URL.revokeObjectURL(url)}state.epubOffline=null;if(state.pdfNativeUrl)URL.revokeObjectURL(state.pdfNativeUrl);state.pdfNativeUrl=null;state.pdfNative=false;ui.nativePdfPlane.replaceChildren();ui.nativePdfPlane.hidden=true;ui.nativePdfMenu.hidden=true;$('nativePdfTab').hidden=true;ui.reader.classList.remove('native-pdf');try{state.archive?.close?.()}catch{}state.archive=null;if(state.archiveWorkerURL)URL.revokeObjectURL(state.archiveWorkerURL);state.archiveWorkerURL=null;state.items=[];state.total=0;state.current=0;state.kind=null;state.id='';state.fileName='';state.bookmarks=[];state.epubCFI=null;exitZoom();ui.track.replaceChildren();ui.scrollBook.replaceChildren();ui.epubMount.replaceChildren();ui.plane.hidden=false;ui.scroll.hidden=true;ui.epubPlane.hidden=true;ui.scroll.style.transform='';ui.scroll.classList.remove('horizontal-mode');ui.scrollBook.classList.remove('horizontal-mode');ui.scroll.style.direction='';ui.reader.classList.remove('scroll-mode','horizontal-mode','menu-open');}
+function cleanReader(){cancelTouchMomentum();stopAuto(false);state.renderSeq++;if(state.scrollObserver){state.scrollObserver.disconnect();state.scrollObserver=null}if(state.rendition){try{state.rendition.destroy()}catch{}state.rendition=null}if(state.epub){try{state.epub.destroy()}catch{}state.epub=null}if(state.pdf){try{state.pdf.destroy()}catch{}state.pdf=null}for(const url of state.imageUrls.values())URL.revokeObjectURL(url);state.imageUrls.clear();state.zip=null;state.epubFrame=null;if(state.epubOffline){for(const url of state.epubOffline.urls.values())URL.revokeObjectURL(url)}state.epubOffline=null;if(state.pdfNativeUrl)URL.revokeObjectURL(state.pdfNativeUrl);state.pdfNativeUrl=null;state.pdfNative=false;ui.nativePdfPlane.replaceChildren();ui.nativePdfPlane.hidden=true;ui.nativePdfMenu.hidden=true;$('nativePdfTab').hidden=true;ui.reader.classList.remove('native-pdf');try{state.archive?.close?.()}catch{}state.archive=null;if(state.archiveWorkerURL)URL.revokeObjectURL(state.archiveWorkerURL);state.archiveWorkerURL=null;state.items=[];state.total=0;state.current=0;state.kind=null;state.id='';state.fileName='';state.bookmarks=[];state.epubCFI=null;exitZoom();ui.track.replaceChildren();ui.scrollBook.replaceChildren();ui.epubMount.replaceChildren();ui.plane.hidden=false;ui.scroll.hidden=true;ui.epubPlane.hidden=true;ui.scroll.style.transform='';ui.scroll.classList.remove('horizontal-mode');ui.scrollBook.classList.remove('horizontal-mode');ui.scroll.style.direction='';ui.reader.classList.remove('scroll-mode','horizontal-mode','menu-open');}
 function showLanding(){hideMenu();cleanReader();ui.reader.hidden=true;ui.header.hidden=false;ui.landing.hidden=false;document.body.style.overflow='';unbusy()}
 function showReader(){ui.landing.hidden=true;ui.header.hidden=true;ui.reader.hidden=false;document.body.style.overflow='hidden';hideMenu();updateEdgeHints();}
-function toggleMenu(on){if(on!==false&&(!state.menu||on===true))stopAuto(false);state.menu=typeof on==='boolean'?on:!state.menu;ui.menu.hidden=!state.menu;ui.scrim.hidden=!state.menu;ui.reader.classList.toggle('menu-open',state.menu);if(state.menu){exitZoom();updateControls();}updateEdgeHints();}
+function toggleMenu(on){cancelTouchMomentum();if(on!==false&&(!state.menu||on===true))stopAuto(false);state.menu=typeof on==='boolean'?on:!state.menu;ui.menu.hidden=!state.menu;ui.scrim.hidden=!state.menu;ui.reader.classList.toggle('menu-open',state.menu);if(state.menu){exitZoom();updateControls();}updateEdgeHints();}
 function hideMenu(){state.menu=false;ui.menu.hidden=true;ui.scrim.hidden=true;ui.reader.classList.remove('menu-open');updateEdgeHints()}
 function fileCount(){return state.total||0}
 function clampPage(n){return Math.min(Math.max(0,Math.trunc(Number(n)||0)),Math.max(0,fileCount()-1))}
@@ -774,12 +780,89 @@ $('autoStartBtn').addEventListener('click',toggleAuto);
 $('autoStatus').addEventListener('click',()=>stopAuto(true));
 document.querySelectorAll('[data-speed]').forEach(b=>b.addEventListener('click',()=>{state.autoSpeed=b.dataset.speed;updatePrefs();updateAutoControls();if(state.autoRunning){stopAuto();startAuto()}}));
 function prevNextByEdge(x){const fraction=x/ui.stage.clientWidth;const edge=0.17;if(fraction>edge&&fraction<1-edge)return 0;const atLeft=fraction<=edge;return state.direction==='rtl'?(atLeft?1:-1):(atLeft?-1:1)}
-let pointer=null;let longTimer=null;
+let pointer=null;let longTimer=null;let touchMomentum=0;
 function cancelLong(){clearTimeout(longTimer);longTimer=null}
-ui.gesture.addEventListener('pointerdown',e=>{if(e.button!==0||state.menu||!state.total)return;const stoppedAuto=state.autoRunning;if(stoppedAuto)stopAuto();pointer={stoppedAuto,id:e.pointerId,x:e.clientX,y:e.clientY,startX:e.clientX,startY:e.clientY,started:performance.now(),zoomWasActive:state.zooming,long:false,moved:false};if(!state.zooming){cancelLong();longTimer=setTimeout(()=>{if(pointer&&pointer.id===e.pointerId&&!pointer.moved){pointer.long=true;enterZoom(pointer.x,pointer.y)}},420)}});
-ui.gesture.addEventListener('pointermove',e=>{if(state.zooming)moveZoom(e.clientX,e.clientY);if(!pointer||e.pointerId!==pointer.id)return;pointer.x=e.clientX;pointer.y=e.clientY;if(Math.hypot(e.clientX-pointer.startX,e.clientY-pointer.startY)>11){pointer.moved=true;cancelLong()}});
-ui.gesture.addEventListener('pointerup',e=>{cancelLong();if(!pointer||e.pointerId!==pointer.id)return;const p=pointer;pointer=null;if(p.stoppedAuto||p.long||p.moved)return;if(p.zoomWasActive){exitZoom();return}if(state.zooming)return;const d=prevNextByEdge(e.clientX);if(d)turn(d);else toggleMenu(true)});
-ui.gesture.addEventListener('pointercancel',()=>{cancelLong();pointer=null});ui.gesture.addEventListener('contextmenu',e=>{if(state.zooming)e.preventDefault()});
+function cancelTouchMomentum(){if(touchMomentum){cancelAnimationFrame(touchMomentum);touchMomentum=0}}
+function textEpubWritingMode(){try{return getComputedStyle(state.epubFrame.contentDocument.body).writingMode||'horizontal-tb'}catch{return 'horizontal-tb'}}
+function touchScrollDelta(dx,dy){
+  // 指を動かした方向に本文が追従するよう、スクロール量を反転します。
+  if(state.mode==='hscroll'&&!isEpub()){
+    ui.scroll.dataset.userMoved='1';ui.scroll.scrollLeft-=dx;
+  }else if(state.mode==='scroll'&&!isEpub()){
+    ui.scroll.scrollTop-=dy;
+  }else if(isEpub()&&state.epubOffline){
+    const el=epubScrollElement();if(!el)return;
+    if(textEpubWritingMode().startsWith('vertical'))el.scrollLeft-=dx;
+    else el.scrollTop-=dy;
+  }
+}
+function canDragTouchContent(){return state.mode==='scroll'||state.mode==='hscroll'||(isEpub()&&!!state.epubOffline)}
+function finishTouchScroll(p){
+  if(!canDragTouchContent()||performance.now()-p.lastAt>100||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  let vx=Math.max(-1.8,Math.min(1.8,p.vx)),vy=Math.max(-1.8,Math.min(1.8,p.vy));
+  if(Math.max(Math.abs(vx),Math.abs(vy))<.12)return;
+  let last=performance.now();
+  const animate=now=>{
+    if(state.menu||state.zooming||ui.reader.hidden){touchMomentum=0;return}
+    const dt=Math.min(34,now-last);last=now;
+    touchScrollDelta(vx*dt,vy*dt);
+    const friction=Math.pow(.89,dt/16.67);vx*=friction;vy*=friction;
+    if(Math.max(Math.abs(vx),Math.abs(vy))>=.035)touchMomentum=requestAnimationFrame(animate);
+    else touchMomentum=0;
+  };
+  touchMomentum=requestAnimationFrame(animate);
+}
+function touchSwipeDirection(dx,dy){
+  const threshold=Math.max(45,Math.min(85,ui.stage.clientWidth*.12));
+  if(Math.abs(dx)<threshold||Math.abs(dx)<Math.abs(dy)*1.25)return 0;
+  return state.direction==='rtl'?(dx>0?1:-1):(dx<0?1:-1);
+}
+ui.gesture.addEventListener('pointerdown',e=>{
+  if(e.button!==0||state.menu||!state.total||e.isPrimary===false)return;
+  cancelTouchMomentum();
+  const stoppedAuto=state.autoRunning;if(stoppedAuto)stopAuto();
+  pointer={stoppedAuto,id:e.pointerId,touch:e.pointerType==='touch',x:e.clientX,y:e.clientY,
+    startX:e.clientX,startY:e.clientY,lastAt:performance.now(),vx:0,vy:0,
+    started:performance.now(),zoomWasActive:state.zooming,long:false,moved:false};
+  if(!state.zooming){cancelLong();longTimer=setTimeout(()=>{
+    if(pointer&&pointer.id===e.pointerId&&!pointer.moved){pointer.long=true;enterZoom(pointer.x,pointer.y)}
+  },420)}
+});
+ui.gesture.addEventListener('pointermove',e=>{
+  if(state.zooming)moveZoom(e.clientX,e.clientY);
+  if(!pointer||e.pointerId!==pointer.id)return;
+  const p=pointer,dx=e.clientX-p.x,dy=e.clientY-p.y,now=performance.now(),dt=Math.max(1,now-p.lastAt);
+  p.x=e.clientX;p.y=e.clientY;p.lastAt=now;
+  if(Math.hypot(e.clientX-p.startX,e.clientY-p.startY)>11){p.moved=true;cancelLong()}
+  if(p.touch&&p.moved&&!p.long&&!p.zoomWasActive&&!state.zooming&&canDragTouchContent()){
+    // 連続モードは表示位置を追従させ、固定ページは指を離した際に切り替えます。
+    touchScrollDelta(dx,dy);
+    p.vx=p.vx*.4+(dx/dt)*.6;p.vy=p.vy*.4+(dy/dt)*.6;
+  }
+});
+ui.gesture.addEventListener('pointerup',e=>{
+  cancelLong();if(!pointer||e.pointerId!==pointer.id)return;
+  const p=pointer;pointer=null;
+  if(p.stoppedAuto||p.long)return;
+  if(p.zoomWasActive){if(!p.moved)exitZoom();return}
+  if(state.zooming)return;
+  if(p.touch&&p.moved){
+    if(canDragTouchContent()){
+      // 横書きの文章EPUBは左右スワイプで章内のページ送りもできます。
+      if(isEpub()&&state.epubOffline&&!textEpubWritingMode().startsWith('vertical')){
+        const d=touchSwipeDirection(e.clientX-p.startX,e.clientY-p.startY);
+        if(d){turn(d);return}
+      }
+      finishTouchScroll(p);return;
+    }
+    const d=touchSwipeDirection(e.clientX-p.startX,e.clientY-p.startY);
+    if(d)turn(d);return;
+  }
+  if(p.moved)return;
+  const d=prevNextByEdge(e.clientX);if(d)turn(d);else toggleMenu(true);
+});
+ui.gesture.addEventListener('pointercancel',()=>{cancelLong();pointer=null});
+ui.gesture.addEventListener('contextmenu',e=>{if(state.zooming)e.preventDefault()});
 let lastWheelTurn=0;
 ui.gesture.addEventListener('wheel',e=>{
  if(!state.total||state.menu||state.pdfNative)return;

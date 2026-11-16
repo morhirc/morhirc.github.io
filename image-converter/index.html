@@ -1,6 +1,5 @@
 <!doctype html>
 <html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>morhirc | 画像変換ツール</title>
-<link rel="icon" type="image/png" href="/favicon.png">
 <style>
 :root{font-family:system-ui,-apple-system,'Segoe UI',Meiryo,sans-serif;color:#182235;background:#f5f6fb}*{box-sizing:border-box}body{margin:0}button,input{font:inherit}button{cursor:pointer}header{background:#111827;color:white;padding:19px max(22px,calc((100vw - 1160px)/2));display:flex;gap:24px;align-items:center}header strong{font-size:27px;letter-spacing:-1px}.sep{height:30px;border-left:1px solid #526077}.app{font-size:20px;font-weight:700}header nav{margin-left:auto;display:flex;gap:22px;align-items:center}header nav a{color:#c6cfdd;text-decoration:none;font-size:19.5px}header nav a:hover{color:white;text-decoration:underline}.app{color:white;text-decoration:none}.app:hover{text-decoration:underline}main{max-width:1150px;margin:auto;padding:42px 20px 65px;min-height:calc(100vh - 145px)}h1{text-align:center;font-size:clamp(28px,4vw,42px);margin:0 0 12px}.intro{text-align:center;font-size:17px;line-height:1.8;color:#475368;margin:0 0 38px}.primary{border:0;background:#4388fa;color:#fff;border-radius:14px;font-size:28.5px;font-weight:750;padding:25.5px 78px;box-shadow:0 4px 10px #2874e82a}.primary:hover{background:#2773ec}.primary:disabled{opacity:.45;cursor:not-allowed}.drop{min-height:355px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;cursor:pointer;border:2px dashed transparent;border-radius:18px}.drop.over{background:#e9f1ff;border-color:#4388fa}.hint{color:#566175;font-size:21px;margin:0}.drop .symbol{font-size:67.5px;color:#4388fa}.hidden{display:none!important}.workspace{background:#fff;border-radius:16px;box-shadow:0 7px 25px #1b2d4812;overflow:hidden}.workspace-head{display:flex;align-items:center;justify-content:space-between;padding:20px 25px;border-bottom:1px solid #e8edf4;gap:15px}.workspace-head h2{font-size:19px;margin:0}.small{background:#f0f5ff;color:#1665d7;border:1px solid #d3e1ff;border-radius:9px;padding:10px 15px;font-weight:650}.layout{display:grid;grid-template-columns:minmax(0,1fr) 315px;min-height:440px}.preview-area{background:#f5f6fb;padding:23px;display:flex;flex-direction:column;gap:18px}.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:16px}.thumb{border:1px solid #e5eaf2;border-radius:12px;background:white;overflow:hidden;position:relative;box-shadow:0 3px 10px #1526410d}.thumb .view{width:100%;height:145px;border:0;background:#fff;padding:10px;display:flex;align-items:center;justify-content:center}.thumb img{max-width:100%;max-height:100%;object-fit:contain}.thumb .filename{font-size:12px;color:#344155;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding:9px 12px}.thumb .remove{position:absolute;right:6px;top:6px;border:0;background:#202b3bda;color:white;border-radius:50%;width:26px;height:26px;font-size:18px}.thumb .unsupported{font-size:13px;color:#b14c37;text-align:center;padding:15px}.preview-note{font-size:13px;color:#66758b}.sidebar{border-left:1px solid #e5eaf2;padding:25px 23px;display:flex;flex-direction:column;gap:18px}.sidebar h3{margin:0;font-size:18px}.formats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.fmt{border:1px solid #d8e1ee;background:white;padding:11px 3px;border-radius:9px;font-weight:700}.fmt.selected{background:#4388fa;border-color:#4388fa;color:white}.fmt:disabled{opacity:.4;cursor:not-allowed}.details{border:0;background:transparent;text-align:left;color:#1766ce;font-weight:650;padding:4px 0}.settings{display:grid;gap:14px;padding:10px 0}.settings-title{font-size:18px;font-weight:700}.current-info{font-size:13px;line-height:1.7;color:#526178;background:#f5f7fb;padding:10px;border-radius:8px}.settings .field{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.settings .field select{padding:7px;border:1px solid #ccd5e3;border-radius:7px}.settings .help{font-size:12px;color:#66758b;line-height:1.5}#estimate-note{height:20px;min-height:20px;line-height:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}.settings input[type=checkbox]{accent-color:#4388fa}.settings label{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px}.settings input[type=number]{width:110px;padding:7px;border:1px solid #ccd5e3;border-radius:7px}.sidebar .primary{margin-top:auto;width:100%;padding:15px 10px}.status{font-size:13px;color:#31537c;line-height:1.6;overflow-wrap:anywhere;min-height:18px}.feature-row{display:flex;justify-content:center;gap:32px;margin-top:36px;flex-wrap:wrap;color:#596679;font-size:13px}.feature-row span{display:flex;align-items:center;gap:8px}footer{text-align:center;padding:20px;color:#697487;font-size:12px}#fileinput{display:none}.modal{position:fixed;inset:0;background:#09111de8;z-index:10;display:flex;flex-direction:column;color:white}.modal-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 22px;background:#101b2c}.modal-top .name{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:14px}.modal button{background:#ffffff20;border:1px solid #ffffff40;border-radius:9px;color:white;padding:9px 13px}.modal-body{display:flex;align-items:center;justify-content:center;flex:1;min-height:0;gap:15px;padding:15px}.modal-imgbox{flex:1;height:100%;min-width:0;overflow:hidden;display:flex;align-items:center;justify-content:center;cursor:grab}.modal-imgbox img{max-width:100%;max-height:100%;object-fit:contain;transform-origin:center;user-select:none;pointer-events:none}.modal-bottom{display:flex;justify-content:center;align-items:center;gap:12px;padding:12px 20px;background:#101b2c;font-size:13px}.modal-bottom button{min-width:42px}@media(max-width:750px){header{padding:15px 18px;gap:12px}header strong{font-size:23px}.app{font-size:15px}header nav{gap:12px}header nav a{font-size:15px}main{padding:28px 14px}.intro{font-size:14px}.drop .primary{font-size:23px;padding:21px 40px}.drop .hint{font-size:16px}.drop{min-height:290px}.layout{grid-template-columns:1fr}.sidebar{border-left:0;border-top:1px solid #e5eaf2}.workspace-head{padding:16px}.preview-area{padding:15px}.thumbs{grid-template-columns:repeat(auto-fill,minmax(120px,1fr))}.thumb .view{height:120px}.feature-row{gap:14px}.modal-body{gap:5px;padding:8px}.modal-body>button{padding:8px}}
 @media(min-width:751px){
@@ -202,6 +201,16 @@ header .site-menu{margin-left:0}
 #epubImagePreviewOpen{padding:9px 13px;white-space:nowrap}
 @media(max-width:750px){.epub-preview-dialog{padding:15px}.epub-image-book{padding:10px}.epub-image-book-page{height:45vh}.epub-preview-tabs button{padding:8px 10px}.epub-page-preview img{max-height:47vh}}
 </style>
+<style id="morhirc-batch-v32">
+/* フォルダー一括取り込み・複数画像ZIP保存 */
+.image-picker-actions{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:14px}
+.folder-pick{border:1px solid #bbcff3;background:#eef5ff;color:#175aba;border-radius:12px;font-size:16px;font-weight:650;padding:14px 18px;min-height:51px}
+.folder-pick:hover{background:#e1eeff;border-color:#8db5fa}
+#folderinput{display:none!important}
+#imageLandingStatus{color:#31537c;font-size:13px;min-height:18px;text-align:center;margin:5px 10px}
+#addFolder{white-space:nowrap}
+@media(max-width:750px){.image-picker-actions{flex-direction:column;gap:10px}.folder-pick{font-size:14px;padding:11px 15px}}
+</style>
 </head><body>
 <header><a class="app" href="#" id="start-over" title="画像選択画面に戻る">▧ 画像変換ツール</a>
 <div class="header-controls" aria-label="変換の設定">
@@ -212,7 +221,7 @@ header .site-menu{margin-left:0}
       <button type="button" data-category="epub">EPUB</button>
     </div>
   </div>
-  <div class="header-control-group header-add-group"><button class="small header-add" id="add" type="button">＋ 画像を追加</button></div>
+  <div class="header-control-group header-add-group"><button class="small header-add" id="add" type="button">＋ 画像を追加</button><button class="small header-add" id="addFolder" type="button">＋ フォルダー</button></div>
   <div class="header-control-group header-current hidden" id="header-current" aria-label="選択画像の現在形式とサイズ">
     <span class="header-control-label" id="current-label">現在</span>
     <span class="current-info" id="current-info" role="status"></span>
@@ -227,7 +236,7 @@ header .site-menu{margin-left:0}
     <a href="https://github.com/morhirc" target="_blank" rel="noopener noreferrer"><svg class="menu-icon github-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 19 4.77 5.07 5.07 0 0 0 18.91 1S17.73.65 15 2.48a13.38 13.38 0 0 0-7 0C5.27.65 4.09 1 4.09 1A5.07 5.07 0 0 0 4 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 8 18.13V22"/></svg><span>GitHub</span></a>
   </div>
 </div></header>
-<main><section id="landing"><h1 id="landing-title">画像を別の形式に変換</h1><p class="intro">JPEG・PNG・WebP・AVIF・HEIC・BMP・TIFF・JXLなどの画像形式を簡単に変換できます。<br>無料・登録不要。画像はブラウザ内で処理します。</p><div class="drop" id="drop" tabindex="0" role="button" aria-label="画像を選択"><div class="symbol">▧</div><button class="primary" id="choose" type="button">画像を選択</button><p class="hint">または、ここに画像をドラッグ＆ドロップ</p></div><div class="format-placeholder hidden landing-pending" id="future-formats" role="status"></div></section>
+<main><section id="landing"><h1 id="landing-title">画像を別の形式に変換</h1><p class="intro">JPEG・PNG・WebP・AVIF・HEIC・BMP・TIFF・JXLなどの画像形式を簡単に変換できます。<br>無料・登録不要。画像はブラウザ内で処理します。</p><div class="drop" id="drop" tabindex="0" role="button" aria-label="画像を選択"><div class="symbol">▧</div><div class="image-picker-actions"><button class="primary" id="choose" type="button">画像を選択</button><button class="folder-pick" id="folderChoose" type="button">フォルダーを選択</button></div><p class="hint">画像・フォルダーをここにドラッグ＆ドロップ</p><p id="imageLandingStatus" role="status"></p></div><div class="format-placeholder hidden landing-pending" id="future-formats" role="status"></div></section>
 
 <section id="pdfLanding" class="hidden">
   <h1>PDFを画像・HTMLに変換</h1>
@@ -332,7 +341,7 @@ header .site-menu{margin-left:0}
 <option value="application/pdf" data-ext="pdf">PDF</option>
 <option value="application/epub+zip" data-ext="epub">EPUB</option>
 <option value="pending" id="pending-format" disabled hidden>準備中</option>
-</select></div></div><div class="layout"><div class="preview-area" id="drop-more"><div class="thumbs" id="thumbs"></div><p class="preview-note">画像をクリックすると拡大表示できます。ここに画像をドロップして追加することもできます。</p></div><aside class="sidebar"><div class="settings" id="settings"><div class="settings-title">設定</div><div id="pdf-image-options" class="hidden">
+</select></div></div><div class="layout"><div class="preview-area" id="drop-more"><div class="thumbs" id="thumbs"></div><p class="preview-note">画像をクリックすると拡大表示できます。画像やフォルダーをここにドロップして追加できます。</p></div><aside class="sidebar"><div class="settings" id="settings"><div class="settings-title">設定</div><div id="pdf-image-options" class="hidden">
   <label class="pdf-form-row">用紙サイズ<select id="pdf-paper">
     <optgroup label="A判（ISO）">
       <option value="a2">A2（420 × 594 mm）</option>
@@ -380,6 +389,7 @@ header .site-menu{margin-left:0}
 <p class="pdf-sidebar-note">選択した順序で1画像ずつページを作成します。一般的なEPUBリーダー向けのEPUB 3形式です。画像はJPEGに変換し、透明部分は白色になります。ネット接続不要です。</p>
 </div><label id="quality-row">画質 <input id="quality" type="range" min="1" max="100" value="100"><output id="qout">100%</output></label><div class="field"><label for="target">目標サイズ</label><input id="target" type="number" min="1" step="1" placeholder="現在の容量"><select id="targetunit" aria-label="目標サイズの単位"><option value="1024">KB</option><option value="1048576">MB</option></select></div><div class="help" id="estimate-note">変換後の容量を計算します。</div><div class="help hidden" id="avif-engine-note">目標サイズは容量の上限です。画質や画像内容によっては指定値より小さくなります。AVIFはバックグラウンドで処理します。初回は変換エンジンの読み込みにネット接続が必要です。画像は送信されません。</div><div class="help hidden" id="heic-engine-note">HEICはバックグラウンドで処理します。初回は変換エンジンの読み込みにネット接続が必要です。画像は送信されません。</div><div class="help hidden" id="bmp-engine-note">BMPは24bit・非圧縮形式です。画質調整はできません。透明部分は白色になります。目標サイズを指定した場合は画像の解像度を縮小して上限以内にします。</div><div class="help hidden" id="tiff-engine-note">TIFFは24bit RGB・非圧縮形式です。画質調整はありません。透明部分は白色になります。目標容量に応じて解像度を縮小します。</div><div class="help hidden" id="jxl-engine-note">JXL（JPEG XL）はブラウザ内のWebAssemblyで変換します。画質100%は可逆圧縮のため、99%台との間で容量が大きく変化する場合があります。目標容量は上限値です。初回は変換エンジンの読み込みにネット接続が必要です。画像は送信されません。Chromeなどでは出力したJXL画像を直接表示できない場合があります。</div><div class="field"><label for="maxwidth">幅 (px)</label><input id="maxwidth" type="number" min="1" placeholder="現在のpx"></div><div class="field"><label for="maxheight">高さ (px)</label><input id="maxheight" type="number" min="1" placeholder="現在のpx"></div><div class="field"><label for="resizepercent">縮小率 (%)</label><input id="resizepercent" type="number" min="1" max="100" step="1" value="100"><span class="help">1%単位</span></div><label><input id="aspect" type="checkbox" checked> 縦横比を維持する</label><div class="help">サイズ指定時は縮小します。目標容量に応じてさらに縮小する場合があります。</div></div><button class="primary" id="convert" type="button" disabled>画像を変換する</button><div class="status" id="status" role="status"></div></aside></div></section>
 <input id="fileinput" type="file" accept="image/*,.heic,.heif,.jxl,.tif,.tiff" multiple>
+<input id="folderinput" type="file" webkitdirectory directory multiple>
 <input id="pdfFileInput" type="file" accept="application/pdf,.pdf"><input id="epubFileInput" type="file" accept="application/epub+zip,.epub"><div class="feature-row"><span>✓ 完全無料・登録不要</span><span>✓ 複数画像を一括変換</span><span>✓ 画像は外部送信しません</span></div></main>
 <div class="feature-details-backdrop hidden" id="featureDetailsBackdrop">
   <section class="feature-details-dialog" role="dialog" aria-modal="true" aria-labelledby="featureDetailsTitle" tabindex="-1">
@@ -389,7 +399,7 @@ header .site-menu{margin-left:0}
       <article><h3>画像形式の変換</h3><p>JPEG・PNG・WebP・AVIF・HEIC・BMP・TIFF・JXLへの出力に対応します。AVIF・HEIC・JXLではWebAssemblyを使用し、BMP・TIFFは24bit RGBの非圧縮形式で保存します。</p></article>
       <article><h3>画質・目標容量の指定</h3><p>JPEG・WebP・AVIF・HEIC・JXLは画質を調整します。BMP・TIFFは非圧縮で、指定容量がある場合は解像度を縮小します。目標容量は上限値です。</p></article>
       <article><h3>解像度の変更</h3><p>幅・高さ・縮小率を指定して変換。縦横比を保ったサイズ調整にも対応します。</p></article>
-      <article><h3>複数画像の一括変換</h3><p>画像をまとめて追加し、同じ設定で一括変換できます。変換結果は個別にダウンロードされます。</p></article>
+      <article><h3>複数画像の一括変換</h3><p>フォルダーごとの取り込みに対応します。同じ設定でまとめて変換し、複数画像はフォルダー構成を維持したZIPファイルで保存できます。</p></article>
       <article><h3>プレビュー・拡大表示</h3><p>選択した画像の一覧表示と、拡大・縮小・前後画像への移動に対応します。</p></article>
       <article><h3>ブラウザ内で処理</h3><p>画像ファイルをサーバーへ送信せず、ご利用のブラウザ内で処理します。AVIF・HEIC・JXLの変換エンジンは外部から読み込みます。</p></article>
     </div>
@@ -557,14 +567,79 @@ function setCategory(next){
  const config=categoryConfig[next];$('landing-title').textContent=config.title;document.querySelector('.intro').innerHTML=config.intro;
  const ready=next==='image';$('drop').classList.toggle('hidden',!ready);$('future-formats').classList.toggle('hidden',ready);
   $('formats').disabled=!ready;$('pending-format').hidden=ready;$('formats').value=ready?'':'pending';
-  $('settings').classList.toggle('hidden',!ready);$('convert').classList.toggle('hidden',!ready);$('add').classList.toggle('hidden',false);$('add').textContent=next==='pdf'?'＋ PDFを変更':next==='epub'?'＋ EPUBを変更':'＋ 画像を追加';
+  $('settings').classList.toggle('hidden',!ready);$('convert').classList.toggle('hidden',!ready);$('add').classList.toggle('hidden',false);$('addFolder').classList.toggle('hidden',!ready);$('add').textContent=next==='pdf'?'＋ PDFを変更':next==='epub'?'＋ EPUBを変更':'＋ 画像を追加';
  if(next==='epub')$('future-formats').textContent='EPUB → HTML・PDF';
  updateImagePdfSettings();
- $('status').textContent='';$('fileinput').value='';render();
+ $('status').textContent='';$('imageLandingStatus').textContent='';$('fileinput').value='';$('folderinput').value='';render();
 }
 document.querySelectorAll('[data-category]').forEach(b=>{b.setAttribute('aria-pressed',String(b.dataset.category==='image'));b.onclick=()=>setCategory(b.dataset.category)});
-let selected=[],type='',ext='',viewIndex=0,zoom=1;const urls=new Map();function urlFor(file){if(!urls.has(file))urls.set(file,URL.createObjectURL(file));return urls.get(file)}function cleanup(file){if(urls.has(file)){URL.revokeObjectURL(urls.get(file));urls.delete(file)}}function choose(){ if(category==='pdf')$('pdfFileInput').click();else if(category==='epub')$('epubFileInput').click();else $('fileinput').click() }$('choose').onclick=e=>{e.stopPropagation();choose()};$('drop').onclick=choose;$('drop').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose()}};$('add').onclick=choose;$('fileinput').onchange=e=>{addFiles(e.target.files);e.target.value=''};for(const area of [$('drop'),$('drop-more')]){area.ondragover=e=>{e.preventDefault();area.classList.add('over')};area.ondragleave=()=>area.classList.remove('over');area.ondrop=e=>{e.preventDefault();area.classList.remove('over');addFiles(e.dataTransfer.files)}}
-$('start-over').onclick=e=>{e.preventDefault();if((selected.length||pdfDocFile||epubDocFile)&&!confirm('選択したファイルを解除し、最初の画面に戻りますか？'))return;for(const f of [...urls.keys()])cleanup(f);selected=[];clearPdfState();clearEpubState();$('modal').classList.add('hidden');$('imageEpubPreviewDialog').classList.add('hidden');$('status').textContent='';$('fileinput').value='';manualTarget=false;type='';ext='';$('formats').value='';$('avif-engine-note').classList.add('hidden');$('heic-engine-note').classList.add('hidden');$('bmp-engine-note').classList.add('hidden');$('tiff-engine-note').classList.add('hidden');$('jxl-engine-note').classList.add('hidden');$('quality-row').classList.remove('hidden');updateImagePdfSettings();render();window.scrollTo(0,0)};function addFiles(files){const added=Array.from(files).filter(f=>f.type.startsWith('image/')||/\.(heic|heif|jxl|tif|tiff|bmp|avif)$/i.test(f.name));selected.push(...added);render();$('status').textContent=added.length?'':'画像ファイルを選択してください'}let isConverting=false;function updateConvertAvailability(){ $('convert').disabled=isConverting||category!=='image'||!type||selected.length===0; }function render(){
+let selected=[],type='',ext='',viewIndex=0,zoom=1;
+const urls=new Map(),imageRelativePaths=new WeakMap();
+function urlFor(file){if(!urls.has(file))urls.set(file,URL.createObjectURL(file));return urls.get(file)}
+function cleanup(file){if(urls.has(file)){URL.revokeObjectURL(urls.get(file));urls.delete(file)}}
+function choose(){if(category==='pdf')$('pdfFileInput').click();else if(category==='epub')$('epubFileInput').click();else $('fileinput').click()}
+function chooseFolder(){if(category==='image')$('folderinput').click()}
+$('choose').onclick=e=>{e.stopPropagation();choose()};
+$('folderChoose').onclick=e=>{e.stopPropagation();chooseFolder()};
+$('addFolder').onclick=chooseFolder;
+$('drop').onclick=choose;
+$('drop').onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();choose()}};
+$('add').onclick=choose;
+$('fileinput').onchange=e=>{addFiles(e.target.files);e.target.value=''};
+$('folderinput').onchange=e=>{addFiles(e.target.files);e.target.value=''};
+function isImageFile(file){return !!file&&(file.type.startsWith('image/')||/\.(?:heic|heif|jxl|tif|tiff|bmp|avif|jpg|jpeg|png|gif|webp|svg)$/i.test(file.name))}
+function addFiles(files){
+ const added=Array.from(files).filter(isImageFile);
+ for(const f of added){if(f.webkitRelativePath)imageRelativePaths.set(f,f.webkitRelativePath)}
+ selected.push(...added);render();
+ const info=added.length?`${added.length}件の画像を追加しました。${selected.length>1?'複数画像はZIP形式で保存します。':''}`:'画像ファイルが見つかりませんでした。';
+ $('status').textContent=info;$('imageLandingStatus').textContent=info;
+}
+function imageEntryFile(entry){return new Promise((resolve,reject)=>entry.file(resolve,reject))}
+function imageEntryBatch(reader){return new Promise((resolve,reject)=>reader.readEntries(resolve,reject))}
+async function readDroppedEntry(entry,files,relative=''){
+ if(!entry)return;
+ if(entry.isFile){
+  const file=await imageEntryFile(entry);
+  if(isImageFile(file)){imageRelativePaths.set(file,relative+file.name);files.push(file)}
+  return;
+ }
+ if(entry.isDirectory){
+  const reader=entry.createReader();
+  // Chromeでは一度に最大100件ずつ返されることがあるため空になるまで読む。
+  while(true){
+   const children=await imageEntryBatch(reader);
+   if(!children.length)break;
+   for(const child of children)await readDroppedEntry(child,files,relative+entry.name+'/');
+  }
+ }
+}
+async function imageDropFiles(dt){
+ const items=Array.from(dt.items||[]).filter(item=>item.kind==='file');
+ const fallbackFiles=Array.from(dt.files||[]);
+ if(!items.some(item=>typeof item.webkitGetAsEntry==='function'))return fallbackFiles;
+ // DragEvent終了後はDataTransferItemが無効になるため、entryは同期的に取得する。
+ const entries=items.map(item=>item.webkitGetAsEntry?.()||item.getAsFile?.()).filter(Boolean);
+ const files=[];
+ for(const entry of entries){
+  if(entry.isFile||entry.isDirectory)await readDroppedEntry(entry,files);
+  else files.push(entry);
+ }
+ return files.length?files:fallbackFiles;
+}
+for(const area of [$('drop'),$('drop-more')]){
+ area.ondragover=e=>{if(category!=='image')return;e.preventDefault();area.classList.add('over')};
+ area.ondragleave=()=>area.classList.remove('over');
+ area.ondrop=async e=>{
+  if(category!=='image')return;
+  e.preventDefault();area.classList.remove('over');
+  $('imageLandingStatus').textContent='画像とフォルダーを読み込んでいます…';
+  try{const files=await imageDropFiles(e.dataTransfer);addFiles(files)}
+  catch(err){const msg='フォルダーの読み込みに失敗しました：'+(err.message||err);$('status').textContent=msg;$('imageLandingStatus').textContent=msg}
+ };
+}
+$('start-over').onclick=e=>{e.preventDefault();if((selected.length||pdfDocFile||epubDocFile)&&!confirm('選択したファイルを解除し、最初の画面に戻りますか？'))return;for(const f of [...urls.keys()])cleanup(f);selected=[];clearPdfState();clearEpubState();$('modal').classList.add('hidden');$('imageEpubPreviewDialog').classList.add('hidden');$('status').textContent='';$('imageLandingStatus').textContent='';$('fileinput').value='';$('folderinput').value='';manualTarget=false;type='';ext='';$('formats').value='';$('avif-engine-note').classList.add('hidden');$('heic-engine-note').classList.add('hidden');$('bmp-engine-note').classList.add('hidden');$('tiff-engine-note').classList.add('hidden');$('jxl-engine-note').classList.add('hidden');$('quality-row').classList.remove('hidden');updateImagePdfSettings();render();window.scrollTo(0,0)};
+let isConverting=false;function updateConvertAvailability(){ $('convert').disabled=isConverting||category!=='image'||!type||selected.length===0; }function render(){
  if(category==='pdf'){
   $('epubLanding').classList.add('hidden');$('epubWorkspace').classList.add('hidden');
   $('landing').classList.add('hidden');$('workspace').classList.add('hidden');
@@ -1185,7 +1260,7 @@ async function compressToTarget(canvas,mime,limit,baseQuality){
 }
 $('convert').onclick=async()=>{if(isConverting||!type||!selected.length||category!=='image')return;
  if(type==='application/pdf'){await createPdfFromImages();return;}
- if(type==='application/epub+zip'){await createEpubFromImages();return;}isConverting=true;const button=$('convert');button.disabled=true;let ok=0,fail=[],results=[];const targetRaw=manualTarget?$('target').value.trim():'',targetValue=Number(targetRaw),limit=targetRaw?Math.floor(targetValue*Number($('targetunit').value)):0;if(targetRaw&&(!Number.isFinite(limit)||limit<1)){$('status').textContent='目標サイズには正の数値を入力してください。';isConverting=false;updateConvertAvailability();return}
+ if(type==='application/epub+zip'){await createEpubFromImages();return;}isConverting=true;const button=$('convert');button.disabled=true;let ok=0,fail=[],results=[],zipFiles=[],usedNames=new Set();const useZip=selected.length>1;const targetRaw=manualTarget?$('target').value.trim():'',targetValue=Number(targetRaw),limit=targetRaw?Math.floor(targetValue*Number($('targetunit').value)):0;if(targetRaw&&(!Number.isFinite(limit)||limit<1)){$('status').textContent='目標サイズには正の数値を入力してください。';isConverting=false;updateConvertAvailability();return}
  for(let i=0;i<selected.length;i++){const file=selected[i];$('status').textContent=type==='image/avif'||type==='image/heic'||type==='image/jxl'?`${type==='image/heic'?'HEIC':type==='image/jxl'?'JXL':'AVIF'}変換中 ${i+1} / ${selected.length}（変換処理に時間がかかる場合があります）`:`変換中 ${i+1} / ${selected.length}`;await new Promise(resolve=>setTimeout(resolve,0));try{const img=await loadImage(file);let cw,ch;
  if(selected.length>1 && dimensions.width && dimensions.height){
   const rw=(Number($('maxwidth').value)||dimensions.width)/dimensions.width;
@@ -1193,7 +1268,20 @@ $('convert').onclick=async()=>{if(isConverting||!type||!selected.length||categor
   cw=Math.max(1,Math.round(img.naturalWidth*rw));ch=Math.max(1,Math.round(img.naturalHeight*rh));
  }else{[cw,ch]=desiredDimensions(img)}
  const canvas=makeCanvas(img,cw,ch);
- const blob=limit?await compressToTarget(canvas,type,limit,Number($('quality').value)/100):await encodeCanvas(canvas,type,Number($('quality').value)/100);save(blob,file.name.replace(/\.[^.]+$/,'')+'.'+ext);results.push(file.name+' → '+readable(blob.size)+(limit?'（上限 '+readable(limit)+'）':''));ok++}catch(e){fail.push(file.name+'：'+e.message)}}$('status').textContent=`${ok}件変換しました。`+(results.length?' '+results.join(' / '):'')+(fail.length?' 失敗：'+fail.join(' / '):'')+(ok>1?' ※複数ファイルは個別にダウンロードされます。':'');isConverting=false;updateConvertAvailability()};
+ const blob=limit?await compressToTarget(canvas,type,limit,Number($('quality').value)/100):await encodeCanvas(canvas,type,Number($('quality').value)/100);
+ const outName=imageZipEntryName(file,ext,usedNames);
+ if(useZip)zipFiles.push({name:outName,blob});else save(blob,file.name.replace(/\.[^.]+$/,'')+'.'+ext);
+ results.push(file.name+' → '+readable(blob.size)+(limit?'（上限 '+readable(limit)+'）':''));ok++}catch(e){fail.push(file.name+'：'+e.message)}}try{
+ if(useZip&&zipFiles.length){
+  $('status').textContent=`ZIPを作成中 0 / ${zipFiles.length}`;
+  const zip=await zipImageBlobs(zipFiles,(done,total)=>{$('status').textContent=`ZIPを作成中 ${done} / ${total}`});
+  save(zip,`converted-${ext}-${zipFiles.length}images.zip`);
+ }
+ $('status').textContent=`${ok}件変換しました。${useZip&&ok?'ZIPにまとめて保存しました。':''}`+(fail.length?' 失敗：'+fail.join(' / '):'')+(ok===1&&!useZip?' '+results[0]:'');
+ if(!ok)$('status').textContent='変換できた画像がありません。'+(fail.length?' 失敗：'+fail.join(' / '):'');
+ }catch(err){$('status').textContent=`ZIP作成失敗：${err.message||err}`;}
+ finally{isConverting=false;updateConvertAvailability()}
+};
 
 // v27: 画像からPDFを直接生成。外部ライブラリなし、JPEG DCTストリームをPDFページに埋め込みます。
 function updateImagePdfSettings(){
@@ -1406,6 +1494,49 @@ function zipStored(files){
  const centralOffset=offset;for(const c of central)push(c);
  const end=new Uint8Array(22),dv=new DataView(end.buffer);u32(dv,0,0x06054b50);u16(dv,8,files.length);u16(dv,10,files.length);u32(dv,12,offset-centralOffset);u32(dv,16,centralOffset);push(end);
  return new Blob(chunks,{type:'application/zip'});
+}
+// v32: 複数画像ZIP。元の画像のバイト列を再圧縮しないZIP（STORE）方式。
+// Blobパーツを保持し、CRC計算時のみ各画像のArrayBufferを取得します。
+async function zipImageBlobs(entries,progress=()=>{}){
+ if(entries.length>65535)throw Error('ZIPに入れられるファイル数の上限を超えました');
+ const encoder=new TextEncoder(),parts=[],central=[];let offset=0;
+ const u16=(d,p,v)=>d.setUint16(p,v,true),u32=(d,p,v)=>d.setUint32(p,v>>>0,true);
+ function add(chunk,size=chunk.size??chunk.length){parts.push(chunk);offset+=size}
+ for(let i=0;i<entries.length;i++){
+  const {name,blob}=entries[i],filename=encoder.encode(name),size=blob.size;
+  if(filename.length>65535)throw Error('ZIP内のファイル名が長すぎます：'+name);
+  if(size>0xffffffff||offset+30+filename.length+size>0xffffffff)throw Error('ZIPの上限4GBを超えています。画像を分割して変換してください');
+  const crc=crc32(new Uint8Array(await blob.arrayBuffer())),here=offset;
+  const local=new Uint8Array(30+filename.length),h=new DataView(local.buffer);
+  u32(h,0,0x04034b50);u16(h,4,20);u16(h,6,0x0800);u16(h,8,0);
+  u32(h,14,crc);u32(h,18,size);u32(h,22,size);u16(h,26,filename.length);local.set(filename,30);
+  add(local);add(blob);
+  const c=new Uint8Array(46+filename.length),v=new DataView(c.buffer);
+  u32(v,0,0x02014b50);u16(v,4,20);u16(v,6,20);u16(v,8,0x0800);
+  u32(v,16,crc);u32(v,20,size);u32(v,24,size);u16(v,28,filename.length);
+  u32(v,42,here);c.set(filename,46);central.push(c);
+  progress(i+1,entries.length);
+  if(i%8===0)await new Promise(resolve=>setTimeout(resolve,0));
+ }
+ const centralOffset=offset;
+ for(const c of central)add(c);
+ if(offset>0xffffffff)throw Error('ZIPの上限4GBを超えています。画像を分割して変換してください');
+ const end=new Uint8Array(22),d=new DataView(end.buffer);
+ u32(d,0,0x06054b50);u16(d,8,entries.length);u16(d,10,entries.length);u32(d,12,offset-centralOffset);u32(d,16,centralOffset);
+ add(end);
+ return new Blob(parts,{type:'application/zip'});
+}
+function imageZipEntryName(file,extension,used){
+ let source=(imageRelativePaths.get(file)||file.webkitRelativePath||file.name).replace(/\\/g,'/');
+ // ZIPに絶対パスや親ディレクトリ遷移を入れない。
+ const segments=source.split('/').filter(s=>s&&s!=='.'&&s!=='..').map(s=>s.replace(/[\x00-\x1f]/g,'_'));
+ if(!segments.length)segments.push(file.name);
+ let stem=segments.pop().replace(/\.[^.]+$/,'');if(!stem)stem='image';
+ const dir=segments.length?segments.join('/')+'/':'';
+ let name=dir+stem+'.'+extension,n=2;
+ while(used.has(name.toLowerCase()))name=dir+stem+'-'+n+++'.'+extension;
+ used.add(name.toLowerCase());
+ return name;
 }
 async function blobDataUrl(blob){return new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=()=>reject(Error('画像をHTMLに埋め込めませんでした'));r.readAsDataURL(blob);});}
 function htmlEscape(str){return String(str).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}

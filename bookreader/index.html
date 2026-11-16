@@ -4,8 +4,8 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111827">
-<meta name="description" content="morhirc BookReader は画像・ZIP/CBZ・PDF・EPUBをブラウザで閲覧する無料のローカルリーダーです。見開き、ページ位置調整、長押し拡大に対応。">
-<title>morhirc BookReader | ブラウザで読む画像・漫画・電子書籍</title>
+<meta name="description" content="morhirc Bookリーダー は画像・ZIP/CBZ・PDF・EPUBをブラウザで閲覧する無料のローカルリーダーです。見開き、ページ位置調整、長押し拡大に対応。">
+<title>morhirc Bookリーダー | ブラウザで読む画像・漫画・電子書籍</title>
 <style>
 :root{font-family:system-ui,-apple-system,"Segoe UI",Meiryo,sans-serif;color:#1b2940;background:#f5f7fb;--blue:#4388fa;--navy:#111827}
 *{box-sizing:border-box}html,body{margin:0;min-height:100%;}button,input,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.43}
@@ -19,7 +19,7 @@
 .upload-zone.dragover{background:#eef5ff;border-color:#4388fa;transform:translateY(-2px)}.book-illustration{width:128px;height:120px;margin-bottom:17px;color:#4388fa}.upload-zone h2{font-size:22px;margin:2px 0 25px;color:#1b2b42}.primary{color:#fff;background:#4388fa;border:0;border-radius:12px;padding:16px 38px;font-weight:750;font-size:19px;box-shadow:0 5px 14px #4388fa37}.primary:hover{background:#2d73e6}.secondary{border:1px solid #cedaf0;color:#285ba3;background:white;border-radius:9px;padding:10px 16px;font-size:13px;font-weight:650}.secondary:hover{background:#eff5ff}.upload-note{color:#60728b;font-size:13px;line-height:1.8;margin:17px 0}.tiny{font-size:12px;color:#8491a4;line-height:1.7}.upload-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}.support-label{margin-top:26px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap}.support-label span{background:#f1f5fb;color:#536c8d;border:1px solid #e2eaf6;border-radius:20px;padding:5px 10px;font-size:12px;font-weight:600}
 .landing-footer{text-align:center;color:#8a95a4;font-size:12px;padding:16px 12px;margin-top:auto}
 .file-input{display:none}
-/* BookReader. No permanent chrome: the reading surface is truly edge to edge. */
+/* Bookリーダー. No permanent chrome: the reading surface is truly edge to edge. */
 .reader{position:fixed;inset:0;background:#0b0c10;color:#e6e9ef;z-index:10;overflow:hidden;touch-action:pan-y;user-select:none}
 .stage{position:absolute;inset:0;overflow:hidden;background:#0b0c10}.page-plane{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transform-origin:center;will-change:transform}.page-track{display:flex;align-items:center;justify-content:center;gap:0;max-width:100%;max-height:100%;height:100%;}
 .page-track.rtl{flex-direction:row-reverse}.sheet{position:relative;display:flex;align-items:center;justify-content:center;width:min(100vw,100%);max-width:100vw;height:100%;min-width:0;overflow:hidden}.page-track.spread{width:100vw}.page-track.spread .sheet{width:50vw;flex:0 0 50vw;max-width:50vw}.sheet img,.sheet canvas{max-width:100%;max-height:100%;height:100%;width:auto;object-fit:contain;box-shadow:0 0 13px #0004;display:block}.sheet canvas{background:white}.sheet .wait-page{color:#8794a6;font-size:13px}.sheet.error{color:#f6bbbb;font-size:13px}
@@ -110,7 +110,7 @@
 </head>
 <body>
 <header class="site-header" id="siteHeader">
-  <a class="brand" href="#" id="homeBrand"><span class="brand-mark">▤</span>morhirc <span>BookReader</span></a>
+  <a class="brand" href="#" id="homeBrand"><span class="brand-mark">▤</span>morhirc <span>Bookリーダー</span></a>
   <div class="site-menu" id="siteMenu">
     <button type="button" class="menu-toggle" id="menuToggle" aria-label="メニューを開く" aria-expanded="false" aria-controls="menuPopover" title="メニュー">≡</button>
     <div class="menu-popover" id="menuPopover" aria-label="サイトメニュー" hidden>
@@ -124,7 +124,7 @@
 <div id="featureBackdrop" class="feature-details-backdrop" hidden>
   <section class="feature-details-dialog" role="dialog" aria-modal="true" aria-labelledby="featureHeading" aria-describedby="featureLead" tabindex="-1">
     <div class="feature-details-heading">
-      <div><div class="feature-details-eyebrow">FEATURES</div><h2 id="featureHeading">morhirc BookReader の機能</h2></div>
+      <div><div class="feature-details-eyebrow">FEATURES</div><h2 id="featureHeading">morhirc Bookリーダー の機能</h2></div>
       <button type="button" class="feature-details-close" id="featureClose" aria-label="機能説明を閉じる">×</button>
     </div>
     <p class="feature-details-lead" id="featureLead">作品を読みやすく表示し、必要な操作だけを呼び出せるブラウザ型リーダーです。</p>
@@ -142,7 +142,7 @@
 <main class="landing" id="landing">
   <div class="hero">
     <section class="landing-copy">
-      <div class="eyebrow">morhirc BookReader</div>
+      <div class="eyebrow">morhirc Bookリーダー</div>
       <h1>読むことに、画面を。</h1>
       <p class="hero-lead">漫画も、小説も、ブラウザで。</p>
       <p class="hero-copy">メニューを隠して、作品を画面いっぱいに。<br>見開きもスクロールも、思いどおりに閲覧できます。</p>
@@ -175,7 +175,7 @@
   <button type="button" id="autoStatus" class="auto-status" hidden title="自動再生を停止">Ⅱ 自動停止</button>
   <div class="reader-scrim" id="menuScrim" hidden></div>
   <aside class="reader-menu" id="readerMenu" hidden aria-label="読書設定メニュー">
-    <div class="menu-top"><div style="min-width:0"><strong>morhirc BookReader</strong><small id="bookName">―</small></div><button type="button" class="icon-button" id="closeMenu" aria-label="メニューを閉じる">×</button></div>
+    <div class="menu-top"><div style="min-width:0"><strong>morhirc Bookリーダー</strong><small id="bookName">―</small></div><button type="button" class="icon-button" id="closeMenu" aria-label="メニューを閉じる">×</button></div>
     <div class="menu-scroller">
       <section class="menu-section">
         <h3>ページ移動</h3>

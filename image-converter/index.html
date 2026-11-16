@@ -211,8 +211,17 @@ header .site-menu{margin-left:0}
 #addFolder{white-space:nowrap}
 @media(max-width:750px){.image-picker-actions{flex-direction:column;gap:10px}.folder-pick{font-size:14px;padding:11px 15px}}
 </style>
+<style id="morhirc-landing-spacing-v33">
+/* 画像選択の初期画面だけ、ヘッダーとの距離を広げる。編集画面・PDF・EPUB画面は変更しない。 */
+@media (min-width: 751px) {
+  #landing { margin-top: 80px; }
+}
+@media (max-width: 750px) {
+  #landing { margin-top: 40px; }
+}
+</style>
 </head><body>
-<header><a class="app" href="#" id="start-over" title="画像選択画面に戻る">▧ 画像変換ツール</a>
+<header><a class="app" href="#" id="start-over" title="画像選択画面に戻る">▧ morhirc 画像変換ツール</a>
 <div class="header-controls" aria-label="変換の設定">
   <div class="header-control-group"><span class="header-control-label" id="category-label">変換対象</span>
     <div class="category-picker header-categories" role="group" aria-labelledby="category-label">

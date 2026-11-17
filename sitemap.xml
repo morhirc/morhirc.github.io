@@ -5,8 +5,16 @@
     <loc>https://morhirc.github.io/</loc>
   </url>
 
-　 <url>
+　<url>
     <loc>https://morhirc.github.io/pdf-editor/</loc>
+  </url>
+
+  <url>
+    <loc>https://morhirc.github.io/image-converter/</loc>
+  </url>
+
+　<url>
+    <loc>https://morhirc.github.io/bookreader/</loc>
   </url>
   
   <url>
@@ -41,7 +49,7 @@
     <loc>https://morhirc.github.io/atokana/</loc>
   </url>
 
-    <url>
+  <url>
     <loc>https://morhirc.github.io/opendaw-jp/</loc>
   </url>
 

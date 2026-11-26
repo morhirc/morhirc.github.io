@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>SiteBuilder 文字幅・改行診断 v1.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+  body{margin:0;background:#f0f4f9;color:#1d2939;font:14px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Meiryo,sans-serif}
+  main{width:min(900px,100%);margin:auto;padding:22px 16px 60px}
+  h1{font-size:22px;line-height:1.3;margin:0 0 9px}
+  h2{font-size:16px;margin:0 0 13px}
+  p{margin:7px 0 14px}
+  .lead{color:#52637a}
+  .card{background:#fff;padding:16px;border:1px solid #dce5f1;border-radius:12px;margin:14px 0;box-shadow:0 2px 7px #1b31420b}
+  label{font-size:12px;font-weight:700;display:block;margin-bottom:6px}
+  textarea,input{font:inherit;color:#1d2939;background:#fff;border:1px solid #bdcadd;border-radius:7px;padding:9px;width:100%}
+  textarea{min-height:92px;resize:vertical}
+  .inputs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+  button{font:inherit;background:#1e61b9;color:white;border:0;border-radius:7px;padding:10px 16px;font-weight:700;cursor:pointer}
+  button.secondary{background:#eef4fe;color:#174d92;border:1px solid #adc7e9}
+  button:focus-visible{outline:2px solid #154f98;outline-offset:2px}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:12px}
+  .muted{font-size:12px;color:#5d6c80}
+  .status{background:#eef5fe;border:1px solid #c6d9f5;border-radius:8px;padding:9px 12px;font-size:12px;white-space:pre-wrap}
+  .scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+  table{border-collapse:collapse;width:100%;min-width:520px;font-size:13px;font-variant-numeric:tabular-nums}
+  td,th{border-bottom:1px solid #e0e7f0;text-align:left;padding:10px 7px;vertical-align:top}
+  th{font-size:12px;color:#57677b}
+  td strong{font-size:15px}
+  .sub{font-size:11px;color:#66758a;margin-top:3px}
+  .preview-group{margin:15px 0 20px}
+  .preview-title{font-weight:700;font-size:12px;margin:0 0 6px}
+  .specimen-scroller{overflow-x:auto;max-width:100%;padding:0 0 5px}
+  .specimen{display:block;width:350px;background:#fff;box-sizing:border-box;white-space:pre-wrap;overflow-wrap:anywhere;-webkit-text-size-adjust:100%;text-size-adjust:100%;line-height:normal;letter-spacing:normal;border:1px solid transparent;outline:1px dashed #9dbce6;outline-offset:-1px;min-height:1.2em;padding:0;margin:2px 0;color:#1d2939}
+  .guide{font-size:12px;color:#5d6c80}
+  code{font-size:12px;background:#eff3f8;border-radius:4px;padding:1px 4px}
+  pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#f5f8fc;padding:12px;border-radius:8px;max-height:240px;overflow:auto;font-size:11px;line-height:1.5}
+  @media(max-width:500px){main{padding:16px 11px 40px}.card{padding:12px}.inputs{gap:8px}h1{font-size:19px}}
+</style>
+</head>
+<body>
+<main>
+  <h1>SiteBuilder 文字幅・改行診断</h1>
+  <p class="lead">WindowsとiPadで、<strong>同じHTML・同じ文章・同じ幅</strong>を使って表示差を測定します。SiteBuilder v1.22のフォント指定と文字サイズ自動調整の設定に合わせています。</p>
+
+  <section class="card">
+    <h2>1. 測定条件</h2>
+    <label for="sample">比較する文章（実際のサイトの文章に変更できます）</label>
+    <textarea id="sample" spellcheck="false">法人・小規模事業者向け　オフィス・店舗のPC・ネットワーク環境をサポートします。パソコンの導入・設定からネットワーク環境の改善まで対応します。</textarea>
+    <div class="inputs">
+      <div><label for="size">フォントサイズ（px）</label><input id="size" type="number" value="21" min="8" max="100" step="1"></div>
+      <div><label for="boxwidth">文字領域の幅（px）</label><input id="boxwidth" type="number" value="350" min="80" max="1000" step="1"></div>
+    </div>
+    <p class="muted">WindowsとiPadの両方で同じ数値にしてください。文字幅はブラウザ上のCSSピクセルで比較します。</p>
+    <div id="fontStatus" class="status" role="status">フォントの状態を確認中です。</div>
+    <div class="actions">
+      <button type="button" id="measure">再測定</button>
+      <button type="button" id="copy" class="secondary">測定結果をコピー</button>
+    </div>
+    <p id="copyStatus" class="muted" role="status" aria-live="polite"></p>
+  </section>
+
+  <section class="card">
+    <h2>2. 測定結果</h2>
+    <div class="scroll"><table>
+      <thead><tr><th>フォント指定</th><th>文章全体の幅</th><th>改行後の行数</th><th>1行目の文字数</th></tr></thead>
+      <tbody id="results"></tbody>
+    </table></div>
+    <p class="muted">「文章全体の幅」は改行しない場合の幅です。フォントサイズの違いだけでなく、字体や字送りの違いも数値に反映されます。</p>
+    <h2>ブラウザ情報</h2>
+    <pre id="environment"></pre>
+  </section>
+
+  <section class="card">
+    <h2>3. 実際の折り返し</h2>
+    <p class="guide">点線の枠幅は両端末で同一のCSSピクセルです。端末の画面より枠が広い場合は、横スクロールで確認できます。</p>
+    <div id="previews"></div>
+  </section>
+  <section class="card">
+    <h2>比較方法</h2>
+    <p>このHTMLをWindowsのChromeとiPadのSafariで開きます。それぞれの<strong>測定結果のスクリーンショット</strong>、または「測定結果をコピー」で得た内容を比較してください。</p>
+    <p class="muted">この診断はフォント単体の差を切り分けるものです。実サイト固有のズーム、テキストパーツの余白、CSSレイアウトまで完全に再現するものではありません。Webフォントの読み込みにインターネット接続が必要です。</p>
+  </section>
+</main>
+<script>
+(function(){
+  'use strict';
+  const $=id=>document.getElementById(id);
+  const variants=[
+    {id:'noto', label:'Noto Sans JP（v1.22標準）',family:'"Noto Sans JP","Hiragino Kaku Gothic ProN",Meiryo,sans-serif'},
+    {id:'system',label:'OS標準（従来方式）',family:'-apple-system,BlinkMacSystemFont,"Segoe UI",Meiryo,sans-serif'},
+    {id:'meiryo',label:'メイリオ指定',family:'Meiryo,"メイリオ",sans-serif'}
+  ];
+  const round=v=>Number(v.toFixed(2));
+  let report=null;
+  function fontState(){
+    const faces=Array.from(document.fonts||[]).filter(f=>String(f.family).replace(/["']/g,'')==='Noto Sans JP');
+    const loaded=faces.filter(f=>f.status==='loaded').length;
+    const state=faces.length?(loaded?`登録 ${faces.length} / 読込済 ${loaded}`:`登録 ${faces.length} / まだ読込されていません`):'Webフォントの登録を確認できません（代替フォントで描画される可能性があります）';
+    $('fontStatus').textContent=`Noto Sans JP：${state}\nフォント読み込み状況：${document.fonts?.status||'不明'}`;
+    return {faceCount:faces.length,loadedCount:loaded,documentStatus:document.fonts?.status||'不明'};
+  }
+  function getLines(node){
+    const textNode=node.firstChild;
+    if(!textNode||textNode.nodeType!==Node.TEXT_NODE)return [];
+    const lines=[];
+    const r=document.createRange();
+    const text=textNode.textContent;
+    for(let i=0;i<text.length;i++){
+      r.setStart(textNode,i);r.setEnd(textNode,i+1);
+      const rect=r.getBoundingClientRect();
+      if(!rect||!Number.isFinite(rect.top))continue;
+      let line=lines.find(l=>Math.abs(l.y-rect.top)<1);
+      if(!line){line={y:rect.top,characters:0};lines.push(line)}
+      line.characters++;
+    }
+    return lines.sort((a,b)=>a.y-b.y);
+  }
+  function measure(){
+    const text=$('sample').value.replace(/\r\n/g,'\n');
+    const size=Math.min(100,Math.max(8,Number($('size').value)||21));
+    const width=Math.min(1000,Math.max(80,Number($('boxwidth').value)||350));
+    $('size').value=size;$('boxwidth').value=width;
+    const tb=$('results'),previews=$('previews');tb.replaceChildren();previews.replaceChildren();
+    const items=[];
+    for(const entry of variants){
+      const outer=document.createElement('div');outer.className='preview-group';
+      const heading=document.createElement('p');heading.className='preview-title';heading.textContent=entry.label;
+      const scroller=document.createElement('div');scroller.className='specimen-scroller';
+      const block=document.createElement('div');block.className='specimen';
+      Object.assign(block.style,{width:width+'px',fontSize:size+'px',fontFamily:entry.family});
+      block.textContent=text;scroller.append(block);outer.append(heading,scroller);previews.append(outer);
+      const single=document.createElement('span');
+      Object.assign(single.style,{display:'inline-block',position:'absolute',visibility:'hidden',whiteSpace:'pre',width:'max-content',fontSize:size+'px',fontFamily:entry.family,lineHeight:'normal',letterSpacing:'normal'});
+      single.textContent=text.replace(/\n/g,'');document.body.append(single);
+      const unwrappedWidth=round(single.getBoundingClientRect().width);single.remove();
+      const lines=getLines(block);
+      const result={id:entry.id,label:entry.label,fontFamily:entry.family,fullTextWidthPx:unwrappedWidth,wrappedLines:lines.length,firstLineCharacters:lines[0]?.characters||0,computedFontSize:getComputedStyle(block).fontSize,computedLineHeight:getComputedStyle(block).lineHeight,displayHeightPx:round(block.getBoundingClientRect().height)};
+      items.push(result);
+      const tr=document.createElement('tr');
+      for(const value of [entry.label,unwrappedWidth+' px',lines.length+' 行',(lines[0]?.characters||0)+' 字']){
+        const cell=document.createElement('td');cell.textContent=value;tr.append(cell);
+      }
+      tb.append(tr);
+    }
+    const vv=window.visualViewport;
+    const env={userAgent:navigator.userAgent,viewportWidthPx:innerWidth,viewportHeightPx:innerHeight,documentClientWidthPx:document.documentElement.clientWidth,visualViewportWidthPx:vv?round(vv.width):null,visualViewportScale:vv?round(vv.scale):null,devicePixelRatio:devicePixelRatio,orientation:screen.orientation?.type||null,deviceTextAdjust:getComputedStyle(document.documentElement).webkitTextSizeAdjust||getComputedStyle(document.documentElement).textSizeAdjust};
+    $('environment').textContent=JSON.stringify(env,null,2);
+    report={tool:'SiteBuilder font width test 1.0',date:new Date().toISOString(),sample:text,fontSizePx:size,textBoxWidthPx:width,fontLoad:fontState(),environment:env,measurements:items};
+    $('copyStatus').textContent='';
+  }
+  $('measure').addEventListener('click',measure);
+  ['sample','size','boxwidth'].forEach(id=>$(id).addEventListener('change',measure));
+  $('copy').addEventListener('click',async()=>{
+    measure();const result=JSON.stringify(report,null,2);
+    try{if(!navigator.clipboard?.writeText)throw Error('clipboard unavailable');await navigator.clipboard.writeText(result);$('copyStatus').textContent='測定結果をコピーしました。'}
+    catch(_){
+      const ta=document.createElement('textarea');ta.value=result;ta.setAttribute('readonly','');ta.style.width='100%';ta.style.height='120px';
+      $('copyStatus').textContent='自動コピーできません。下のテキストを長押ししてコピーしてください。';$('copyStatus').after(ta);ta.select();
+    }
+  });
+  measure();
+  if(document.fonts?.ready){document.fonts.ready.then(measure).catch(()=>{});}
+  window.addEventListener('load',measure,{once:true});
+})();
+</script>
+</body>
+</html>
